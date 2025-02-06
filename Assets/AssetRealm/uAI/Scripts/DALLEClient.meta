@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 81143a50a28db3942aa3d416afecbc45
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 248269
+  packageName: uAI - AI Assistant
+  packageVersion: 1.4.0
+  assetPath: Assets/AssetRealm/uAI/Scripts/DALLEClient
+  uploadId: 690380
