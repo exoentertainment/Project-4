@@ -11,4 +11,5 @@ public class InputManager : MonoBehaviour
             Debug.Log("Open Settings");
         }
     }
+    
 }
