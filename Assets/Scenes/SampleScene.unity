@@ -1007,7 +1007,23 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3316b6c5-f791-4ffb-8dde-37bec3f37285
     m_ActionName: 'UI/Rotate Planet Right[/Keyboard/d]'
-  m_NeverAutoSwitchControlSchemes: 1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1035036774}
+        m_TargetAssemblyTypeName: WeaponManager, Assembly-CSharp
+        m_MethodName: SelectWeaponPlatform
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 964f0c41-80fd-48d7-9df9-8dc3e8ce2424
+    m_ActionName: 'UI/Select Weapon Platform[/Mouse/leftButton,/Gamepad/buttonSouth]'
+  m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
@@ -1529,6 +1545,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1485309057}
+  - {fileID: 978241277}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1666,7 +1683,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 887264030}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1035036774}
+        m_TargetAssemblyTypeName: WeaponManager, Assembly-CSharp
+        m_MethodName: PreviousWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &887264030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,6 +1734,249 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 887264027}
   m_CullTransparentMesh: 1
+--- !u!1 &978241276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 978241277}
+  - component: {fileID: 978241278}
+  m_Layer: 5
+  m_Name: Virtual Mouse UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &978241277
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978241276}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2028901831}
+  m_Father: {fileID: 809361261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &978241278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978241276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424b6720ff5999446843ba414e58a907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CursorMode: 0
+  m_CursorGraphic: {fileID: 2028901832}
+  m_CursorTransform: {fileID: 2028901831}
+  m_CursorSpeed: 1000
+  m_ScrollSpeed: 45
+  m_StickAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Stick
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 069d6d00-62be-4e77-b3f6-f5ed56b4d4ed
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: df8d42f9-a64f-42bc-8cd8-b988197add10
+        m_Path: <Gamepad>/leftStick
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Stick
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_LeftButtonAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Left Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 5a9adeb2-88ec-4f4a-8e12-4d384ced881d
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 5460e92e-4d41-4636-b3b6-3d8d10a6485d
+        m_Path: <Gamepad>/buttonSouth
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Left Button
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_MiddleButtonAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Middle Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 3b381ce2-0658-4b22-ae5d-432b0be00c94
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 4df29167-e94d-4911-ac92-73b5dda65ab5
+        m_Path: <Gamepad>/rightShoulder
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Middle Button
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_RightButtonAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Right Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 48ccd670-b73c-4363-bcf1-206a650f4d99
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: e7e2c141-1f35-415f-963d-44e539d7d9b4
+        m_Path: <Gamepad>/buttonWest
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Right Button
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_ForwardButtonAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Forward Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: ba323f0b-6ae7-4091-bc04-9dd22ea7932d
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 54975387-a322-424e-bab3-d1db9865ac29
+        m_Path: <Gamepad>/buttonNorth
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Forward Button
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_BackButtonAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Back Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: b1d3532a-fd36-437f-98ed-718f602c0332
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: a93e16b7-9ec6-46c9-96d9-ba437aa7b64f
+        m_Path: <Gamepad>/buttonEast
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Back Button
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_ScrollWheelAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Scroll Wheel
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: fc822909-71b1-4745-a6aa-e920147e7329
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: da9a2a89-f892-4a58-8ec9-efd3adf9506e
+        m_Path: <Gamepad>/rightStick
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Scroll Wheel
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+--- !u!1 &1035036773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1035036775}
+  - component: {fileID: 1035036774}
+  m_Layer: 0
+  m_Name: Weapon Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1035036774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035036773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2dbc9adf9ce2807489ad3f5ce7b2b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPlatformMask:
+    serializedVersion: 2
+    m_Bits: 64
+  playerInput: {fileID: 577036996}
+  gamepadMouseCursor: {fileID: 2028901831}
+--- !u!4 &1035036775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035036773}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.116046906, y: 0.0000076293945, z: -0.114616394}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1305634236
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,7 +2666,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2011581506}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1035036774}
+        m_TargetAssemblyTypeName: WeaponManager, Assembly-CSharp
+        m_MethodName: NextWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2011581506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2508,6 +2792,97 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!1 &2028901830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2028901831}
+  - component: {fileID: 2028901833}
+  - component: {fileID: 2028901832}
+  - component: {fileID: 2028901834}
+  m_Layer: 5
+  m_Name: Mouse Cursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2028901831
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028901830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 978241277}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 380, y: 482}
+  m_SizeDelta: {x: 20, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2028901832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028901830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 10c12ef630bc26049a0b93af90e4390f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2028901833
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028901830}
+  m_CullTransparentMesh: 1
+--- !u!114 &2028901834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028901830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &2059694782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2602,7 +2977,7 @@ GameObject:
   - component: {fileID: 2095844001}
   - component: {fileID: 2095844000}
   - component: {fileID: 2095843999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platform (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2641,7 +3016,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -2711,3 +3086,4 @@ SceneRoots:
   - {fileID: 1686987056}
   - {fileID: 809361261}
   - {fileID: 1690043847}
+  - {fileID: 1035036775}
