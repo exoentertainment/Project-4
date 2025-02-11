@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,21 +8,85 @@ public class WeaponManager : MonoBehaviour
     #region --Serialized Fields--
 
     [SerializeField] private LayerMask weaponPlatformMask;
+    [SerializeField] private LayerMask weaponPlatformUIMask;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] private Transform gamepadMouseCursor;
 
+    [SerializeField] private WeaponPlatformSO[] weaponPlatforms;
+    [SerializeField] private Transform weaponPreviewPane;
+    [SerializeField] private int weaponPreviewRotateSpeed;
+
+    [SerializeField] TMP_Text uiDamageText;
+    [SerializeField] TMP_Text uiRangeText;
+    [SerializeField] TMP_Text uiCostText;
+    [SerializeField] TMP_Text uiRoFText;
+    [SerializeField] TMP_Text uiDescriptionText;
+    
     #endregion
 
-
+    private GameObject weaponPlatformPreview;
+    private int currentWeaponPlatform;
     
-    public void PreviousWeapon()
+    private void Start()
     {
-        Debug.Log("Previous Weapon");
+        PopulatePreviewPanel();
+    }
+
+    private void Update()
+    {
+        RotateWeaponPlatformPreview();
+    }
+
+    //Instantiates the currently selected weapon and spawns it at the center of world for the preview camera to capture
+    void PopulatePreviewPanel()
+    {
+        
+        //Instantiate weapon and fit to preview window
+        weaponPlatformPreview = Instantiate(weaponPlatforms[currentWeaponPlatform].weaponPrefab, Vector3.zero, Quaternion.identity);
+        weaponPlatformPreview.layer = LayerMask.NameToLayer("UI Preview");
+        weaponPlatformPreview.transform.localScale = new Vector3(weaponPlatforms[currentWeaponPlatform].UIScale, weaponPlatforms[currentWeaponPlatform].UIScale,
+            weaponPlatforms[currentWeaponPlatform].UIScale);
+        
+        //Populate weapon stat windows
+        uiDamageText.text = "Damage: " + weaponPlatforms[currentWeaponPlatform].damage.ToString();
+        uiRangeText.text = "Range: " + weaponPlatforms[currentWeaponPlatform].range.ToString();
+        uiCostText.text = "Cost: " + weaponPlatforms[currentWeaponPlatform].cost.ToString();
+        uiRoFText.text = "RoF: " + weaponPlatforms[currentWeaponPlatform].fireRate.ToString();
+        uiDescriptionText.text = weaponPlatforms[currentWeaponPlatform].weaponDescription.ToString();
+
+    }
+
+    void RotateWeaponPlatformPreview()
+    {
+        weaponPlatformPreview.transform.Rotate(Vector3.up, weaponPreviewRotateSpeed * Time.deltaTime);
     }
     
+    //Move to the previous weapon in the array then populate the preview window
+    public void PreviousWeapon()
+    {
+        if (currentWeaponPlatform - 1 >= 0)
+            currentWeaponPlatform--;
+        else
+            currentWeaponPlatform = weaponPlatforms.Length - 1;
+        
+        if(weaponPlatformPreview != null)
+            Destroy(weaponPlatformPreview);
+        
+        PopulatePreviewPanel();
+    }
+    
+    //Move to the next weapon in the array then populate the preview window
     public void NextWeapon()
     {
-        Debug.Log("Next Weapon");
+        if (currentWeaponPlatform + 1 < weaponPlatforms.Length)
+            currentWeaponPlatform++;
+        else
+            currentWeaponPlatform = 0;
+        
+        if(weaponPlatformPreview != null)
+            Destroy(weaponPlatformPreview);
+        
+        PopulatePreviewPanel();
     }
     
     //If player clicks on a weapon platform slot, then call the interact function
