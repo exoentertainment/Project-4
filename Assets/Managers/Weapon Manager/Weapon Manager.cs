@@ -21,6 +21,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] TMP_Text uiCostText;
     [SerializeField] TMP_Text uiRoFText;
     [SerializeField] TMP_Text uiDescriptionText;
+    [SerializeField] private TMP_Text uiCurrentResourcesText;
 
     [SerializeField] private int currentResources;
     
@@ -31,6 +32,8 @@ public class WeaponManager : MonoBehaviour
     
     private void Start()
     {
+        uiCurrentResourcesText.text = "Resources: " + currentResources.ToString();
+        
         PopulatePreviewPanel();
     }
 
@@ -98,15 +101,18 @@ public class WeaponManager : MonoBehaviour
         {
             Ray ray;
 
+            //If player is using the keyboard/mouse then shoot a ray from the mouse's position
             if (playerInput.currentControlScheme == "Keyboard&Mouse")
             {
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             }
+            //If player is using the gamepad then shoot a ray from the virtual mouse cursor
             else
             {
                 ray = Camera.main.ScreenPointToRay(gamepadMouseCursor.position);
             }
 
+            //If the raycast hits an object under the weapon platform mask then check for resources and place the selected weapon
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, weaponPlatformMask))
             {
                 if (hit.collider != null)
@@ -115,7 +121,14 @@ public class WeaponManager : MonoBehaviour
                     {
                         hit.collider.GetComponent<WeaponPlatformSpot>()
                             .PlaceWeapon(weaponPlatforms[currentWeaponPlatform].weaponPrefab);
+                        
                         currentResources -= weaponPlatforms[currentWeaponPlatform].cost;
+                        
+                        uiCurrentResourcesText.text = "Resources: " + currentResources.ToString();
+                    }
+                    else
+                    {
+                        //Play sound
                     }
                 }
             }
