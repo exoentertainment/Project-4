@@ -21,6 +21,8 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] TMP_Text uiCostText;
     [SerializeField] TMP_Text uiRoFText;
     [SerializeField] TMP_Text uiDescriptionText;
+
+    [SerializeField] private int currentResources;
     
     #endregion
 
@@ -109,11 +111,12 @@ public class WeaponManager : MonoBehaviour
             {
                 if (hit.collider != null)
                 {
-                    Debug.Log("Selected Platform");
-                    // if (hit.collider.gameObject.TryGetComponent<iInteractable>(out iInteractable slot)) 
-                    // {
-                    //     slot.Interact();
-                    // }
+                    if (currentResources - weaponPlatforms[currentWeaponPlatform].cost >= 0)
+                    {
+                        hit.collider.GetComponent<WeaponPlatformSpot>()
+                            .PlaceWeapon(weaponPlatforms[currentWeaponPlatform].weaponPrefab);
+                        currentResources -= weaponPlatforms[currentWeaponPlatform].cost;
+                    }
                 }
             }
         }
