@@ -1,5 +1,7 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +12,8 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private GameObject[] phaseOneUI;
     [SerializeField] private GameObject[] phaseTwoUI;
+    
+    [SerializeField] UnityEvent initPhaseTwo;
 
     #endregion
     
@@ -20,19 +24,18 @@ public class GameManager : MonoBehaviour
     }
     
     GamePhase currentGamePhase = GamePhase.PhaseOne;
-    public static GameManager Instance;
     
-    private void Start()
-    {
-        PhaseOneSetup();
-    }
+    public static GameManager Instance;
 
-    void PhaseOneSetup()
+    //Invokes any event associated with the beginning of Phase 2. Calls all internal functions related to the beginning of Phase 2
+    public void PhaseTwoSetup()
     {
-        playerInput.SwitchCurrentActionMap("UI");
-        Debug.Log(playerInput.currentActionMap.ToString());
-        playerInput.SwitchCurrentActionMap("Player");
-        Debug.Log(playerInput.currentActionMap.ToString());
+        initPhaseTwo?.Invoke();
+        
+        //DeactivatePhaseOneUI();
+        ActivatePhaseTwoUI();
+        SwitchInputProfile();
+        EnableEnemySpawners();
     }
     
     public GamePhase GetCurrentPhase()
@@ -40,11 +43,28 @@ public class GameManager : MonoBehaviour
         return currentGamePhase;
     }
 
-    public void DeactivatePhaseOneUI()
+    #region --Phase 2 Setup--
+    
+    //Enable all UI elements associated with player flying their ship
+    void ActivatePhaseTwoUI()
     {
-        foreach (GameObject element in phaseOneUI)
+        foreach (GameObject element in phaseTwoUI)
         {
-            Destroy(element);
+            element.SetActive(true);
         }
     }
+
+    //Switch player action map to Player
+    void SwitchInputProfile()
+    {
+        playerInput.SwitchCurrentActionMap("Player");
+    }
+    
+    //Enable the enemy spawners
+    private void EnableEnemySpawners()
+    {
+        
+    }
+
+    #endregion
 }

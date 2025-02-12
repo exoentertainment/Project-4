@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class WeaponPlatformSpot : MonoBehaviour
@@ -10,7 +11,8 @@ public class WeaponPlatformSpot : MonoBehaviour
     #endregion
 
     private GameObject weapon;
-    
+
+    //Places the passed weapon prefab at the build position and assigns itself as parent
     public void PlaceWeapon(GameObject obj)
     {
         GetComponent<MeshRenderer>().material = slotOccupiedColor;

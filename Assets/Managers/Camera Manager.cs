@@ -2,12 +2,14 @@ using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class CameraManager : MonoBehaviour
 {
     #region --Serialized Fields--
 
-    [SerializeField] CinemachineCamera planetCamera;
+    [FormerlySerializedAs("planetCamera")] [SerializeField] GameObject[] phaseOneCameras;
+    [SerializeField] GameObject playerCamera;
     [SerializeField] private Transform planet;
 
     [SerializeField] private float planetRotateSpeed;
@@ -28,6 +30,15 @@ public class CameraManager : MonoBehaviour
         RotatePlanet();
     }
 
+    //Disable all cameras associated with Phase 1 and enable the player ship camera
+    public void InitPhaseTwoCameras()
+    {
+        foreach (GameObject phaseOneCamera in phaseOneCameras)
+            phaseOneCamera.SetActive(false);
+        
+        playerCamera.SetActive(true);
+    }
+    
     void RotatePlanet()
     {
         if (isRotating)
