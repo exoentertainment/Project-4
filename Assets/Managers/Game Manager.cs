@@ -3,6 +3,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,10 +11,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerInput playerInput;
     
-    [SerializeField] private GameObject[] phaseOneUI;
-    [SerializeField] private GameObject[] phaseTwoUI;
+    [FormerlySerializedAs("phaseOneUI")] [SerializeField] private GameObject[] phaseOneObjects;
+    [FormerlySerializedAs("phaseTwoUI")] [SerializeField] private GameObject[] phaseTwoObjects;
     
-    [SerializeField] UnityEvent initPhaseTwo;
+    [FormerlySerializedAs("initPhaseTwo")] [SerializeField] UnityEvent eventInitPhaseTwo;
 
     #endregion
     
@@ -30,11 +31,9 @@ public class GameManager : MonoBehaviour
     //Invokes any event associated with the beginning of Phase 2. Calls all internal functions related to the beginning of Phase 2
     public void PhaseTwoSetup()
     {
-        initPhaseTwo?.Invoke();
+        eventInitPhaseTwo?.Invoke();
         
-        //DeactivatePhaseOneUI();
         ActivatePhaseTwoUI();
-        SwitchInputProfile();
         EnableEnemySpawners();
     }
     
@@ -48,16 +47,10 @@ public class GameManager : MonoBehaviour
     //Enable all UI elements associated with player flying their ship
     void ActivatePhaseTwoUI()
     {
-        foreach (GameObject element in phaseTwoUI)
+        foreach (GameObject element in phaseTwoObjects)
         {
             element.SetActive(true);
         }
-    }
-
-    //Switch player action map to Player
-    void SwitchInputProfile()
-    {
-        playerInput.SwitchCurrentActionMap("Player");
     }
     
     //Enable the enemy spawners

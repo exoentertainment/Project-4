@@ -307,11 +307,33 @@
                 },
                 {
                     "name": "",
+                    "id": "54dccc32-8e59-4810-867d-f8b77f98a7a3",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Rotate Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a77c3115-b0c2-4901-9c0e-fd9abf75df5a",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "Rotate Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2cfc2e95-d550-4c06-a374-82057dbbb547",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Rotate Right",
                     "isComposite": false,
                     "isPartOfComposite": false
