@@ -125,6 +125,7 @@ public class WeaponManager : MonoBehaviour
                         currentResources -= weaponPlatforms[currentWeaponPlatform].cost;
                         
                         uiCurrentResourcesText.text = "Resources: " + currentResources.ToString();
+                        Debug.Log("gamepad weapon manager");
                     }
                     else
                     {

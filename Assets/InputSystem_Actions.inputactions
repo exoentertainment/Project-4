@@ -264,7 +264,7 @@
                 {
                     "name": "",
                     "id": "6770c4ce-96a8-4fc8-8cb6-51896d7b32a2",
-                    "path": "<XInputController>/leftStick/left",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -286,7 +286,7 @@
                 {
                     "name": "",
                     "id": "36a09609-a327-4765-acef-5ea8061e3503",
-                    "path": "<XInputController>/leftStick/right",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",

@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     {
         eventInitPhaseTwo?.Invoke();
         
-        ActivatePhaseTwoUI();
+        //ActivatePhaseTwoUI();
         EnableEnemySpawners();
     }
     
