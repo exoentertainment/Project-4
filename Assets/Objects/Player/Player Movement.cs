@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,11 +7,15 @@ public class PlayerMovement : MonoBehaviour
 {
     #region --Serialized Members--
     
+    [Header("Movement Settings")]
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float strafeSpeed = 10f;
     [SerializeField] float verticalSpeed = 10f;
     [SerializeField] private float forwardSpeed = 10;
     [SerializeField] float backwardSpeed = 10;
+    [SerializeField] float boostSpeed = 10;
+    [SerializeField] private float boostRate;
+    [SerializeField] float boostDuration;
     
     #endregion
 
@@ -47,10 +52,16 @@ public class PlayerMovement : MonoBehaviour
     private bool isVertical;
     private bool isMovingForward;
     bool isMovingBackward;
+    private bool isAiming;
+
+    private float aimAngle;
+    private float lastBoostTime;
     
     private void Start()
     {
         currentControlScheme = InputManager.Instance.GetCurrentControlScheme();
+        
+        lastBoostTime = Time.time;
     }
 
     private void Update()
@@ -59,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         StrafeShip();
         MoveVertical();
         MoveHorizontal();
+        AimShip();
     }
 
     #region --Rotation--
@@ -112,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isStrafing)
         {
-            transform.position += transform.rotation *(Vector3.left * strafeDirection * strafeSpeed * Time.deltaTime);
+            transform.position += transform.rotation * (Vector3.left * strafeDirection * strafeSpeed * Time.deltaTime);
         }
     }
     
@@ -213,9 +225,9 @@ public class PlayerMovement : MonoBehaviour
     void MoveHorizontal()
     {
         if(isMovingForward)
-            transform.position += Vector3.forward * forwardSpeed * Time.deltaTime;
+            transform.position += transform.rotation * (Vector3.forward * forwardSpeed * Time.deltaTime);
         else if(isMovingBackward)
-            transform.position += Vector3.back * backwardSpeed * Time.deltaTime;
+            transform.position += transform.rotation * (Vector3.back * backwardSpeed * Time.deltaTime);
     }
 
     public void MoveForward(InputAction.CallbackContext context)
@@ -232,6 +244,61 @@ public class PlayerMovement : MonoBehaviour
             isMovingBackward = true;
         else 
             isMovingBackward = false;
+    }
+    
+    #endregion
+
+    #region --Aim Ship--
+
+    void AimShip()
+    {
+        if(isAiming)
+        {
+            float newX = transform.eulerAngles.x + (aimAngle * rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(newX, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        }
+    }
+
+    public void AdjustAim(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            aimAngle = context.ReadValue<Vector2>().y;
+            isAiming = true;
+        }
+        else
+        {
+            isAiming = false;
+        }
+    }
+    
+    #endregion
+
+    #region --Boost--
+
+    public void Boost(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if ((Time.time - lastBoostTime) > boostRate)
+            {
+                lastBoostTime = Time.time;
+                StartCoroutine(BoostRoutine());
+            }
+        }
+    }
+
+    IEnumerator BoostRoutine()
+    {
+        float boostTime = 0;
+
+        while (boostTime < boostDuration)
+        {
+            boostTime += Time.deltaTime;
+            transform.position += transform.rotation * (Vector3.forward * boostSpeed * Time.deltaTime);
+            
+            yield return new WaitForEndOfFrame();
+        }
     }
     
     #endregion
