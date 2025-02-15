@@ -41,7 +41,7 @@ public class InputManager : MonoBehaviour
         playerInput.SwitchCurrentActionMap("Player");
     }
 
-    public string GetCurrentActionMap()
+    public string GetCurrentControlScheme()
     {
         return playerInput.currentControlScheme;
     }

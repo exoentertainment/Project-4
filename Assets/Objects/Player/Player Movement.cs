@@ -8,10 +8,15 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float strafeSpeed = 10f;
+    [SerializeField] float verticalSpeed = 10f;
+    [SerializeField] private float forwardSpeed = 10;
+    [SerializeField] float backwardSpeed = 10;
     
     #endregion
 
     private string currentControlScheme;
+
+    #region --Enums--
 
     enum RotateDirection
     {
@@ -25,21 +30,35 @@ public class PlayerMovement : MonoBehaviour
         Right = -1
     }
 
+    enum VerticalDirection
+    {
+        Up = 1,
+        Down = -1
+    }
+
+    #endregion
+    
     private int rotateDirection;
     int strafeDirection;
+    int verticalDirection;
     
     private bool isRotating;
     private bool isStrafing;
+    private bool isVertical;
+    private bool isMovingForward;
+    bool isMovingBackward;
     
     private void Start()
     {
-        currentControlScheme = InputManager.Instance.GetCurrentActionMap();
+        currentControlScheme = InputManager.Instance.GetCurrentControlScheme();
     }
 
     private void Update()
     {
         RotateShip();
         StrafeShip();
+        MoveVertical();
+        MoveHorizontal();
     }
 
     #region --Rotation--
@@ -129,4 +148,91 @@ public class PlayerMovement : MonoBehaviour
     
     #endregion
 
+    #region --Vertical Movement
+
+    //If player is holding down the vertical keys, move ship according to the current rotation
+    void MoveVertical()
+    {
+        if (isVertical)
+        {
+            transform.position += transform.rotation *(Vector3.up * verticalDirection * verticalSpeed * Time.deltaTime);
+        }
+    }
+
+    //Input calls this when mouse wheel is used
+    public void MoveVertical(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isVertical = true;
+
+            if(context.ReadValue<Vector2>().y > 0)
+                verticalDirection = (int)VerticalDirection.Up;
+            else if(context.ReadValue<Vector2>().y < 0)
+                verticalDirection = (int)VerticalDirection.Down;
+        }
+        else
+        {
+            isVertical = false;
+        }
+    }
+
+    //Input calls this when gamepad is used
+    public void MoveUp(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isVertical = true;
+            verticalDirection = (int)VerticalDirection.Up;
+        }
+        else
+        {
+            isVertical = false;
+        }
+    }
+    
+    //Input calls this when gamepad is used
+    public void MoveDown(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isVertical = true;
+            verticalDirection = (int)VerticalDirection.Down;
+        }
+        else
+        {
+            isVertical = false;
+        }
+    }
+    
+    #endregion
+
+    #region --Forward Movement--
+
+    //If player is holding down the accelerate/decelerate keys, move ship according to the current rotation
+    void MoveHorizontal()
+    {
+        if(isMovingForward)
+            transform.position += Vector3.forward * forwardSpeed * Time.deltaTime;
+        else if(isMovingBackward)
+            transform.position += Vector3.back * backwardSpeed * Time.deltaTime;
+    }
+
+    public void MoveForward(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+            isMovingForward = true;
+        else 
+            isMovingForward = false;
+    }
+    
+    public void MoveBackward(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+            isMovingBackward = true;
+        else 
+            isMovingBackward = false;
+    }
+    
+    #endregion
 }

@@ -141,9 +141,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Hover",
-                    "type": "Value",
+                    "name": "Hover Up",
+                    "type": "Button",
                     "id": "ab0c6ee8-37bd-461e-9a7b-41b32a5a1452",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Hover Down",
+                    "type": "Button",
+                    "id": "625d496c-05f8-465e-8df9-e2e097bb436c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Hover - Mouse",
+                    "type": "Value",
+                    "id": "76e437f7-da99-41bf-9115-bd0eec5ae051",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -494,23 +512,34 @@
                 },
                 {
                     "name": "",
-                    "id": "2c91c538-470f-4706-b9e2-eb026533bab0",
-                    "path": "<Mouse>/scroll",
+                    "id": "c10086db-9a7c-4960-8fd3-480a90f06e43",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Hover",
+                    "groups": ";Gamepad",
+                    "action": "Hover Up",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c10086db-9a7c-4960-8fd3-480a90f06e43",
-                    "path": "<XInputController>/leftStick",
+                    "id": "be2636b3-0c9a-45a2-8f49-77927279c47d",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Hover",
+                    "action": "Hover Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b907b5ed-92ab-411f-99cf-b7bc6b222aca",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Hover - Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
