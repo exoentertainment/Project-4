@@ -31,6 +31,8 @@ public class InputManager : MonoBehaviour
                 
                 if(playerInput.currentActionMap.name == "Gamepad")
                     virtualMouse.SetActive(true);
+                else
+                    Cursor.visible = true;
             }
         }
     }
@@ -41,8 +43,22 @@ public class InputManager : MonoBehaviour
         playerInput.SwitchCurrentActionMap("Player");
     }
 
+    public void HideMouse()
+    {
+        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void ShowMouse()
+    {
+        if(playerInput.currentActionMap.name == "Keyboard&Mouse")
+            Cursor.visible = true;
+    }
+    
     public string GetCurrentControlScheme()
     {
         return playerInput.currentControlScheme;
     }
+
+    public string GetCurrentActionMap() => playerInput.currentActionMap.name;
 }

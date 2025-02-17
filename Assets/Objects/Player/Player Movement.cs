@@ -76,46 +76,6 @@ public class PlayerMovement : MonoBehaviour
 
     #region --Rotation--
 
-    /*//If player is holding down the rotate keys, rotate ship according to the current direction
-    void RotateShip()
-    {
-        if (isRotating)
-        {
-            float newZ = transform.eulerAngles.z +(rotateDirection * rotationSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, newZ);
-        }
-    }
-    
-    //Called by input system, rotates player counter-clockwise
-    public void RotatePlayerLeft(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            isRotating = true;
-            
-            rotateDirection = (int)RotateDirection.Left;
-        }
-        else
-        {
-            isRotating = false;
-        }
-    }
-    
-    //Called by input system, rotates player clockwise
-    public void RotatePlayerRight(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            isRotating = true;
-
-            rotateDirection = (int)RotateDirection.Right;
-        }
-        else
-        {
-            isRotating = false;
-        }
-    }*/
-
     //If player is holding down the rotate keys, rotate ship according to the current direction
     void RotateShip()
     {
@@ -134,21 +94,6 @@ public class PlayerMovement : MonoBehaviour
             isRotating = true;
             
             rotationAngle = -context.ReadValue<Vector2>().x;
-        }
-        else
-        {
-            isRotating = false;
-        }
-    }
-    
-    //Called by input system, rotates player clockwise
-    public void RotatePlayerRight(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            isRotating = true;
-
-            rotateDirection = (int)RotateDirection.Right;
         }
         else
         {

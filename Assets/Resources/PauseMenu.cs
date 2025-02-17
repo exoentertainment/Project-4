@@ -13,7 +13,11 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1.0f;
-        GameObject.FindGameObjectWithTag("Virtual Mouse").SetActive(false);
+        
+        if(InputManager.Instance.GetCurrentActionMap() == "Gamepad")
+            GameObject.FindGameObjectWithTag("Virtual Mouse").SetActive(false);
+        else
+            InputManager.Instance.HideMouse();
         
         Destroy(gameObject);
     }

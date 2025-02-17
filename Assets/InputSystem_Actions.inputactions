@@ -260,7 +260,7 @@
                 {
                     "name": "",
                     "id": "5df3da6a-9127-468e-a98b-18844204666a",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -282,7 +282,7 @@
                 {
                     "name": "",
                     "id": "c01569c6-1db4-4093-ad12-6917c75a3c73",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",

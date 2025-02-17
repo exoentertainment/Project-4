@@ -1,30 +1,27 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerMainGun : MonoBehaviour
+public class PlaceholderMissileLauncher : MonoBehaviour
 {
     #region --Serialized Fields--
 
-    [SerializeField] private MainGunSO gunSO;
-    [SerializeField] Transform convergencePoint;
+    [SerializeField] MissileLauncherSO missileLauncherSO;
 
     #endregion
-
+    
     float lastFireTime;
     private bool isFiring;
     
     private void Start()
     {
-        transform.LookAt(convergencePoint);
         lastFireTime = Time.time;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         Fire();
     }
-
+    
     public void ActivateGun()
     {
         isFiring = true;
@@ -38,11 +35,11 @@ public class PlayerMainGun : MonoBehaviour
     void Fire()
     {
         if(isFiring)
-            if ((Time.time - lastFireTime) > gunSO.fireRate)
+            if ((Time.time - lastFireTime) > missileLauncherSO.fireRate)
             {
                 lastFireTime = Time.time;
                 
-                Instantiate(gunSO.projectileSO.projectilePrefab, transform.position, transform.rotation);
+                Instantiate(missileLauncherSO.missileSO.missilePrefab, transform.position, transform.rotation);
             }
     }
 }

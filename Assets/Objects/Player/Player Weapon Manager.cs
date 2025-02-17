@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-public class GunManager : MonoBehaviour
+public class PlayerWeaponManager : MonoBehaviour
 {
     [FormerlySerializedAs("gunListeners")] [SerializeField] private UnityEvent turnGunsOn;
     [SerializeField] private UnityEvent turnGunsOff;

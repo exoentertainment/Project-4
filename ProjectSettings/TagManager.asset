@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Virtual Mouse
+  - Aim Reticule
   layers:
   - Default
   - TransparentFX
