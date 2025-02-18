@@ -8,7 +8,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [FormerlySerializedAs("gunListeners")] [SerializeField] private UnityEvent turnGunsOn;
     [SerializeField] private UnityEvent turnGunsOff;
     
-    public void FireGuns(InputAction.CallbackContext context)
+    public void FireWeapons(InputAction.CallbackContext context)
     {
         if (context.performed)
         {

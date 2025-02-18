@@ -6,6 +6,7 @@ public class MissileSO : ScriptableObject
     public float damage;
     public float speed;
     public float duration;
+    public int range;
     public LayerMask targetLayers;
     public GameObject targetIcon;
     public float targetIconDuration;

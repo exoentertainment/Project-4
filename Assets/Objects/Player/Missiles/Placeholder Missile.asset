@@ -13,5 +13,12 @@ MonoBehaviour:
   m_Name: Placeholder Missile
   m_EditorClassIdentifier: 
   damage: 0
-  speed: 0
-  duration: 0
+  speed: 100
+  duration: 2
+  range: 1000
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  targetIcon: {fileID: 4137781402869143273, guid: 5923a5123b011ee6585c2c0f43b07ba8, type: 3}
+  targetIconDuration: 5
+  missilePrefab: {fileID: 1548669689951394, guid: fdb8daf7a66574819bfdbb641d99b458, type: 3}

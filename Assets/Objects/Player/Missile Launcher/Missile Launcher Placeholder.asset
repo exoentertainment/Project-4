@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13c72db0c43aa0929a3ea16420ca9ea, type: 3}
   m_Name: Missile Launcher Placeholder
   m_EditorClassIdentifier: 
-  fireRate: 0
-  range: 0
+  fireRate: 2
+  range: 1000
+  missileSO: {fileID: 11400000, guid: 3964b74743ff7f312b6edffebabf9b54, type: 2}
