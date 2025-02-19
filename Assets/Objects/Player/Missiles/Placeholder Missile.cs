@@ -26,7 +26,9 @@ public class PlaceholderMissile : MonoBehaviour
 
     void Move()
     {
-        transform.LookAt(target.transform);
+        if(target != null)
+            transform.LookAt(target.transform);
+        
         transform.position += transform.rotation * Vector3.forward * missileSO.speed * Time.deltaTime;
     }
 
@@ -41,9 +43,23 @@ public class PlaceholderMissile : MonoBehaviour
     {
         Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileSO.range, missileSO.targetLayers);
 
+
         if (possibleTargets.Length > 0)
         {
-            target = possibleTargets[0].gameObject;
+            List<Collider> targets = new List<Collider>();
+            targets.AddRange(possibleTargets);
+
+            for (int x = targets.Count - 1; x > -1; x--)
+            {
+                if (!CameraManager.Instance.ObjectInCameraView(targets[x].gameObject.transform))
+                    targets.RemoveAt(x);
+            }
+
+            if (targets.Count > 0)
+            {
+                int randomTarget = UnityEngine.Random.Range(0, targets.Count);
+                target = targets[randomTarget].gameObject;
+            }
         }
     }
 }

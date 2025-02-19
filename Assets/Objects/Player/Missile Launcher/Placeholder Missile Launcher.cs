@@ -5,6 +5,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
     #region --Serialized Fields--
 
     [SerializeField] MissileLauncherSO missileLauncherSO;
+    [SerializeField] private Transform[] spawnPoints;
 
     #endregion
     
@@ -38,8 +39,12 @@ public class PlaceholderMissileLauncher : MonoBehaviour
             if ((Time.time - lastFireTime) > missileLauncherSO.fireRate)
             {
                 lastFireTime = Time.time;
-                
-                Instantiate(missileLauncherSO.missileSO.missilePrefab, transform.position, transform.rotation);
+
+                foreach (Transform spawnPoint in spawnPoints)
+                {
+                    Debug.Log("missile fired");
+                    Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
+                }
             }
     }
 }

@@ -16,6 +16,8 @@ public class CameraManager : MonoBehaviour
     
     #endregion
 
+    public static CameraManager Instance;
+    
     enum RotationDirection
     {
         rotateLeft = -1,
@@ -25,6 +27,11 @@ public class CameraManager : MonoBehaviour
     bool isRotating;
     int rotateDirection = (int)RotationDirection.rotateLeft;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+    
     private void Update()
     {
         RotatePlanet();
@@ -48,7 +55,16 @@ public class CameraManager : MonoBehaviour
             planet.rotation = Quaternion.Euler(planet.rotation.eulerAngles.x, newAngle, planet.rotation.eulerAngles.z);
         }
     }
+
+    public bool ObjectInCameraView(Transform objectInCameraView)
+    {
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(objectInCameraView.position);
+
+        return (viewPos.x >= 0 && viewPos.y >= 0) && (viewPos.x <= 1 && viewPos.y <= 1) && viewPos.z >= 0;
+    }
     
+    #region --Input Listeners
+
     public void RotateCameraLeft(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -74,4 +90,7 @@ public class CameraManager : MonoBehaviour
             isRotating = false;
         }
     }
+
+    #endregion
+
 }
