@@ -8,7 +8,6 @@ public class PlaceholderMissile : MonoBehaviour
     [SerializeField] MissileSO missileSO;
 
     private GameObject target;
-    private GameObject targetIcon;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,13 +29,6 @@ public class PlaceholderMissile : MonoBehaviour
             transform.LookAt(target.transform);
         
         transform.position += transform.rotation * Vector3.forward * missileSO.speed * Time.deltaTime;
-    }
-
-    void AssignTargetIcon()
-    {
-        targetIcon = Instantiate(missileSO.targetIcon, target.transform.position, Quaternion.identity);
-
-        //StartCoroutine(AssignTargetIconRoutine());
     }
     
     void SearchForTarget()

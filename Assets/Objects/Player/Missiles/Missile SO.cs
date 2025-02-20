@@ -8,7 +8,5 @@ public class MissileSO : ScriptableObject
     public float duration;
     public int range;
     public LayerMask targetLayers;
-    public GameObject targetIcon;
-    public float targetIconDuration;
     public GameObject missilePrefab;
 }

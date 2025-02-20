@@ -14,7 +14,7 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             turnGunsOn?.Invoke();
         }
-        else
+        else if(context.canceled)
         {
             turnGunsOff?.Invoke();
         }

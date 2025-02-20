@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlaceholderMissileLauncher : MonoBehaviour
@@ -12,6 +13,13 @@ public class PlaceholderMissileLauncher : MonoBehaviour
     float lastFireTime;
     private bool isFiring;
     
+    UITargetIcons uiTargetIcons;
+
+    private void Awake()
+    {
+        uiTargetIcons = FindFirstObjectByType<UITargetIcons>();
+    }
+
     private void Start()
     {
         lastFireTime = Time.time;
@@ -39,12 +47,20 @@ public class PlaceholderMissileLauncher : MonoBehaviour
             if ((Time.time - lastFireTime) > missileLauncherSO.fireRate)
             {
                 lastFireTime = Time.time;
-
+                SetTargetIcons();
+                
                 foreach (Transform spawnPoint in spawnPoints)
                 {
-                    Debug.Log("missile fired");
                     Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
                 }
             }
+    }
+
+    void SetTargetIcons()
+    {
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
+        
+        if(possibleTargets.Length > 0)
+            uiTargetIcons.SetTargets(possibleTargets);
     }
 }
