@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Missile Launcher Placeholder
   m_EditorClassIdentifier: 
   fireRate: 2
-  range: 1000
+  targettingType: 0
   missileSO: {fileID: 11400000, guid: 3964b74743ff7f312b6edffebabf9b54, type: 2}

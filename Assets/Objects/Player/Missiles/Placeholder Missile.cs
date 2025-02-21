@@ -14,7 +14,7 @@ public class PlaceholderMissile : MonoBehaviour
     {
         Destroy(gameObject, missileSO.duration);
         
-        SearchForTarget();
+        //SearchForTarget();
     }
 
     // Update is called once per frame
@@ -53,5 +53,10 @@ public class PlaceholderMissile : MonoBehaviour
                 target = targets[randomTarget].gameObject;
             }
         }
+    }
+
+    public void SetTarget(GameObject target)
+    {
+        this.target = target;
     }
 }

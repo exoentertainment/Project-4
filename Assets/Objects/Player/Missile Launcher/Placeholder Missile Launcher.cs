@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlaceholderMissileLauncher : MonoBehaviour
@@ -47,20 +48,93 @@ public class PlaceholderMissileLauncher : MonoBehaviour
             if ((Time.time - lastFireTime) > missileLauncherSO.fireRate)
             {
                 lastFireTime = Time.time;
-                SetTargetIcons();
                 
-                foreach (Transform spawnPoint in spawnPoints)
-                {
-                    Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
-                }
+                if(missileLauncherSO.targettingType == MissileLauncherSO.MissileType.MultiTarget)
+                    SetRandomTarget();
+                else if(missileLauncherSO.targettingType == MissileLauncherSO.MissileType.SingleTarget)
+                    SetSingleTarget();
             }
     }
 
-    void SetTargetIcons()
+    void SetRandomTarget()
     {
         Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
         
-        if(possibleTargets.Length > 0)
-            uiTargetIcons.SetTargets(possibleTargets);
+        if (possibleTargets.Length > 0)
+        {
+            List<Collider> targets = new List<Collider>();
+            targets.AddRange(possibleTargets);
+
+            for (int x = targets.Count - 1; x > -1; x--)
+            {
+                if (!CameraManager.Instance.ObjectInCameraView(targets[x].gameObject.transform))
+                    targets.RemoveAt(x);
+            }
+
+            if (targets.Count > 0)
+            {
+                int randomTarget;
+                
+                foreach (Transform spawnPoint in spawnPoints)
+                {
+                    GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
+                    randomTarget = UnityEngine.Random.Range(0, targets.Count);
+                    missile.GetComponent<PlaceholderMissile>().SetTarget(targets[randomTarget].gameObject);
+                    
+                    SetTargetIcons(targets[randomTarget].gameObject);
+                }
+            }
+        }
+    }
+
+    void SetSingleTarget()
+    {
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
+        
+        if (possibleTargets.Length > 0)
+        {
+            List<Collider> targets = new List<Collider>();
+            targets.AddRange(possibleTargets);
+
+            for (int x = targets.Count - 1; x > -1; x--)
+            {
+                if (!CameraManager.Instance.ObjectInCameraView(targets[x].gameObject.transform))
+                    targets.RemoveAt(x);
+            }
+
+            if (targets.Count > 0)
+            {
+                GameObject target = null;
+                float closestEnemy = Mathf.Infinity;
+
+                for (int x = 0; x < targets.Count; x++)
+                {
+                    float distanceToEnemy =
+                        Vector3.Distance(targets[x].transform.position, transform.position);
+
+                    if (distanceToEnemy < closestEnemy)
+                    {
+                        closestEnemy = distanceToEnemy;
+                        target = targets[x].gameObject;
+                    }
+                }
+                
+                SetTargetIcons(target);
+                
+                foreach (Transform spawnPoint in spawnPoints)
+                {
+                    GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
+                    missile.GetComponent<PlaceholderMissile>().SetTarget(target);
+                }
+            }
+        }
+    }
+    
+    void SetTargetIcons(GameObject target)
+    {
+        // Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
+        //
+        // if(possibleTargets.Length > 0)
+        uiTargetIcons.SetTargets(target);
     }
 }

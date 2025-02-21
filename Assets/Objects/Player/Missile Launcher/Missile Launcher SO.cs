@@ -4,6 +4,12 @@ using UnityEngine;
 public class MissileLauncherSO : ScriptableObject
 {
     public float fireRate;
-    public int range;
+    public MissileType targettingType;
     public MissileSO missileSO;
+
+    public enum MissileType
+    {
+        SingleTarget,
+        MultiTarget
+    }
 }
