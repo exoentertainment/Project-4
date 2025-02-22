@@ -13,8 +13,6 @@ public class PlaceholderMissile : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, missileSO.duration);
-        
-        //SearchForTarget();
     }
 
     // Update is called once per frame
@@ -29,30 +27,6 @@ public class PlaceholderMissile : MonoBehaviour
             transform.LookAt(target.transform);
         
         transform.position += transform.rotation * Vector3.forward * missileSO.speed * Time.deltaTime;
-    }
-    
-    void SearchForTarget()
-    {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileSO.range, missileSO.targetLayers);
-
-
-        if (possibleTargets.Length > 0)
-        {
-            List<Collider> targets = new List<Collider>();
-            targets.AddRange(possibleTargets);
-
-            for (int x = targets.Count - 1; x > -1; x--)
-            {
-                if (!CameraManager.Instance.ObjectInCameraView(targets[x].gameObject.transform))
-                    targets.RemoveAt(x);
-            }
-
-            if (targets.Count > 0)
-            {
-                int randomTarget = UnityEngine.Random.Range(0, targets.Count);
-                target = targets[randomTarget].gameObject;
-            }
-        }
     }
 
     public void SetTarget(GameObject target)

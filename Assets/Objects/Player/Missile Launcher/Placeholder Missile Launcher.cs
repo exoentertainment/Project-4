@@ -56,6 +56,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
             }
     }
 
+    //This is called if current missile selects a random target. Culls any nearby target that isn't on screen
     void SetRandomTarget()
     {
         Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
@@ -87,6 +88,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
         }
     }
 
+    //This is called if current missile selects closest target. Culls any nearby target that isn't on screen
     void SetSingleTarget()
     {
         Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
@@ -96,6 +98,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
             List<Collider> targets = new List<Collider>();
             targets.AddRange(possibleTargets);
 
+            //Remove any potential targets that aren't onscreen
             for (int x = targets.Count - 1; x > -1; x--)
             {
                 if (!CameraManager.Instance.ObjectInCameraView(targets[x].gameObject.transform))
@@ -135,6 +138,6 @@ public class PlaceholderMissileLauncher : MonoBehaviour
         // Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
         //
         // if(possibleTargets.Length > 0)
-        uiTargetIcons.SetTargets(target);
+        uiTargetIcons.SetTargetIcon(target);
     }
 }
