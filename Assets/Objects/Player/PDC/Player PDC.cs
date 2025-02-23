@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class PlayerPDC : MonoBehaviour
 {
@@ -8,7 +10,13 @@ public class PlayerPDC : MonoBehaviour
     [SerializeField] private Transform pdcGunMount;
 
     private GameObject target;
-    
+    private float lastFireTime;
+
+    private void Start()
+    {
+        lastFireTime = Time.time;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -82,6 +90,7 @@ public class PlayerPDC : MonoBehaviour
         }
     }
 
+    //Rotate the base of the PDC and its barrels towards target
     void RotateTowardsTarget()
     {
         if (target != null)
@@ -97,11 +106,31 @@ public class PlayerPDC : MonoBehaviour
         }
     }
 
+    
+    //Fires the PDC and introduces a small random offset to the rounds don't always go in the same direction. Helps to ensure they cover a wider area and heightens chance of hitting small targets
     void Fire()
     {
         if (target != null)
         {
-            
+            if ((Time.time - lastFireTime) > pdcSO.RoF)
+            {
+                lastFireTime = Time.time;
+                
+                Quaternion shootingAngle = new Quaternion();
+                shootingAngle.eulerAngles = new Vector3(pdcGunMount.rotation.eulerAngles.x + pdcSO.GetTrackingError(), pdcGunMount.rotation.eulerAngles.y + pdcSO.GetTrackingError(), 0);
+
+                foreach (Transform spawnPoint in spawnPoints)
+                {
+                    //Instantiate(pdcSO.projectilePrefab, spawnPoint.position, shootingAngle);
+                    GameObject projectile = PDCPool.SharedInstance.GetPooledObject(); 
+                    if (projectile != null) {
+                        projectile.transform.position = spawnPoint.position;
+                        projectile.transform.rotation = shootingAngle;
+                        projectile.SetActive(true);
+                    }
+                }
+                
+            }
         }
     }
 }

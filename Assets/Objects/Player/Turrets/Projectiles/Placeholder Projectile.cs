@@ -5,6 +5,7 @@ public class PlaceholderProjectile : MonoBehaviour
 {
     [SerializeField] ProjectileSO projectileSO;
 
+    private bool isActivated;
     private void Start()
     {
         Destroy(gameObject, projectileSO.duration);
