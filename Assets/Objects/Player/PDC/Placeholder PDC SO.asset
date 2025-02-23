@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Placeholder PDC SO
   m_EditorClassIdentifier: 
   RoF: 0
-  range: 1000
+  range: 100
   fireOffset: 0
   targetMask:
     serializedVersion: 2
