@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class PlaceholderMissileLauncher : MonoBehaviour
+public class EnemyMissileLauncher : MonoBehaviour
 {
     #region --Serialized Fields--
 
@@ -12,14 +11,6 @@ public class PlaceholderMissileLauncher : MonoBehaviour
     #endregion
     
     float lastFireTime;
-    private bool isFiring = true;
-    
-    UITargetIcons uiTargetIcons;
-
-    private void Awake()
-    {
-        uiTargetIcons = FindFirstObjectByType<UITargetIcons>();
-    }
 
     private void Start()
     {
@@ -32,19 +23,8 @@ public class PlaceholderMissileLauncher : MonoBehaviour
         Fire();
     }
     
-    public void ActivateGun()
-    {
-        isFiring = true;
-    }
-
-    public void DeactivateGun()
-    {
-        isFiring = false;
-    }
-    
     void Fire()
     {
-        if(isFiring)
             if ((Time.time - lastFireTime) > missileLauncherSO.fireRate)
             {
                 lastFireTime = Time.time;
@@ -81,8 +61,6 @@ public class PlaceholderMissileLauncher : MonoBehaviour
                     GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
                     randomTarget = UnityEngine.Random.Range(0, targets.Count);
                     missile.GetComponent<PlaceholderMissile>().SetTarget(targets[randomTarget].gameObject);
-                    
-                    SetTargetIcons(targets[randomTarget].gameObject);
                 }
             }
         }
@@ -131,13 +109,5 @@ public class PlaceholderMissileLauncher : MonoBehaviour
                 }
             }
         }
-    }
-    
-    void SetTargetIcons(GameObject target)
-    {
-        // Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
-        //
-        // if(possibleTargets.Length > 0)
-        uiTargetIcons.SetTargetIcon(target);
     }
 }

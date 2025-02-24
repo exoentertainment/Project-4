@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bc38177ec5c7b3db81784421a59265, type: 3}
   m_Name: Placeholder PDC SO
   m_EditorClassIdentifier: 
-  RoF: 0.2
-  range: 100
+  RoF: 0.1
+  range: 150
   fireOffset: 0
   trackingErrorMin: -1
   trackingErrorMax: 1
   targetMask:
     serializedVersion: 2
-    m_Bits: 256
-  projectilePrefab: {fileID: 3033007431209303257, guid: c2dc7190f3934402c8d1c66e9e5517d9,
+    m_Bits: 128
+  projectilePrefab: {fileID: 5730284336272845626, guid: ecd3cb347597014a49f3d194ba6a91fd,
     type: 3}

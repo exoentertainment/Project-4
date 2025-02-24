@@ -19,8 +19,8 @@ TagManager:
   - Enemy
   - Platform Preview
   - Weapon Platform
-  - 
-  - 
+  - UIManagedFOV
+  - UINoFOV
   - 
   - 
   - 
