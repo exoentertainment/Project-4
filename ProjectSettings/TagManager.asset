@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Virtual Mouse
+  - Ground
+  - FlyByParticles
   - Aim Reticule
+  - Virtual Mouse
   layers:
   - Default
   - TransparentFX
@@ -13,10 +15,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Weapon Platform Slot
-  - UI Preview
-  - Enemy
   - Player
+  - Enemy
+  - Platform Preview
+  - Weapon Platform
   - 
   - 
   - 
@@ -40,15 +42,11 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Distortion
+    uniqueID: 4179220155
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   m_RenderingLayers:
   - Default
-  - Light Layer 1
-  - Light Layer 2
-  - Light Layer 3
-  - Light Layer 4
-  - Light Layer 5
-  - Light Layer 6
-  - Light Layer 7

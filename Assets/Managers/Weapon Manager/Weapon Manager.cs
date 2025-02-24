@@ -45,10 +45,9 @@ public class WeaponManager : MonoBehaviour
     //Instantiates the currently selected weapon and spawns it at the center of world for the preview camera to capture
     void PopulatePreviewPanel()
     {
-        
         //Instantiate weapon and fit to preview window
         weaponPlatformPreview = Instantiate(weaponPlatforms[currentWeaponPlatform].weaponPrefab, Vector3.zero, Quaternion.identity);
-        weaponPlatformPreview.layer = LayerMask.NameToLayer("UI Preview");
+        weaponPlatformPreview.layer = LayerMask.NameToLayer("Platform Preview");
         weaponPlatformPreview.transform.localScale = new Vector3(weaponPlatforms[currentWeaponPlatform].UIScale, weaponPlatforms[currentWeaponPlatform].UIScale,
             weaponPlatforms[currentWeaponPlatform].UIScale);
         

@@ -15,9 +15,10 @@ MonoBehaviour:
   RoF: 0.2
   range: 100
   fireOffset: 0
-  trackingErrorMin: -0.1
-  trackingErrorMax: 0.1
+  trackingErrorMin: -1
+  trackingErrorMax: 1
   targetMask:
     serializedVersion: 2
     m_Bits: 256
-  projectilePrefab: {fileID: 3033007431209303257, guid: c2dc7190f3934402c8d1c66e9e5517d9, type: 3}
+  projectilePrefab: {fileID: 3033007431209303257, guid: c2dc7190f3934402c8d1c66e9e5517d9,
+    type: 3}
