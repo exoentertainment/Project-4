@@ -15,8 +15,8 @@ MonoBehaviour:
   RoF: 0.1
   range: 150
   fireOffset: 0
-  trackingErrorMin: -1
-  trackingErrorMax: 1
+  trackingErrorMin: -0.5
+  trackingErrorMax: 0.503
   targetMask:
     serializedVersion: 2
     m_Bits: 128

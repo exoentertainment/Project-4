@@ -34,7 +34,6 @@ public class PlaceholderMissile : MonoBehaviour
         Destroy(gameObject, missileSO.duration);
         randomTimeOffset = Random.Range(0f, 1000f);
         startTime = Time.time;
-        
     }
 
     // Update is called once per frame
@@ -72,6 +71,6 @@ public class PlaceholderMissile : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Missile Collision");
+        Destroy(gameObject);
     }
 }

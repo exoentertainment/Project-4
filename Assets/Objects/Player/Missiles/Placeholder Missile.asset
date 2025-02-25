@@ -15,9 +15,9 @@ MonoBehaviour:
   damage: 0
   speed: 50
   duration: 2
-  range: 1000
+  range: 250
   targetLayers:
     serializedVersion: 2
     m_Bits: 128
-  missilePrefab: {fileID: 1548669689951394, guid: fdb8daf7a66574819bfdbb641d99b458,
+  missilePrefab: {fileID: 1298173687816790, guid: f34e250723b573bc69858d257b8f733a,
     type: 3}

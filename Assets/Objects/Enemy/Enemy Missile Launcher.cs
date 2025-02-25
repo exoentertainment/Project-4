@@ -43,24 +43,15 @@ public class EnemyMissileLauncher : MonoBehaviour
         
         if (possibleTargets.Length > 0)
         {
-            List<Collider> targets = new List<Collider>();
-            targets.AddRange(possibleTargets);
-
-            for (int x = targets.Count - 1; x > -1; x--)
-            {
-                if (!CameraManager.Instance.ObjectInCameraView(targets[x].gameObject.transform))
-                    targets.RemoveAt(x);
-            }
-
-            if (targets.Count > 0)
+            if (possibleTargets.Length > 0)
             {
                 int randomTarget;
                 
                 foreach (Transform spawnPoint in spawnPoints)
                 {
                     GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
-                    randomTarget = UnityEngine.Random.Range(0, targets.Count);
-                    missile.GetComponent<PlaceholderMissile>().SetTarget(targets[randomTarget].gameObject);
+                    randomTarget = UnityEngine.Random.Range(0, possibleTargets.Length);
+                    missile.GetComponent<PlaceholderMissile>().SetTarget(possibleTargets[randomTarget].gameObject);
                 }
             }
         }

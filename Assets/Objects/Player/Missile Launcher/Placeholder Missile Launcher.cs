@@ -140,4 +140,10 @@ public class PlaceholderMissileLauncher : MonoBehaviour
         // if(possibleTargets.Length > 0)
         uiTargetIcons.SetTargetIcon(target);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, missileLauncherSO.missileSO.range);
+    }
 }

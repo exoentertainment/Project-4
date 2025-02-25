@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -36,4 +37,9 @@ public class PDCProjectile : MonoBehaviour
         isActivated = false;
         gameObject.SetActive(false);
     }
+
+    // private void OnCollisionEnter(Collision other)
+    // {
+    //     Debug.Log("Collision Enter");
+    // }
 }

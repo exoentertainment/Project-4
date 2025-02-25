@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6945156480394160076}
   - component: {fileID: 6398722035353452578}
   - component: {fileID: 2477664777599993660}
+  - component: {fileID: 3955562961843534997}
   m_Layer: 0
   m_Name: PDC Projectile
   m_TagString: Untagged
@@ -135,7 +136,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 0.40392157, g: 0.9137255, b: 0.9372549, a: 1}
-  m_Intensity: 150
+  m_Intensity: 50
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -225,3 +226,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSO: {fileID: 11400000, guid: f6dce16614239ac7cbe52de9651fed93, type: 2}
+--- !u!54 &3955562961843534997
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5730284336272845626}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
