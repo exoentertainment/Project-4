@@ -21,3 +21,5 @@ MonoBehaviour:
     m_Bits: 64
   missilePrefab: {fileID: 1548669689951394, guid: 34796838f9631be37af90926c23b7c85,
     type: 3}
+  missileDetonation: {fileID: 1043624379182380, guid: 15722c524bd936b53b0f54c71519922d,
+    type: 3}

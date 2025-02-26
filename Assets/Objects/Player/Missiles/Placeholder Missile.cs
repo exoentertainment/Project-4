@@ -44,24 +44,54 @@ public class PlaceholderMissile : MonoBehaviour
 
     void Move()
     {
-        if(target != null)
+        if (target != null)
+        {
             transform.LookAt(target.transform);
-        
-        float dist = Vector3.Distance(transform.position, target.transform.position);
-        float swarmAmount = dist > swarmFadeDistance ? 1 : (dist / swarmFadeDistance);
-        swarmAmount *= Mathf.Clamp(1 - ((Time.time - startTime) / swarmFadeTime), 0, 1);
+            
+            float dist = Vector3.Distance(transform.position, target.transform.position);
+            float swarmAmount = dist > swarmFadeDistance ? 1 : (dist / swarmFadeDistance);
+            swarmAmount *= Mathf.Clamp(1 - ((Time.time - startTime) / swarmFadeTime), 0, 1);
 
-        Vector3 fwd = transform.forward;
-        Vector3 toTarget = (target.transform.position - transform.position).normalized;
-        fwd = Vector3.Lerp(fwd, toTarget, (1 - swarmAmount) * guidanceSteeringPower * Time.deltaTime);
-        transform.rotation = Quaternion.LookRotation(fwd, Vector3.up);
+            Vector3 fwd = transform.forward;
+            Vector3 toTarget = (target.transform.position - transform.position).normalized;
+            fwd = Vector3.Lerp(fwd, toTarget, (1 - swarmAmount) * guidanceSteeringPower * Time.deltaTime);
+            transform.rotation = Quaternion.LookRotation(fwd, Vector3.up);
 
-        float wiggleX = swarmAmount * (Mathf.PerlinNoise((Time.time + randomTimeOffset) * swarmFrequency, 0.2f) - 0.5f) * maxSwarmAmount;
-        float wiggleY = swarmAmount * (Mathf.PerlinNoise((Time.time + randomTimeOffset) * swarmFrequency, 0.5f) - 0.5f) * maxSwarmAmount;
-        float wiggleZ = swarmAmount * (Mathf.PerlinNoise((Time.time + randomTimeOffset) * swarmFrequency, 0.8f) - 0.5f) * maxSwarmAmount;
+            float wiggleX = swarmAmount * (Mathf.PerlinNoise((Time.time + randomTimeOffset) * swarmFrequency, 0.2f) - 0.5f) * maxSwarmAmount;
+            float wiggleY = swarmAmount * (Mathf.PerlinNoise((Time.time + randomTimeOffset) * swarmFrequency, 0.5f) - 0.5f) * maxSwarmAmount;
+            float wiggleZ = swarmAmount * (Mathf.PerlinNoise((Time.time + randomTimeOffset) * swarmFrequency, 0.8f) - 0.5f) * maxSwarmAmount;
 
-        transform.rotation = Quaternion.Euler(wiggleX, wiggleY, wiggleZ) * transform.rotation;
-        transform.position += transform.rotation * Vector3.forward * missileSO.speed * Time.deltaTime;
+            transform.rotation = Quaternion.Euler(wiggleX, wiggleY, wiggleZ) * transform.rotation;
+            transform.position += transform.rotation * Vector3.forward * missileSO.speed * Time.deltaTime;
+        }
+        else
+        {
+            FindClosestTarget();
+            transform.position += transform.rotation * Vector3.forward * missileSO.speed * Time.deltaTime;
+        }
+    }
+
+    void FindClosestTarget()
+    {
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileSO.range,
+            missileSO.targetLayers);
+
+        if (possibleTargets.Length > 0)
+        {
+            float closestEnemy = Mathf.Infinity;
+
+            for (int x = 0; x < possibleTargets.Length; x++)
+            {
+                float distanceToEnemy =
+                    Vector3.Distance(possibleTargets[x].transform.position, transform.position);
+
+                if (distanceToEnemy < closestEnemy)
+                {
+                    closestEnemy = distanceToEnemy;
+                    target = possibleTargets[x].gameObject;
+                }
+            }
+        }
     }
 
     public void SetTarget(GameObject target)
@@ -71,6 +101,7 @@ public class PlaceholderMissile : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        Instantiate(missileSO.missileDetonation, other.contacts[0].point, Quaternion.identity);
         Destroy(gameObject);
     }
 }

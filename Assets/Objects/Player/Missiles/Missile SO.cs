@@ -9,4 +9,5 @@ public class MissileSO : ScriptableObject
     public int range;
     public LayerMask targetLayers;
     public GameObject missilePrefab;
+    public GameObject missileDetonation;
 }
