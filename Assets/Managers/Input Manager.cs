@@ -45,14 +45,18 @@ public class InputManager : MonoBehaviour
 
     public void HideMouse()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        //Mouse.current.WarpCursorPosition(Vector2.zero);
     }
 
     public void ShowMouse()
     {
-        if(playerInput.currentActionMap.name == "Keyboard&Mouse")
+        if (playerInput.currentActionMap.name == "Keyboard&Mouse")
+        {
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
     
     public string GetCurrentControlScheme()

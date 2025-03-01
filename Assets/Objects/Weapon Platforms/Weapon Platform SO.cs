@@ -12,4 +12,5 @@ public class WeaponPlatformSO : ScriptableObject
 
     public string weaponDescription;
     public GameObject weaponPrefab;
+    public GameObject projectilePrefab;
 }

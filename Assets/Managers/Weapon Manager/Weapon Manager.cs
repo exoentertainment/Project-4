@@ -35,6 +35,7 @@ public class WeaponManager : MonoBehaviour
         uiCurrentResourcesText.text = "Resources: " + currentResources.ToString();
         
         PopulatePreviewPanel();
+        weaponPlatformPreview.transform.SetParent(transform);
     }
 
     private void Update()
@@ -47,7 +48,15 @@ public class WeaponManager : MonoBehaviour
     {
         //Instantiate weapon and fit to preview window
         weaponPlatformPreview = Instantiate(weaponPlatforms[currentWeaponPlatform].weaponPrefab, Vector3.zero, Quaternion.identity);
-        weaponPlatformPreview.layer = LayerMask.NameToLayer("Platform Preview");
+        weaponPlatformPreview.GetComponent<WeaponPlatformTurretAttack>().enabled = false;
+
+        Transform[] weaponPreviewTransforms = weaponPlatformPreview.GetComponentsInChildren<Transform>();
+        foreach (Transform child in weaponPreviewTransforms)
+        {
+            child.gameObject.layer = LayerMask.NameToLayer("Platform Preview");
+        }
+        
+        //weaponPlatformPreview.layer = LayerMask.NameToLayer("Platform Preview");
         weaponPlatformPreview.transform.localScale = new Vector3(weaponPlatforms[currentWeaponPlatform].UIScale, weaponPlatforms[currentWeaponPlatform].UIScale,
             weaponPlatforms[currentWeaponPlatform].UIScale);
         
@@ -124,7 +133,6 @@ public class WeaponManager : MonoBehaviour
                         currentResources -= weaponPlatforms[currentWeaponPlatform].cost;
                         
                         uiCurrentResourcesText.text = "Resources: " + currentResources.ToString();
-                        Debug.Log("gamepad weapon manager");
                     }
                     else
                     {

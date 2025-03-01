@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float boostSpeed = 10;
     [SerializeField] private float boostRate;
     [SerializeField] float boostDuration;
+    [SerializeField] private float rotationLimit;
     
     #endregion
 
@@ -54,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     bool isMovingBackward;
     private bool isAiming;
 
-    private float aimAngle;
+    private Vector2 aimAngle;
     float rotationAngle;
     private float lastBoostTime;
     
@@ -67,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        RotateShip();
+        //RotateShip();
         StrafeShip();
         MoveVertical();
         MoveHorizontal();
@@ -240,8 +241,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isAiming)
         {
-            float newX = transform.eulerAngles.x + (aimAngle * rotationSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Euler(newX, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            float newX = transform.eulerAngles.x + (aimAngle.y * rotationSpeed * Time.deltaTime);
+            float newY = transform.eulerAngles.y + (aimAngle.x * rotationSpeed * Time.deltaTime);
+            float newZ = transform.eulerAngles.z + (aimAngle.x * -rotationSpeed * Time.deltaTime);
+            
+            transform.rotation = Quaternion.Euler(newX, newY, transform.eulerAngles.z);
+            //transform.rotation = Quaternion.Euler(newX, newY, rotationAngle);
         }
     }
 
@@ -249,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (context.performed)
         {
-            aimAngle = context.ReadValue<Vector2>().y;
+            aimAngle = context.ReadValue<Vector2>();
             isAiming = true;
         }
         else
