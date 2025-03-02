@@ -15,10 +15,13 @@ public class PlaceholderMissileLauncher : MonoBehaviour
     private bool isFiring = true;
     
     UITargetIcons uiTargetIcons;
+    
+    ObjectPool projectilePool;
 
     private void Awake()
     {
         uiTargetIcons = FindFirstObjectByType<UITargetIcons>();
+        projectilePool = GetComponent<ObjectPool>();
     }
 
     private void Start()
@@ -78,6 +81,13 @@ public class PlaceholderMissileLauncher : MonoBehaviour
                 
                 foreach (Transform spawnPoint in spawnPoints)
                 {
+                    // GameObject projectile = projectilePool.GetPooledObject(); 
+                    // if (projectile != null) {
+                    //     projectile.transform.position = spawnPoint.position;
+                    //     projectile.transform.rotation = shootingAngle;
+                    //     projectile.SetActive(true);
+                    // }
+                    
                     GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
                     randomTarget = UnityEngine.Random.Range(0, targets.Count);
                     missile.GetComponent<PlaceholderMissile>().SetTarget(targets[randomTarget].gameObject);

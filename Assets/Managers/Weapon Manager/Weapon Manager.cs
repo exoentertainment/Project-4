@@ -48,7 +48,7 @@ public class WeaponManager : MonoBehaviour
     {
         //Instantiate weapon and fit to preview window
         weaponPlatformPreview = Instantiate(weaponPlatforms[currentWeaponPlatform].weaponPrefab, Vector3.zero, Quaternion.identity);
-        weaponPlatformPreview.GetComponent<WeaponPlatformTurretAttack>().enabled = false;
+        weaponPlatformPreview.GetComponent<IPlatformInterface>().TurnActivityOff();
 
         Transform[] weaponPreviewTransforms = weaponPlatformPreview.GetComponentsInChildren<Transform>();
         foreach (Transform child in weaponPreviewTransforms)

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class WeaponPlatformTurretAttack : MonoBehaviour
+public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
 {
     #region --Serialized Fields
 
@@ -30,6 +30,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour
         IsTargetStillInView();
     }
 
+    //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
     void SearchForTarget()
     {
         if(target == null)
@@ -60,6 +61,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour
             }
     }
     
+    //Check if the passed target is within line-of-sight. If it is, then return true
     bool IsLoSClear(GameObject obj)
     {
         Ray ray = new Ray(transform.position, obj.transform.position - transform.position);
@@ -68,8 +70,6 @@ public class WeaponPlatformTurretAttack : MonoBehaviour
         {
             if (hit.collider != null)
             {
-                Debug.DrawRay(transform.position, (obj.transform.position - transform.position) * 500, Color.red); 
-                
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                     return true;
             }
@@ -78,6 +78,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour
         return true;
     }
     
+    //Check if the passed target is within line-of-sight. If it isn't then set target to null so a new target can be found
     void IsTargetStillInView()
     {
         if (target != null)
@@ -88,8 +89,6 @@ public class WeaponPlatformTurretAttack : MonoBehaviour
             {
                 if (hit.collider != null)
                 {
-                    Debug.DrawRay(transform.position, (target.transform.position - transform.position) * 500, Color.red); 
-                
                     if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Enemy"))
                         target = null;
                 }
@@ -97,6 +96,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour
         }
     }
 
+    //Rotate the base and barrel towards target
     void RotateTowardsTarget()
     {
         if (target != null)
@@ -126,5 +126,11 @@ public class WeaponPlatformTurretAttack : MonoBehaviour
                 }
             }
         }
+    }
+
+    //Disable this script. Called by the weapon manager
+    public void TurnActivityOff()
+    {
+        this.enabled = false;
     }
 }

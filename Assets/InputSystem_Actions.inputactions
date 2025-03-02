@@ -512,11 +512,33 @@
                 },
                 {
                     "name": "",
+                    "id": "0bb3b758-d6d8-4d20-9bba-dba9e022fc95",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Hover Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "be2636b3-0c9a-45a2-8f49-77927279c47d",
                     "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
+                    "action": "Hover Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e89b49a-32de-45e8-aaae-4ab579ca37bc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Hover Down",
                     "isComposite": false,
                     "isPartOfComposite": false

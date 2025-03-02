@@ -212,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
     void MoveHorizontal()
     {
         if(isMovingForward)
-            transform.position += transform.rotation * (Vector3.forward * forwardSpeed * Time.deltaTime);
+            transform.position += transform.rotation * (transform.forward * forwardSpeed * Time.deltaTime);
         else if(isMovingBackward)
             transform.position += transform.rotation * (Vector3.back * backwardSpeed * Time.deltaTime);
     }

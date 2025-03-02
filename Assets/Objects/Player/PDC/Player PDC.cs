@@ -11,6 +11,13 @@ public class PlayerPDC : MonoBehaviour
 
     private GameObject target;
     private float lastFireTime;
+    
+    ObjectPool projectilePool;
+
+    private void Awake()
+    {
+        projectilePool = GetComponent<ObjectPool>();
+    }
 
     private void Start()
     {
@@ -121,8 +128,7 @@ public class PlayerPDC : MonoBehaviour
 
                 foreach (Transform spawnPoint in spawnPoints)
                 {
-                    //Instantiate(pdcSO.projectilePrefab, spawnPoint.position, shootingAngle);
-                    GameObject projectile = PDCPool.SharedInstance.GetPooledObject(); 
+                    GameObject projectile = projectilePool.GetPooledObject(); 
                     if (projectile != null) {
                         projectile.transform.position = spawnPoint.position;
                         projectile.transform.rotation = shootingAngle;
