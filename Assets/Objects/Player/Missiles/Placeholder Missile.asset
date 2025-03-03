@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de43a3869cda8ed99dd8fffbb29f839, type: 3}
   m_Name: Placeholder Missile
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 1
   speed: 100
   duration: 2
   range: 250

@@ -21,4 +21,9 @@ public class PlaceholderProjectile : MonoBehaviour
     {
         transform.position += transform.rotation * Vector3.forward * projectileSO.speed * Time.deltaTime;
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Destroy(gameObject);
+    }
 }

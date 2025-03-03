@@ -7,11 +7,6 @@ public class PDCProjectile : MonoBehaviour
     [SerializeField] ProjectileSO projectileSO;
 
     private bool isActivated;
-    private void Start()
-    {
-        //Destroy(gameObject, projectileSO.duration);
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -38,8 +33,9 @@ public class PDCProjectile : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // private void OnCollisionEnter(Collision other)
-    // {
-    //     Debug.Log("Collision Enter");
-    // }
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("Projectile Hit");
+       Destroy(gameObject);
+    }
 }

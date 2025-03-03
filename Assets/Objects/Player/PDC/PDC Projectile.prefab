@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6398722035353452578}
   - component: {fileID: 2477664777599993660}
   - component: {fileID: 3955562961843534997}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PDC Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

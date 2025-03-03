@@ -58,7 +58,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 aimAngle;
     float rotationAngle;
     private float lastBoostTime;
-    
+
+    Vector3 currentRotation;
+    private float newZ;
     private void Start()
     {
         currentControlScheme = InputManager.Instance.GetCurrentControlScheme();
@@ -241,12 +243,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isAiming)
         {
-            float newX = transform.eulerAngles.x + (aimAngle.y * rotationSpeed * Time.deltaTime);
-            float newY = transform.eulerAngles.y + (aimAngle.x * rotationSpeed * Time.deltaTime);
-            float newZ = transform.eulerAngles.z + (aimAngle.x * -rotationSpeed * Time.deltaTime);
+            currentRotation.x += (aimAngle.y * rotationSpeed * Time.deltaTime);
+            currentRotation.y += (aimAngle.x * rotationSpeed * Time.deltaTime);
+            currentRotation.z += (aimAngle.x * -rotationSpeed * Time.deltaTime);
+            currentRotation.z = Mathf.Clamp(currentRotation.z, -rotationLimit, rotationLimit);
             
-            transform.rotation = Quaternion.Euler(newX, newY, transform.eulerAngles.z);
-            //transform.rotation = Quaternion.Euler(newX, newY, rotationAngle);
+            transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, currentRotation.z);
         }
     }
 

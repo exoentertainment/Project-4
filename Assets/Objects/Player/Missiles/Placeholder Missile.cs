@@ -102,6 +102,9 @@ public class PlaceholderMissile : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         Instantiate(missileSO.missileDetonation, other.contacts[0].point, Quaternion.identity);
+        other.gameObject.TryGetComponent<IDamageable>(out IDamageable hit);
+        if (hit != null)
+            hit.TakeDamage(missileSO.damage);
         Destroy(gameObject);
     }
 }
