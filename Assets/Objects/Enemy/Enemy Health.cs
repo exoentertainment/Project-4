@@ -44,6 +44,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         
         //start coroutine that spawns explosions along ship
         StartCoroutine(SpawnExplosionsRoutine());
+        StartCoroutine(SpawnReactorExplosion());
     }
 
     IEnumerator SpawnExplosionsRoutine()
@@ -59,10 +60,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
         
         //call reactor death at end of routine
+        
+        Destroy(gameObject);
     }
 
-    void SpawnReactorExplosion()
+    IEnumerator SpawnReactorExplosion()
     {
+        yield return new WaitForSeconds(healthSO.explosionDuration * .75f);
         
+        Instantiate(healthSO.reactorExplosionPrefab, transform.position, Quaternion.identity);
     }
 }
