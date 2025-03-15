@@ -17,3 +17,7 @@ MonoBehaviour:
   duration: 2
   projectilePrefab: {fileID: 5730284336272845626, guid: 87cd90a42e5c58b789398cb016c578b1,
     type: 3}
+  dischargePrefab: {fileID: 1232470965182556, guid: 74067b953ce2846f09acc35583000bd4,
+    type: 3}
+  impactPrefab: {fileID: 1576947433937734, guid: 39178679c6a7874a6a3850dee66c73e3,
+    type: 3}

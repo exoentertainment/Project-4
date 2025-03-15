@@ -6,7 +6,7 @@ public class EnemyHealthSO : ScriptableObject
     public int maxHealth;
     
     public GameObject explosionPrefab;
-    public int explosionDuration;
+    public float explosionDuration;
     public float explosionFrequency;
     
     public GameObject reactorExplosionPrefab;

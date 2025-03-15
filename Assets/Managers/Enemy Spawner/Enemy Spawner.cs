@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
@@ -11,13 +13,7 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private SphereCollider collider;
 
-    // [SerializeField] private GameObject spawnPortalPrefab;
-    // [SerializeField] private float spawnPortalDuration;
-    // [SerializeField] private float spawnTime;
-    // [SerializeField] private GameObject enemyPrefab;
-    // [SerializeField] private int numSpawns;
-
-    [SerializeField] EnemyWaveSO[] waveSO;
+    [FormerlySerializedAs("waveSO")] [SerializeField] EnemyWaveSO[] enemySpawnManagers;
     
     #endregion
 
@@ -32,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SetLastSpawnTimes()
     {
-        lastSpawnTimes = new float[waveSO.Length];
+        lastSpawnTimes = new float[enemySpawnManagers.Length];
         
         for(int i = 0; i < lastSpawnTimes.Length; i++)
             lastSpawnTimes[i] = Time.time;
@@ -40,37 +36,45 @@ public class EnemySpawner : MonoBehaviour
 
     void SetNumSpawns()
     {
-        numSpawns = new int[waveSO.Length];
+        numSpawns = new int[enemySpawnManagers.Length];
         
         for(int i = 0; i < numSpawns.Length; i++)
-            numSpawns[i] = waveSO[i].numSpawns;
+            numSpawns[i] = enemySpawnManagers[i].numSpawns;
     }
     
     private void Update()
     {
-        SpawnEnemy();
+        SpawnEnemyPortal();
     }
 
-    void SpawnEnemy()
+    //Go through each spawn manager and spawn an enemy from the manager if the spawn time has been reached. Each enemy and spawn portal is spawned on a random spot on the sphere collider
+    void SpawnEnemyPortal()
     {
-        for (int i = 0; i < waveSO.Length; i++)
+        for (int i = 0; i < enemySpawnManagers.Length; i++)
         {
             if (numSpawns[i] > 0)
             {
-                if (Time.time - lastSpawnTimes[i] > waveSO[i].spawnFrequency)
+                if (Time.time - lastSpawnTimes[i] > enemySpawnManagers[i].spawnFrequency)
                 {
                     lastSpawnTimes[i] = Time.time;
                     numSpawns[i]--;
 
                     Vector3 spawnPos = Random.onUnitSphere * collider.radius;
-                    GameObject spawnPortal = Instantiate(waveSO[i].spawnPortalPrefab, spawnPos, Quaternion.identity);
+                    GameObject spawnPortal = Instantiate(enemySpawnManagers[i].spawnPortalPrefab, spawnPos, Quaternion.identity);
                     spawnPortal.transform.LookAt(Vector3.zero);
-                    Destroy(spawnPortal, waveSO[i].spawnPortalDuration);
+                    Destroy(spawnPortal, enemySpawnManagers[i].spawnPortalDuration);
 
-                    Instantiate(waveSO[i].enemyPrefab[Random.Range(0, waveSO[i].enemyPrefab.Length)], spawnPos,
-                        spawnPortal.transform.rotation);
+                    StartCoroutine(SpawnEnemyRoutine(i, spawnPos, spawnPortal));
                 }
             }
         }
+    }
+
+    IEnumerator SpawnEnemyRoutine(int i, Vector3 spawnPos, GameObject spawnPortal)
+    {
+        yield return new WaitForSeconds(enemySpawnManagers[i].spawnDelay);
+        
+        Instantiate(enemySpawnManagers[i].enemyPrefab[Random.Range(0, enemySpawnManagers[i].enemyPrefab.Length)], spawnPos,
+            spawnPortal.transform.rotation);
     }
 }

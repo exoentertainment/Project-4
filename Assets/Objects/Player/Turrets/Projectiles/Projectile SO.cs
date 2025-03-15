@@ -7,4 +7,6 @@ public class ProjectileSO : ScriptableObject
     public float damage;
     public int duration;
     public GameObject projectilePrefab;
+    public GameObject dischargePrefab;
+    public GameObject impactPrefab;
 }

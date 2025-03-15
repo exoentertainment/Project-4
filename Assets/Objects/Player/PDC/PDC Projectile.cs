@@ -34,8 +34,10 @@ public class PDCProjectile : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("Projectile Hit");
-       Destroy(gameObject);
+    { 
+        if(projectileSO.impactPrefab != null)
+            Instantiate(projectileSO.impactPrefab, other.contacts[0].point, Quaternion.identity);
+        
+        gameObject.SetActive(false);
     }
 }

@@ -5,7 +5,8 @@ public class PlaceholderProjectile : MonoBehaviour
 {
     [SerializeField] ProjectileSO projectileSO;
 
-    private bool isActivated;
+    //
+    //private bool isActivated;
     private void Start()
     {
         Destroy(gameObject, projectileSO.duration);
@@ -24,6 +25,7 @@ public class PlaceholderProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        Instantiate(projectileSO.impactPrefab, other.contacts[0].point, Quaternion.identity);
         Destroy(gameObject);
     }
 }

@@ -44,20 +44,25 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         
         //start coroutine that spawns explosions along ship
         StartCoroutine(SpawnExplosionsRoutine());
-        StartCoroutine(SpawnReactorExplosion());
+        
+        if(healthSO.reactorExplosionPrefab != null)
+            StartCoroutine(SpawnReactorExplosion());
     }
 
     IEnumerator SpawnExplosionsRoutine()
     {
         float startTime = Time.time;
 
-        while ((Time.time - startTime) < healthSO.explosionDuration)
+        do
         {
-            Vector3 explosionPos = new Vector3(Random.Range(meshCollider.bounds.min.x, meshCollider.bounds.max.x), Random.Range(meshCollider.bounds.min.y, meshCollider.bounds.max.y), Random.Range(meshCollider.bounds.min.z, meshCollider.bounds.max.z));
+            Vector3 explosionPos = new Vector3(Random.Range(meshCollider.bounds.min.x, meshCollider.bounds.max.x),
+                Random.Range(meshCollider.bounds.min.y, meshCollider.bounds.max.y),
+                Random.Range(meshCollider.bounds.min.z, meshCollider.bounds.max.z));
             Instantiate(healthSO.explosionPrefab, explosionPos, Quaternion.identity);
-            
+
             yield return new WaitForSeconds(healthSO.explosionFrequency);
-        }
+        } 
+        while ((Time.time - startTime) < healthSO.explosionDuration);
         
         //call reactor death at end of routine
         
