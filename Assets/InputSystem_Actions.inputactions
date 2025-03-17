@@ -166,6 +166,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Open Turret Placement Mode",
+                    "type": "Button",
+                    "id": "b06ca91f-c1c0-4093-9752-7330f270f364",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -551,6 +560,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Hover - Mouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76a0f03f-e9a6-4691-8ca1-a06905edfd2b",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Open Turret Placement Mode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f55ab689-4fca-47c5-ab7a-4f3eb227d8c0",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Open Turret Placement Mode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

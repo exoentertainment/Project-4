@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed = 10f;
     [SerializeField] float strafeSpeed = 10f;
     [SerializeField] float verticalSpeed = 10f;
+    [SerializeField] private float coastSpeed;
     [SerializeField] private float forwardSpeed = 10;
     [SerializeField] float backwardSpeed = 10;
     [SerializeField] float boostSpeed = 10;
@@ -217,6 +218,9 @@ public class PlayerMovement : MonoBehaviour
             transform.position += transform.rotation * (transform.forward * forwardSpeed * Time.deltaTime);
         else if(isMovingBackward)
             transform.position += transform.rotation * (Vector3.back * backwardSpeed * Time.deltaTime);
+        else
+            transform.position += transform.rotation * (transform.forward * coastSpeed * Time.deltaTime);
+            
     }
 
     public void MoveForward(InputAction.CallbackContext context)

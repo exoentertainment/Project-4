@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerInput playerInput;
     
-    [FormerlySerializedAs("phaseOneUI")] [SerializeField] private GameObject[] phaseOneObjects;
-    [FormerlySerializedAs("phaseTwoUI")] [SerializeField] private GameObject[] phaseTwoObjects;
+    //[FormerlySerializedAs("phaseOneUI")] [SerializeField] private GameObject[] phaseOneObjects;
+    //[FormerlySerializedAs("phaseTwoUI")] [SerializeField] private GameObject[] phaseTwoObjects;
     
     [FormerlySerializedAs("initPhaseTwo")] [SerializeField] UnityEvent eventInitPhaseTwo;
+    [SerializeField] private UnityEvent eventInitPhaseOne;
 
     #endregion
     
@@ -31,10 +32,25 @@ public class GameManager : MonoBehaviour
     //Invokes any event associated with the beginning of Phase 2. Calls all internal functions related to the beginning of Phase 2
     public void PhaseTwoSetup()
     {
+        if(Time.timeScale == 0)
+            Time.timeScale = 1;
+        
+        currentGamePhase = GamePhase.PhaseTwo;
         eventInitPhaseTwo?.Invoke();
         
-        //ActivatePhaseTwoUI();
         EnableEnemySpawners();
+    }
+    
+    public void ActivateTurretPlacementMode(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+            if (currentGamePhase == GamePhase.PhaseTwo)
+            {
+                Time.timeScale = 0;
+
+                currentGamePhase = GamePhase.PhaseOne;
+                eventInitPhaseOne?.Invoke();
+            }
     }
     
     public GamePhase GetCurrentPhase()
@@ -43,15 +59,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region --Phase 2 Setup--
-    
-    //Enable all UI elements associated with player flying their ship
-    void ActivatePhaseTwoUI()
-    {
-        foreach (GameObject element in phaseTwoObjects)
-        {
-            element.SetActive(true);
-        }
-    }
     
     //Enable the enemy spawners
     private void EnableEnemySpawners()

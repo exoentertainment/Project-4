@@ -5,9 +5,14 @@ public class GunAimReticule : MonoBehaviour
 {
     Transform aimReticulePos;
 
-    private void Start()
+    private void Awake()
     {
         aimReticulePos = GameObject.FindGameObjectWithTag("Aim Reticule").GetComponent<Transform>();
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void LateUpdate()

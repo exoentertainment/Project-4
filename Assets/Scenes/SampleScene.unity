@@ -1668,7 +1668,7 @@ PrefabInstance:
     - target: {fileID: 1361539211247568243, guid: 79ab40496a0b655798224b34700a9bea,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -85.09
+      value: -102.61
       objectReference: {fileID: 0}
     - target: {fileID: 1361539211247568243, guid: 79ab40496a0b655798224b34700a9bea,
         type: 3}
@@ -1793,12 +1793,45 @@ MonoBehaviour:
   rotationSpeed: 1
   strafeSpeed: 1
   verticalSpeed: 1
+  coastSpeed: 1
   forwardSpeed: 1
   backwardSpeed: 1
   boostSpeed: 2.5
   boostRate: 5
   boostDuration: 2
   rotationLimit: 10
+--- !u!1 &420024955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 420024956}
+  m_Layer: 0
+  m_Name: 'Planet Camera '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &420024956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420024955}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2019495470}
+  m_Father: {fileID: 694278951}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &459215132
 GameObject:
   m_ObjectHideFlags: 0
@@ -2124,18 +2157,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 413995406}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: RotateInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
@@ -2219,35 +2240,11 @@ MonoBehaviour:
     m_ActionId: 9705d1fd-b82c-4975-a958-4eb0f536baa5
     m_ActionName: 'Player/Strafe Right[/Keyboard/e]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 413995406}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: RotatePlayerLeft
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 286bbcff-38b4-4ea8-8d2a-8df9c1a205bb
     m_ActionName: 'Player/Rotate Left[/Keyboard/a]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 413995406}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: RotatePlayerRight
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 65b1dc58-da8c-480c-b8a8-0e07be8001e2
     m_ActionName: 'Player/Rotate Right[/Keyboard/d]'
   - m_PersistentCalls:
@@ -2410,6 +2407,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 76e437f7-da99-41bf-9115-bd0eec5ae051
     m_ActionName: 'Player/Hover - Mouse[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 788663053}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ActivateTurretPlacementMode
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b06ca91f-c1c0-4093-9752-7330f270f364
+    m_ActionName: 'Player/Open Turret Placement Mode[/Keyboard/tab]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
@@ -2722,9 +2735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3503bfc13eb6a54a7b7af70169bbcc80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phaseOneCameras:
-  - {fileID: 2019495468}
-  - {fileID: 2036290319}
+  phaseOneCamera: {fileID: 420024955}
   playerCamera: {fileID: 903737139}
   planet: {fileID: 1686987057}
   planetRotateSpeed: 25
@@ -2741,8 +2752,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2019495470}
   - {fileID: 903737140}
+  - {fileID: 420024956}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &710369449 stripped
@@ -2765,6 +2776,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunSO: {fileID: 11400000, guid: c0eb4150bc2ed30ef920e5474277995b, type: 2}
   convergencePoint: {fileID: 1733431887}
+--- !u!1 &716762339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 716762340}
+  m_Layer: 0
+  m_Name: Platforms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &716762340
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716762339}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2095843998}
+  m_Father: {fileID: 2059694783}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &738339246
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,7 +3416,7 @@ PrefabInstance:
     - target: {fileID: 6273887433251789901, guid: b0d5d0e4c7d3adce198ccd34a0aba280,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6563011559224519252, guid: b0d5d0e4c7d3adce198ccd34a0aba280,
         type: 3}
@@ -3419,14 +3462,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 577036996}
-  phaseOneObjects:
-  - {fileID: 1485309056}
-  - {fileID: 978241276}
-  phaseTwoObjects: []
   eventInitPhaseTwo:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2095844000}
+      - m_Target: {fileID: 716762339}
         m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -3476,7 +3515,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 577036997}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: SwitchInputProfile
+        m_MethodName: SwitchInputProfilePhaseTwo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3534,7 +3573,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+  eventInitPhaseOne:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 716762339}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -3545,6 +3587,102 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 694278950}
+        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+        m_MethodName: InitPhaseOneCameras
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1035036773}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1485309056}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 577036997}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: SwitchInputProfilePhaseTwo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1656024267}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 978241276}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 577036997}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: ShowMouse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 413995404}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!4 &788663054
 Transform:
@@ -4002,7 +4140,7 @@ Transform:
   m_GameObject: {fileID: 903737139}
   serializedVersion: 2
   m_LocalRotation: {x: 0.051104058, y: 0, z: 0, w: 0.99869335}
-  m_LocalPosition: {x: 9.67, y: 0.36, z: -86.24}
+  m_LocalPosition: {x: 9.67, y: 0.36, z: -103.76}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6373,6 +6511,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4930302944991180268, guid: 4249e009d46761d49a715b787ef80a0b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -7857,7 +8000,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 694278951}
+  m_Father: {fileID: 420024956}
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1 &2023798834
 GameObject:
@@ -8315,7 +8458,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4230641676980230, guid: e70e44726e9455c42bc282828e9815af,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2095843998}
+      addedObject: {fileID: 716762340}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e70e44726e9455c42bc282828e9815af, type: 3}
 --- !u!4 &2059694783 stripped
@@ -8421,12 +8564,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095843997}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -22.004, z: -14.43}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -22.004005, z: -14.43}
   m_LocalScale: {x: 2, y: 2, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2059694783}
+  m_Father: {fileID: 716762340}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &2095843999
 SphereCollider:

@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
 {
     #region --Serialized Fields--
 
-    [FormerlySerializedAs("planetCamera")] [SerializeField] GameObject[] phaseOneCameras;
+    [FormerlySerializedAs("phaseOneCameras")] [FormerlySerializedAs("planetCamera")] [SerializeField] GameObject phaseOneCamera;
     [SerializeField] GameObject playerCamera;
     [SerializeField] private Transform planet;
 
@@ -40,19 +40,25 @@ public class CameraManager : MonoBehaviour
     //Disable all cameras associated with Phase 1 and enable the player ship camera
     public void InitPhaseTwoCameras()
     {
-        foreach (GameObject phaseOneCamera in phaseOneCameras)
-            phaseOneCamera.SetActive(false);
+        phaseOneCamera.SetActive(false);
         
         playerCamera.SetActive(true);
+    }
+
+    public void InitPhaseOneCameras()
+    {
+        phaseOneCamera.SetActive(true);
+        
+        playerCamera.SetActive(false);
     }
     
     void RotatePlanet()
     {
         if (isRotating)
         {
-            float newAngle = planet.eulerAngles.y + (planetRotateSpeed * Time.deltaTime * rotateDirection);
+            float newAngle = phaseOneCamera.transform.eulerAngles.y + (planetRotateSpeed * Time.deltaTime * rotateDirection);
         
-            planet.rotation = Quaternion.Euler(planet.rotation.eulerAngles.x, newAngle, planet.rotation.eulerAngles.z);
+            phaseOneCamera.transform.rotation = Quaternion.Euler(phaseOneCamera.transform.rotation.eulerAngles.x, newAngle, phaseOneCamera.transform.rotation.eulerAngles.z);
         }
     }
 

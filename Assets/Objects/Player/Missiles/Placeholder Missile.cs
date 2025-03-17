@@ -105,6 +105,7 @@ public class PlaceholderMissile : MonoBehaviour
         other.gameObject.TryGetComponent<IDamageable>(out IDamageable hit);
         if (hit != null)
             hit.TakeDamage(missileSO.damage);
-        Destroy(gameObject);
+        
+        gameObject.SetActive(false);
     }
 }

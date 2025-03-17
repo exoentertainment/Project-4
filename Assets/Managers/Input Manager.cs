@@ -38,11 +38,16 @@ public class InputManager : MonoBehaviour
     }
     
     //Switch player action map to Player
-    public void SwitchInputProfile()
+    public void SwitchInputProfilePhaseTwo()
     {
         playerInput.SwitchCurrentActionMap("Player");
     }
 
+    public void SwitchInputProfilePhaseOne()
+    {
+        playerInput.SwitchCurrentActionMap("UI");
+    }
+    
     public void HideMouse()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -57,6 +62,8 @@ public class InputManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+        else if (playerInput.currentActionMap.name == "Gamepad")
+            virtualMouse.SetActive(true);
     }
     
     public string GetCurrentControlScheme()
