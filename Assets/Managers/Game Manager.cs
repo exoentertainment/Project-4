@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     //[FormerlySerializedAs("phaseTwoUI")] [SerializeField] private GameObject[] phaseTwoObjects;
     
     [FormerlySerializedAs("initPhaseTwo")] [SerializeField] UnityEvent eventInitPhaseTwo;
-    [SerializeField] private UnityEvent eventInitPhaseOne;
+    [FormerlySerializedAs("eventInitPhaseOne")] [SerializeField] private UnityEvent turretPlacementMode;
 
     #endregion
     
@@ -43,14 +43,15 @@ public class GameManager : MonoBehaviour
     
     public void ActivateTurretPlacementMode(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
+        {
             if (currentGamePhase == GamePhase.PhaseTwo)
             {
-                Time.timeScale = 0;
-
                 currentGamePhase = GamePhase.PhaseOne;
-                eventInitPhaseOne?.Invoke();
+                turretPlacementMode?.Invoke();
+                Time.timeScale = 0;
             }
+        }
     }
     
     public GamePhase GetCurrentPhase()

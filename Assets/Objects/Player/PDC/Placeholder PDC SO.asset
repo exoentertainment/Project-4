@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Placeholder PDC SO
   m_EditorClassIdentifier: 
   RoF: 0.1
-  range: 15
+  range: 5
   fireOffset: 0
   trackingErrorMin: -0.5
   trackingErrorMax: 0.503

@@ -21,6 +21,6 @@ public class WeaponPlatformSpot : MonoBehaviour
             Destroy(weapon);
         
         weapon = Instantiate(obj, weaponBuildPos.position, Quaternion.identity);
-        weapon.transform.parent = transform;
+        //weapon.transform.parent = transform;
     }
 }

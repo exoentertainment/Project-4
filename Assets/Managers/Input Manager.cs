@@ -57,12 +57,12 @@ public class InputManager : MonoBehaviour
 
     public void ShowMouse()
     {
-        if (playerInput.currentActionMap.name == "Keyboard&Mouse")
+        if (playerInput.currentControlScheme == "Keyboard&Mouse")
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-        else if (playerInput.currentActionMap.name == "Gamepad")
+        else if (playerInput.currentControlScheme == "Gamepad")
             virtualMouse.SetActive(true);
     }
     

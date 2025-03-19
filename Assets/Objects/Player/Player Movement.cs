@@ -71,42 +71,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        //RotateShip();
         StrafeShip();
         MoveVertical();
         MoveHorizontal();
         AimShip();
     }
-
-    #region --Rotation--
-
-    //If player is holding down the rotate keys, rotate ship according to the current direction
-    void RotateShip()
-    {
-        if (isRotating)
-        {
-            float newZ = transform.eulerAngles.z +(rotationAngle * rotationSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, newZ);
-        }
-    }
     
-    //Called by input system, rotates player counter-clockwise
-    public void RotateInput(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            isRotating = true;
-            
-            rotationAngle = -context.ReadValue<Vector2>().x;
-        }
-        else
-        {
-            isRotating = false;
-        }
-    }
-    
-    #endregion
-
     #region --Strafing--
 
     //If player is holding down the strafe keys, strafe ship according to the current rotation
@@ -114,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isStrafing)
         {
-            transform.position += transform.rotation * (Vector3.left * strafeDirection * strafeSpeed * Time.deltaTime);
+            transform.position += -transform.right * strafeDirection * (strafeSpeed * Time.deltaTime);
         }
     }
     
@@ -215,12 +185,11 @@ public class PlayerMovement : MonoBehaviour
     void MoveHorizontal()
     {
         if(isMovingForward)
-            transform.position += transform.rotation * (transform.forward * forwardSpeed * Time.deltaTime);
+            transform.position += transform.forward * (forwardSpeed * Time.deltaTime);
         else if(isMovingBackward)
-            transform.position += transform.rotation * (Vector3.back * backwardSpeed * Time.deltaTime);
+            transform.position += -transform.forward * (backwardSpeed * Time.deltaTime);
         else
-            transform.position += transform.rotation * (transform.forward * coastSpeed * Time.deltaTime);
-            
+            transform.position += transform.forward * (coastSpeed * Time.deltaTime);
     }
 
     public void MoveForward(InputAction.CallbackContext context)
@@ -292,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
         while (boostTime < boostDuration)
         {
             boostTime += Time.deltaTime;
-            transform.position += transform.rotation * (Vector3.forward * boostSpeed * Time.deltaTime);
+            transform.position += transform.rotation * Vector3.forward * (boostSpeed * Time.deltaTime);
             
             yield return new WaitForEndOfFrame();
         }

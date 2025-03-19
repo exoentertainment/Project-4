@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5025448185029840195}
   - component: {fileID: 3570543464800874262}
   - component: {fileID: -8436357894647935533}
+  - component: {fileID: 5778281924626978606}
   m_Layer: 7
   m_Name: Enemy 1
   m_TagString: Untagged
@@ -154,7 +155,32 @@ MonoBehaviour:
   healthSO: {fileID: 11400000, guid: a1e662c541d665c8bb9b50c8934126e1, type: 2}
   onDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5778281924626978606}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5778281924626978606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6273887433251789901}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347748c3456d77d3ebcdbbdd5d9a4a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 25
 --- !u!1 &7411493172457989263
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1602658515463940, guid: 5379e2443b0c7cc419d1b7f6c5c226e0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4020487323894124, guid: 5379e2443b0c7cc419d1b7f6c5c226e0, type: 3}
       propertyPath: m_LocalScale.x

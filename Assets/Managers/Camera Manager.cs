@@ -47,16 +47,15 @@ public class CameraManager : MonoBehaviour
 
     public void InitPhaseOneCameras()
     {
-        phaseOneCamera.SetActive(true);
-        
         playerCamera.SetActive(false);
+        phaseOneCamera.SetActive(true);
     }
     
     void RotatePlanet()
     {
         if (isRotating)
         {
-            float newAngle = phaseOneCamera.transform.eulerAngles.y + (planetRotateSpeed * Time.deltaTime * rotateDirection);
+            float newAngle = phaseOneCamera.transform.eulerAngles.y + (planetRotateSpeed * Time.unscaledDeltaTime * rotateDirection);
         
             phaseOneCamera.transform.rotation = Quaternion.Euler(phaseOneCamera.transform.rotation.eulerAngles.x, newAngle, phaseOneCamera.transform.rotation.eulerAngles.z);
         }

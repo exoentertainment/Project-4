@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   speed: 10
-  duration: 2
-  range: 250
+  duration: 4
+  range: 25
   targetLayers:
     serializedVersion: 2
     m_Bits: 128
