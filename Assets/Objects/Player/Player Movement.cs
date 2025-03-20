@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastBoostTime;
 
     Vector3 currentRotation;
-    private float newZ;
+    
     private void Start()
     {
         currentControlScheme = InputManager.Instance.GetCurrentControlScheme();

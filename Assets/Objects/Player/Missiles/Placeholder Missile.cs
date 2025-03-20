@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlaceholderMissile : MonoBehaviour
+public class PlaceholderMissile : MonoBehaviour, IDamageable
 {
     [Tooltip("The maximum amount of swarm.")]
     [SerializeField] protected float maxSwarmAmount = 20;
@@ -107,5 +107,10 @@ public class PlaceholderMissile : MonoBehaviour
             hit.TakeDamage(missileSO.damage);
         
         gameObject.SetActive(false);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Destroy(gameObject);
     }
 }

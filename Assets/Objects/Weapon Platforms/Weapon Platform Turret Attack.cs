@@ -64,18 +64,19 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     //Check if the passed target is within line-of-sight. If it is, then return true
     bool IsLoSClear(GameObject obj)
     {
-        Ray ray = new Ray(transform.position, obj.transform.position - transform.position);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, platformSO.range))
+        // if (Physics.Raycast(ray, out RaycastHit hit, platformSO.range))
+        if (Physics.Raycast(spawnPoints[0].transform.position, obj.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, platformSO.range))
         {
             if (hit.collider != null)
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
                     return true;
+                }
             }
         }
         
-        return true;
+        return false;
     }
     
     //Check if the passed target is within line-of-sight. If it isn't then set target to null so a new target can be found
@@ -83,9 +84,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if (target != null)
         {
-            Ray ray = new Ray(transform.position, target.transform.position - transform.position);
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (Physics.Raycast(spawnPoints[0].transform.position, target.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, platformSO.range))
             {
                 if (hit.collider != null)
                 {
@@ -132,5 +131,11 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     public void TurnActivityOff()
     {
         this.enabled = false;
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, platformSO.range);
     }
 }

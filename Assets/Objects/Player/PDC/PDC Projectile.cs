@@ -22,7 +22,7 @@ public class PDCProjectile : MonoBehaviour
 
     void Move()
     {
-        transform.position += transform.rotation * Vector3.forward * projectileSO.speed * Time.deltaTime;
+        transform.position += transform.forward * (projectileSO.speed * Time.deltaTime);
     }
 
     IEnumerator DeactivateRoutine()
@@ -37,6 +37,8 @@ public class PDCProjectile : MonoBehaviour
     { 
         if(projectileSO.impactPrefab != null)
             Instantiate(projectileSO.impactPrefab, other.contacts[0].point, Quaternion.identity);
+        
+        other.gameObject.GetComponent<IDamageable>()?.TakeDamage(projectileSO.damage);
         
         gameObject.SetActive(false);
     }
