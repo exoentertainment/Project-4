@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Placeholder PDC SO
   m_EditorClassIdentifier: 
   RoF: 0.1
-  range: 5
+  range: 10
   fireOffset: 0
-  trackingErrorMin: -0.5
-  trackingErrorMax: 0.503
+  trackingErrorMin: -0.343
+  trackingErrorMax: 0.349
   targetMask:
     serializedVersion: 2
     m_Bits: 128

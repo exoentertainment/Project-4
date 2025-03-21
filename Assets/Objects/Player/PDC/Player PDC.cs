@@ -102,7 +102,8 @@ public class PlayerPDC : MonoBehaviour
 
             Quaternion targetRotation = Quaternion.LookRotation(targetVector);
 
-            pdcBase.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+            //pdcBase.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+            pdcBase.transform.LookAt(target.transform.position);
             
             pdcGunMount.transform.LookAt(target.transform.position);
         }
@@ -139,5 +140,6 @@ public class PlayerPDC : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, pdcSO.range);
+        
     }
 }
