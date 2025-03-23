@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     #region --Serialized Fields--
 
     [SerializeField] private EnemySO enemySO;
+    [SerializeField] private Transform raycastOrigin;
 
     [Header("Behavior Settings")] 
     [SerializeField] Behaviors behavior;
@@ -35,20 +36,20 @@ public class EnemyMovement : MonoBehaviour
     
     private void Start()
     {
-        if (behavior == Behaviors.Patrol)
-        {
-            currentBehavior = Behaviors.Patrol;
-            waypoints = new Vector3[numWaypoints];
-            SetWaypoints();
-            transform.LookAt(waypoints[currentWaypoint]);
-        }
+        // if (behavior == Behaviors.Patrol)
+        // {
+        //     currentBehavior = Behaviors.Patrol;
+        //     waypoints = new Vector3[numWaypoints];
+        //     SetWaypoints();
+        //     transform.LookAt(waypoints[currentWaypoint]);
+        // }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //MoveForward();
-        BehaviorTree();
+        MoveForward();
+        //BehaviorTree();
     }
 
     void BehaviorTree()
@@ -87,7 +88,25 @@ public class EnemyMovement : MonoBehaviour
     
     void MoveForward()
     {
-        transform.position += transform.forward * enemySO.moveSpeed * Time.deltaTime;
+        if(!CheckForObstacle())
+            transform.position += transform.forward * enemySO.moveSpeed * Time.deltaTime;
+    }
+
+    bool CheckForObstacle()
+    {
+        //shoot ray
+        //if (Physics.Raycast(transform.position, waypoints[currentWaypoint] - transform.position, out RaycastHit hit, 5))
+        if (Physics.Raycast(raycastOrigin.position, transform.forward, out RaycastHit hit, 5))
+        {
+            if (hit.collider != null)
+            {
+                Debug.Log("Obstacle: " + hit.collider.name);
+                
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     #region --Patrol Logic--
@@ -102,7 +121,7 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                Vector3 newWaypoint = Random.onUnitSphere * 200;
+                Vector3 newWaypoint = (Random.insideUnitSphere * 200) - transform.position;
                 float distToLastWaypoint = Vector3.Distance(waypoints[i-1], newWaypoint);
                 
                 if(distToLastWaypoint > minDistanceBetweenWaypoints)
