@@ -29,10 +29,15 @@ public class EnemyMovement : MonoBehaviour
         StopAtDistance
     }
     Behaviors currentBehavior;
-    
+
+    #region --Patrol Variables--
+
     Vector3[] waypoints;
     int currentWaypoint = 1;
-    
+    private bool isDetoured;
+    private Vector3 detourPos;
+
+    #endregion
     
     private void Start()
     {
@@ -58,7 +63,10 @@ public class EnemyMovement : MonoBehaviour
         {
             case Behaviors.Patrol:
             {
-                MoveToWaypoint();
+                if(!isDetoured)
+                    MoveToWaypoint();
+                else
+                    MoveAroundDetour();
                 
                 break;
             }
@@ -96,11 +104,13 @@ public class EnemyMovement : MonoBehaviour
     {
         //shoot ray
         //if (Physics.Raycast(transform.position, waypoints[currentWaypoint] - transform.position, out RaycastHit hit, 5))
-        if (Physics.Raycast(raycastOrigin.position, transform.forward, out RaycastHit hit, 5))
+        
+        if (Physics.Raycast(raycastOrigin.position, transform.forward, out RaycastHit hit, 15))
         {
             if (hit.collider != null)
             {
-                Debug.Log("Obstacle: " + hit.collider.name);
+                isDetoured = true;
+                SetDetourPosition(hit);
                 
                 return true;
             }
@@ -109,6 +119,42 @@ public class EnemyMovement : MonoBehaviour
         return false;
     }
 
+    void SetDetourPosition(RaycastHit obstacle)
+    {
+        bool foundPosition = false;
+
+        // while (!foundPosition)
+        // {
+            Vector3 newPos = (Random.onUnitSphere * (obstacle.collider.bounds.extents.z * 2)) + obstacle.transform.position;
+            float distToPos = Vector3.Distance(transform.position, newPos);
+            Debug.DrawLine(raycastOrigin.position, newPos, Color.red);
+            
+            if (Physics.Raycast(raycastOrigin.position, newPos - transform.position, out RaycastHit hit, distToPos))
+            {
+                if (hit.collider == null)
+                {
+                    Debug.Log("Found new position");
+                    detourPos = newPos;
+                    foundPosition = true;
+                }
+                else
+                {
+                    Debug.Log(hit.collider.name);
+                }
+            }
+        //} 
+    }
+
+    void MoveToDetourPosition()
+    {
+        
+    }
+    
+    void MoveAroundDetour()
+    {
+        
+    }
+    
     #region --Patrol Logic--
 
     void SetWaypoints()
@@ -121,7 +167,7 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                Vector3 newWaypoint = (Random.insideUnitSphere * 200) - transform.position;
+                Vector3 newWaypoint = (Random.insideUnitSphere * 200) + transform.position;
                 float distToLastWaypoint = Vector3.Distance(waypoints[i-1], newWaypoint);
                 
                 if(distToLastWaypoint > minDistanceBetweenWaypoints)
