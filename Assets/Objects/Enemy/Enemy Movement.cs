@@ -65,8 +65,8 @@ public class EnemyMovement : MonoBehaviour
             {
                 if(!isDetoured)
                     MoveToWaypoint();
-                else
-                    MoveAroundDetour();
+                // else
+                //     MoveAroundDetour();
                 
                 break;
             }
@@ -97,62 +97,36 @@ public class EnemyMovement : MonoBehaviour
     void MoveForward()
     {
         if(!CheckForObstacle())
-            transform.position += transform.forward * enemySO.moveSpeed * Time.deltaTime;
+            transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
     }
 
     bool CheckForObstacle()
     {
-        //shoot ray
-        //if (Physics.Raycast(transform.position, waypoints[currentWaypoint] - transform.position, out RaycastHit hit, 5))
-        
-        if (Physics.Raycast(raycastOrigin.position, transform.forward, out RaycastHit hit, 15))
-        {
-            if (hit.collider != null)
-            {
-                isDetoured = true;
-                SetDetourPosition(hit);
+         if (Physics.Raycast(raycastOrigin.position, transform.forward, out RaycastHit hit, 25))
+         {
+             if (hit.collider != null)
+             {
+                 isDetoured = true;
+                 SetDetourPosition(hit);
                 
-                return true;
-            }
-        }
+                 return true;
+             }
+         }
         
-        return false;
+         return false;
     }
 
     void SetDetourPosition(RaycastHit obstacle)
     {
-        bool foundPosition = false;
-
-        // while (!foundPosition)
-        // {
-            Vector3 newPos = (Random.onUnitSphere * (obstacle.collider.bounds.extents.z * 2)) + obstacle.transform.position;
-            float distToPos = Vector3.Distance(transform.position, newPos);
-            Debug.DrawLine(raycastOrigin.position, newPos, Color.red);
-            
-            if (Physics.Raycast(raycastOrigin.position, newPos - transform.position, out RaycastHit hit, distToPos))
-            {
-                if (hit.collider == null)
-                {
-                    Debug.Log("Found new position");
-                    detourPos = newPos;
-                    foundPosition = true;
-                }
-                else
-                {
-                    Debug.Log(hit.collider.name);
-                }
-            }
-        //} 
-    }
-
-    void MoveToDetourPosition()
-    {
+        Vector3 newPos = (Random.onUnitSphere * (obstacle.collider.bounds.extents.z * 4)) + obstacle.transform.position;
+        float distToPos = Vector3.Distance(transform.position, newPos);
+        Vector3 normalizedDirection = (newPos - transform.position).normalized;
         
-    }
-    
-    void MoveAroundDetour()
-    {
-        
+        if (!Physics.Raycast(raycastOrigin.position, normalizedDirection, out RaycastHit hit, distToPos))
+        {
+            detourPos = newPos;
+            transform.LookAt(detourPos);
+        }
     }
     
     #region --Patrol Logic--
@@ -172,22 +146,39 @@ public class EnemyMovement : MonoBehaviour
                 
                 if(distToLastWaypoint > minDistanceBetweenWaypoints)
                     waypoints[i] = Random.onUnitSphere * 200;
-                
-                Debug.Log(waypoints[i]);
             }
-            
         }
     }
 
     void MoveToWaypoint()
     {
-        transform.position += transform.forward * enemySO.moveSpeed * Time.deltaTime;
-        
+        if (!CheckForObstacle() && !isDetoured)
+        {
+            transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
+        }
+        else if (!CheckForObstacle() && isDetoured)
+        {
+            transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
+            IsWaypointPathClear();
+        }
+
         float distToWaypoint = Vector3.Distance(transform.position, waypoints[currentWaypoint]);
         if(distToWaypoint < waypointContactDistance)
             SelectNextWaypoint();
     }
 
+    void IsWaypointPathClear()
+    {
+        Vector3 normalizedDirection = (waypoints[currentWaypoint] - transform.position).normalized;
+        float distToWaypoint = Vector3.Distance(transform.position, waypoints[currentWaypoint]);
+        
+        if (!Physics.Raycast(raycastOrigin.position, normalizedDirection, out RaycastHit hit, distToWaypoint))
+        {
+            isDetoured = false;
+            transform.LookAt(waypoints[currentWaypoint]);
+        }
+    }
+    
     void SelectNextWaypoint()
     {
         currentWaypoint++;
