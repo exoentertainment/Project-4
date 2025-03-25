@@ -10,6 +10,8 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] private EnemySO enemySO;
     [SerializeField] private Transform raycastOrigin;
+    [SerializeField] private int obstacleDetectionRange;
+    [SerializeField] private GameObject waypointMarker;
 
     [Header("Behavior Settings")] 
     [SerializeField] Behaviors behavior;
@@ -36,25 +38,28 @@ public class EnemyMovement : MonoBehaviour
     int currentWaypoint = 1;
     private bool isDetoured;
     private Vector3 detourPos;
+    
+    [SerializeField] private int minWaypointDistance;
+    [SerializeField] private int maxWaypointDistance;
 
     #endregion
     
     private void Start()
     {
-        // if (behavior == Behaviors.Patrol)
-        // {
-        //     currentBehavior = Behaviors.Patrol;
-        //     waypoints = new Vector3[numWaypoints];
-        //     SetWaypoints();
-        //     transform.LookAt(waypoints[currentWaypoint]);
-        // }
+        if (behavior == Behaviors.Patrol)
+        {
+            currentBehavior = Behaviors.Patrol;
+            waypoints = new Vector3[numWaypoints];
+            SetWaypoints();
+            transform.LookAt(waypoints[currentWaypoint]);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveForward();
-        //BehaviorTree();
+        //MoveForward();
+        BehaviorTree();
     }
 
     void BehaviorTree()
@@ -65,8 +70,6 @@ public class EnemyMovement : MonoBehaviour
             {
                 if(!isDetoured)
                     MoveToWaypoint();
-                // else
-                //     MoveAroundDetour();
                 
                 break;
             }
@@ -96,16 +99,17 @@ public class EnemyMovement : MonoBehaviour
     
     void MoveForward()
     {
-        if(!CheckForObstacle())
+        if(!CheckForObstacle(obstacleDetectionRange))
             transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
     }
 
-    bool CheckForObstacle()
+    bool CheckForObstacle(float detectionRange)
     {
-         if (Physics.Raycast(raycastOrigin.position, transform.forward, out RaycastHit hit, 25))
+         if (Physics.Raycast(raycastOrigin.position, transform.forward, out RaycastHit hit, detectionRange))
          {
              if (hit.collider != null)
              {
+                 Debug.Log("Obstacle");
                  isDetoured = true;
                  SetDetourPosition(hit);
                 
@@ -141,22 +145,28 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                Vector3 newWaypoint = (Random.insideUnitSphere * 200) + transform.position;
+                Vector3 newWaypoint = (Random.insideUnitSphere * Random.Range(minWaypointDistance, maxWaypointDistance)) + transform.position;
                 float distToLastWaypoint = Vector3.Distance(waypoints[i-1], newWaypoint);
-                
-                if(distToLastWaypoint > minDistanceBetweenWaypoints)
-                    waypoints[i] = Random.onUnitSphere * 200;
+
+                if (distToLastWaypoint > minDistanceBetweenWaypoints)
+                {
+                    Vector3 normalizedDirection = (newWaypoint - transform.position).normalized;
+                    //if (!Physics.Raycast(raycastOrigin.position, normalizedDirection, out RaycastHit hit, distToPos))
+                    waypoints[i] = newWaypoint;
+                }
             }
+            
+            Instantiate(waypointMarker, waypoints[i], Quaternion.identity);
         }
     }
 
     void MoveToWaypoint()
     {
-        if (!CheckForObstacle() && !isDetoured)
+        if (!CheckForObstacle(obstacleDetectionRange) && !isDetoured)
         {
             transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
         }
-        else if (!CheckForObstacle() && isDetoured)
+        else if (!CheckForObstacle(obstacleDetectionRange) && isDetoured)
         {
             transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
             IsWaypointPathClear();
