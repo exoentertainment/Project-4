@@ -1,5 +1,8 @@
 using System;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
 {
@@ -11,10 +14,15 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     [SerializeField] private Transform platformTurret;
     [SerializeField] Transform[] spawnPoints;
 
+    [SerializeField] private float trackingSpeed;
+
     #endregion
 
     private GameObject target;
     private float lastFireTime;
+
+    private float xCurrentRotation;
+    float yCurrentRotation;
 
     private void Start()
     {
@@ -102,12 +110,45 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
         {
             Vector3 targetVector = target.transform.position - transform.position;
             targetVector.Normalize();
-
-            Quaternion targetRotation = Quaternion.LookRotation(targetVector);
-
-            platformBase.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
             
-            platformTurret.transform.LookAt(target.transform.position);
+            Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+            // platformBase.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
+
+            //float yAngle = Vector3.Angle(platformBase.position, target.transform.position);
+            
+            // if (targetRotation.eulerAngles.y < yCurrentRotation)
+            // {
+            //     yCurrentRotation -= Time.deltaTime * trackingSpeed;
+            // }
+            // else
+            // {
+            //     yCurrentRotation += Time.deltaTime * trackingSpeed;
+            // }
+            //
+            // platformBase.rotation = Quaternion.Euler(0, yCurrentRotation, 0);
+            platformBase.rotation = Quaternion.Slerp(platformBase.rotation, targetRotation, trackingSpeed * Time.deltaTime);
+            
+            
+            targetVector = target.transform.position - platformTurret.transform.position;
+            targetVector.Normalize();
+            
+            targetRotation = Quaternion.LookRotation(targetVector);
+
+            if (targetRotation.eulerAngles.y < 5f)
+            {
+                if (targetRotation.eulerAngles.x < xCurrentRotation)
+                {
+                    xCurrentRotation -= Time.deltaTime * trackingSpeed;
+                }
+                else
+                {
+                    xCurrentRotation += Time.deltaTime * trackingSpeed;
+                }
+            }
+            
+            platformTurret.rotation = Quaternion.Slerp(platformTurret.rotation, targetRotation, trackingSpeed * Time.deltaTime);
+            //platformTurret.rotation = Quaternion.Euler(xCurrentRotation, 0, 0);
+            //platformTurret.transform.LookAt(target.transform.position);
         }
     }
 
