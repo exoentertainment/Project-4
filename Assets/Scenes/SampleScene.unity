@@ -4972,9 +4972,20 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 5778281924626978606, guid: b0d5d0e4c7d3adce198ccd34a0aba280,
         type: 3}
+      propertyPath: behavior
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5778281924626978606, guid: b0d5d0e4c7d3adce198ccd34a0aba280,
+        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5778281924626978606, guid: b0d5d0e4c7d3adce198ccd34a0aba280,
+        type: 3}
+      propertyPath: detourMarker
+      value: 
+      objectReference: {fileID: 2765680218413202114, guid: 331e6a8c69e786ac79a817f5f0f2cad1,
+        type: 3}
     - target: {fileID: 5778281924626978606, guid: b0d5d0e4c7d3adce198ccd34a0aba280,
         type: 3}
       propertyPath: isPatrolling
@@ -5009,7 +5020,7 @@ PrefabInstance:
     - target: {fileID: 5778281924626978606, guid: b0d5d0e4c7d3adce198ccd34a0aba280,
         type: 3}
       propertyPath: obstacleDetectionRange
-      value: 25
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5778281924626978606, guid: b0d5d0e4c7d3adce198ccd34a0aba280,
         type: 3}

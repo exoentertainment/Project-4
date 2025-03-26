@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,19 +13,21 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private Transform raycastOrigin;
     [SerializeField] private int obstacleDetectionRange;
     [SerializeField] private GameObject waypointMarker;
+    [SerializeField] GameObject detourMarker;
 
     [Header("Behavior Settings")] 
     [SerializeField] Behaviors behavior;
     
     [Header("Patrol Behavior Settings")]
     [SerializeField] int numWaypoints;
-    [SerializeField] float minDistanceBetweenWaypoints;
+    //[SerializeField] float minDistanceBetweenWaypoints;
     [SerializeField] private float waypointContactDistance;
     
     #endregion
 
     enum Behaviors
     {
+        Nothing,
         Patrol,
         Chase,
         Flyby,
@@ -51,7 +54,7 @@ public class EnemyMovement : MonoBehaviour
             currentBehavior = Behaviors.Patrol;
             waypoints = new Vector3[numWaypoints];
             SetWaypoints();
-            transform.LookAt(waypoints[currentWaypoint]);
+            
         }
     }
 
@@ -68,8 +71,7 @@ public class EnemyMovement : MonoBehaviour
         {
             case Behaviors.Patrol:
             {
-                if(!isDetoured)
-                    MoveToWaypoint();
+                MoveToWaypoint();
                 
                 break;
             }
@@ -109,9 +111,8 @@ public class EnemyMovement : MonoBehaviour
          {
              if (hit.collider != null)
              {
-                 Debug.Log("Obstacle");
                  isDetoured = true;
-                 SetDetourPosition(hit);
+                 //SetDetourPosition(hit);
                 
                  return true;
              }
@@ -129,6 +130,7 @@ public class EnemyMovement : MonoBehaviour
         if (!Physics.Raycast(raycastOrigin.position, normalizedDirection, out RaycastHit hit, distToPos))
         {
             detourPos = newPos;
+            Instantiate(detourMarker, detourPos, Quaternion.identity);
             transform.LookAt(detourPos);
         }
     }
@@ -137,42 +139,98 @@ public class EnemyMovement : MonoBehaviour
 
     void SetWaypoints()
     {
+        StartCoroutine(SetNewWaypointRoutine());
+        
+        // for (int i = 0; i < numWaypoints; ++i)
+        // {
+        //     if (i == 0)
+        //     {
+        //         waypoints[i] = transform.position;
+        //     }
+        //     else
+        //     {
+        //         StartCoroutine(SetNewWaypointRoutine(i));
+        //         
+        //     //     Vector3 newWaypoint = (Random.insideUnitSphere * Random.Range(minWaypointDistance, maxWaypointDistance)) + transform.position;
+        //     //     float distToLastWaypoint = Vector3.Distance(waypoints[i-1], newWaypoint);
+        //     //
+        //     //     if (distToLastWaypoint > minDistanceBetweenWaypoints)
+        //     //     {
+        //     //         Vector3 normalizedDirection = (newWaypoint - transform.position).normalized;
+        //     //         //if (!Physics.Raycast(raycastOrigin.position, normalizedDirection, out RaycastHit hit, distToPos))
+        //     //         waypoints[i] = newWaypoint;
+        //     //     }
+        //     }
+        // }
+        
+        
+    }
+
+    IEnumerator SetNewWaypointRoutine()
+    {
+        bool waypointFound;
+
         for (int i = 0; i < numWaypoints; ++i)
         {
+            waypointFound = false;
+            
             if (i == 0)
             {
                 waypoints[i] = transform.position;
             }
             else
             {
-                Vector3 newWaypoint = (Random.insideUnitSphere * Random.Range(minWaypointDistance, maxWaypointDistance)) + transform.position;
-                float distToLastWaypoint = Vector3.Distance(waypoints[i-1], newWaypoint);
-
-                if (distToLastWaypoint > minDistanceBetweenWaypoints)
+                while (!waypointFound)
                 {
-                    Vector3 normalizedDirection = (newWaypoint - transform.position).normalized;
-                    //if (!Physics.Raycast(raycastOrigin.position, normalizedDirection, out RaycastHit hit, distToPos))
-                    waypoints[i] = newWaypoint;
+                    //Vector3 newWaypoint = (Random.insideUnitSphere * Random.Range(minWaypointDistance, maxWaypointDistance)) + transform.position;
+                    Vector3 newWaypoint = (Random.insideUnitSphere * Random.Range(minWaypointDistance, maxWaypointDistance));
+                    
+                    Vector3 normalizedDirection = (newWaypoint - waypoints[i - 1]).normalized;
+                    if (!Physics.Raycast(waypoints[i - 1], normalizedDirection, out RaycastHit hit, maxWaypointDistance))
+                    {
+                        waypointFound = true;
+                        waypoints[i] = newWaypoint;
+                        Instantiate(waypointMarker, waypoints[i], Quaternion.identity);
+                        Debug.Log("Waypoint selected: " + i);
+                    }
+            
+                    yield return new WaitForEndOfFrame();
                 }
             }
-            
-            Instantiate(waypointMarker, waypoints[i], Quaternion.identity);
         }
+        
+        // while (!waypointFound)
+        // {
+        //     Vector3 newWaypoint = (Random.insideUnitSphere * Random.Range(minWaypointDistance, maxWaypointDistance)) + transform.position;
+        //     float distToLastWaypoint = Vector3.Distance(waypoints[waypointIndex - 1], newWaypoint);
+        //     
+        //     if (distToLastWaypoint > minDistanceBetweenWaypoints)
+        //     {
+        //         Vector3 normalizedDirection = (newWaypoint - waypoints[waypointIndex - 1]).normalized;
+        //         if (!Physics.Raycast(waypoints[waypointIndex - 1], normalizedDirection, out RaycastHit hit, maxWaypointDistance))
+        //         {
+        //             waypointFound = true;
+        //             waypoints[waypointIndex] = newWaypoint;
+        //             Instantiate(waypointMarker, waypoints[waypointIndex], Quaternion.identity);
+        //             Debug.Log("Waypoint selected: " + waypointIndex);
+        //         }
+        //     }
+            
+            // yield return new WaitForEndOfFrame();
+        //}
+        
+        transform.LookAt(waypoints[1]);
     }
-
+    
     void MoveToWaypoint()
     {
-        if (!CheckForObstacle(obstacleDetectionRange) && !isDetoured)
+        if (!CheckForObstacle(obstacleDetectionRange))
         {
             transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
-        }
-        else if (!CheckForObstacle(obstacleDetectionRange) && isDetoured)
-        {
-            transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
-            IsWaypointPathClear();
         }
 
         float distToWaypoint = Vector3.Distance(transform.position, waypoints[currentWaypoint]);
+        Debug.Log(distToWaypoint);
         if(distToWaypoint < waypointContactDistance)
             SelectNextWaypoint();
     }
