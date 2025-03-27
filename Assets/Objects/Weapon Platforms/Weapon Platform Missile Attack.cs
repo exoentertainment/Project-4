@@ -28,8 +28,8 @@ public class WeaponPlatformMissileAttack : MonoBehaviour
     
     private void Update()
     {
-        if(target != null)
-            Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
+        // if(target != null)
+        //     Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
         
         SearchForTarget();
         RotateTowardsTarget();
@@ -79,6 +79,7 @@ public class WeaponPlatformMissileAttack : MonoBehaviour
         // if (Physics.Raycast(ray, out RaycastHit hit, platformSO.range))
         if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
         {
+            Debug.DrawRay(raycastOrigin.position, obj.transform.position - raycastOrigin.position, Color.red);
             if (hit.collider != null)
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
@@ -96,9 +97,9 @@ public class WeaponPlatformMissileAttack : MonoBehaviour
     {
         if (target != null)
         {
-            Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
-            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward, out RaycastHit hit, platformSO.projectileSO.range))
+            if (Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
             {
+                
                 if (hit.collider != null)
                 {
                     if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Enemy"))
@@ -151,7 +152,7 @@ public class WeaponPlatformMissileAttack : MonoBehaviour
                 // {
                 //     xCurrentRotation += Time.deltaTime * trackingSpeed;
                 // }
-                
+
                 platformTurret.rotation = Quaternion.Slerp(platformTurret.rotation, targetRotation, trackingSpeed * Time.deltaTime);
             }
             
@@ -165,8 +166,8 @@ public class WeaponPlatformMissileAttack : MonoBehaviour
     {
         if (target != null)
         {
-            if (Physics.Raycast(spawnPoints[0].transform.position,
-                    raycastOrigin.forward, out RaycastHit hit,
+            if (Physics.Raycast(raycastOrigin.position,
+                    target.transform.position - raycastOrigin.position, out RaycastHit hit,
                     platformSO.projectileSO.range))
             {
                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))

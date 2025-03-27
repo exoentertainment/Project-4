@@ -13,6 +13,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     [SerializeField] private Transform platformBase;
     [SerializeField] private Transform platformTurret;
     [SerializeField] Transform[] spawnPoints;
+    [SerializeField] Transform raycastOrigin;
 
     [SerializeField] private float trackingSpeed;
 
@@ -32,7 +33,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     private void Update()
     {
         if(target != null)
-            Debug.DrawRay(spawnPoints[0].position, spawnPoints[0].forward * platformSO.projectileSO.range, Color.red);
+            Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
             
             // Debug.DrawRay(spawnPoints[0].position, target.transform.position - spawnPoints[0].position, Color.red);
         
@@ -40,7 +41,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
         RotateTowardsTarget();
         Fire();
         
-        IsTargetStillInView();
+        //IsTargetStillInView();
     }
 
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
@@ -78,7 +79,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     bool IsLoSClear(GameObject obj)
     {
         // if (Physics.Raycast(ray, out RaycastHit hit, platformSO.range))
-        if (Physics.Raycast(spawnPoints[0].transform.position, obj.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, platformSO.projectileSO.range))
+        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
         {
             if (hit.collider != null)
             {
@@ -97,7 +98,9 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if (target != null)
         {
-            if (Physics.Raycast(spawnPoints[0].transform.position, target.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, platformSO.projectileSO.range))
+            
+            //if (Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
+            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, out RaycastHit hit, platformSO.projectileSO.range))
             {
                 if (hit.collider != null)
                 {
@@ -165,8 +168,9 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if (target != null)
         {
-            if (Physics.Raycast(spawnPoints[0].transform.position,
-                    spawnPoints[0].forward * platformSO.projectileSO.range, out RaycastHit hit,
+            // if (Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position, out RaycastHit hit,
+            //         platformSO.projectileSO.range))
+            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, out RaycastHit hit,
                     platformSO.projectileSO.range))
             {
                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
