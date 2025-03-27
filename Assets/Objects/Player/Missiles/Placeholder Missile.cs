@@ -62,12 +62,12 @@ public class PlaceholderMissile : MonoBehaviour, IDamageable
             float wiggleZ = swarmAmount * (Mathf.PerlinNoise((Time.time + randomTimeOffset) * swarmFrequency, 0.8f) - 0.5f) * maxSwarmAmount;
 
             transform.rotation = Quaternion.Euler(wiggleX, wiggleY, wiggleZ) * transform.rotation;
-            transform.position += transform.rotation * Vector3.forward * missileSO.speed * Time.deltaTime;
+            transform.position += transform.rotation * Vector3.forward * (missileSO.speed * Time.deltaTime);
         }
         else
         {
             FindClosestTarget();
-            transform.position += transform.rotation * Vector3.forward * missileSO.speed * Time.deltaTime;
+            transform.position += transform.rotation * Vector3.forward * (missileSO.speed * Time.deltaTime);
         }
     }
 
@@ -101,7 +101,7 @@ public class PlaceholderMissile : MonoBehaviour, IDamageable
 
     private void OnCollisionEnter(Collision other)
     {
-        Instantiate(missileSO.missileDetonation, other.contacts[0].point, Quaternion.identity);
+        Instantiate(missileSO.impactPrefab, other.contacts[0].point, Quaternion.identity);
         other.gameObject.TryGetComponent<IDamageable>(out IDamageable hit);
         if (hit != null)
             hit.TakeDamage(missileSO.damage);

@@ -16,12 +16,8 @@ MonoBehaviour:
   range: 500
   fireRate: 1
   cost: 1
-  targetPriorities:
-  - serializedVersion: 2
-    m_Bits: 128
   UIScale: 20
   weaponDescription: Test Platform 1
+  projectileSO: {fileID: 11400000, guid: a8f98bca48da2fd4ea767052fd748a66, type: 2}
   weaponPrefab: {fileID: 1535887227311786, guid: b325700bd98ed230a8e4ee7e60d6ee53,
-    type: 3}
-  projectilePrefab: {fileID: 5730284336272845626, guid: 87cd90a42e5c58b789398cb016c578b1,
     type: 3}

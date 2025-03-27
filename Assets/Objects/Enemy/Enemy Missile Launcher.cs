@@ -49,7 +49,7 @@ public class EnemyMissileLauncher : MonoBehaviour
                 
                 foreach (Transform spawnPoint in spawnPoints)
                 {
-                    GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
+                    GameObject missile = Instantiate(missileLauncherSO.missileSO.projectilePrefab, spawnPoint.position, transform.rotation);
                     randomTarget = UnityEngine.Random.Range(0, possibleTargets.Length);
                     missile.GetComponent<PlaceholderMissile>().SetTarget(possibleTargets[randomTarget].gameObject);
                 }
@@ -95,7 +95,7 @@ public class EnemyMissileLauncher : MonoBehaviour
                 
                 foreach (Transform spawnPoint in spawnPoints)
                 {
-                    GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
+                    GameObject missile = Instantiate(missileLauncherSO.missileSO.projectilePrefab, spawnPoint.position, transform.rotation);
                     missile.GetComponent<PlaceholderMissile>().SetTarget(target);
                 }
             }

@@ -88,7 +88,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
                     //     projectile.SetActive(true);
                     // }
                     
-                    GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
+                    GameObject missile = Instantiate(missileLauncherSO.missileSO.projectilePrefab, spawnPoint.position, transform.rotation);
                     randomTarget = UnityEngine.Random.Range(0, targets.Count);
                     missile.GetComponent<PlaceholderMissile>().SetTarget(targets[randomTarget].gameObject);
                     
@@ -136,7 +136,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
                 
                 foreach (Transform spawnPoint in spawnPoints)
                 {
-                    GameObject missile = Instantiate(missileLauncherSO.missileSO.missilePrefab, spawnPoint.position, transform.rotation);
+                    GameObject missile = Instantiate(missileLauncherSO.missileSO.projectilePrefab, spawnPoint.position, transform.rotation);
                     missile.GetComponent<PlaceholderMissile>().SetTarget(target);
                 }
             }

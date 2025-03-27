@@ -62,7 +62,7 @@ public class WeaponManager : MonoBehaviour
         
         //Populate weapon stat windows
         uiDamageText.text = "Damage: " + weaponPlatforms[currentWeaponPlatform].damage.ToString();
-        uiRangeText.text = "Range: " + weaponPlatforms[currentWeaponPlatform].range.ToString();
+        uiRangeText.text = "Range: " + weaponPlatforms[currentWeaponPlatform].projectileSO.range.ToString();
         uiCostText.text = "Cost: " + weaponPlatforms[currentWeaponPlatform].cost.ToString();
         uiRoFText.text = "RoF: " + weaponPlatforms[currentWeaponPlatform].fireRate.ToString();
         uiDescriptionText.text = weaponPlatforms[currentWeaponPlatform].weaponDescription.ToString();

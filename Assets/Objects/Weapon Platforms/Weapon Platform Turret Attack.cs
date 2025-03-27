@@ -31,6 +31,11 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
 
     private void Update()
     {
+        if(target != null)
+            Debug.DrawRay(spawnPoints[0].position, spawnPoints[0].forward * platformSO.projectileSO.range, Color.red);
+            
+            // Debug.DrawRay(spawnPoints[0].position, target.transform.position - spawnPoints[0].position, Color.red);
+        
         SearchForTarget();
         RotateTowardsTarget();
         Fire();
@@ -42,13 +47,13 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     void SearchForTarget()
     {
         if(target == null)
-            for (int i = 0; i < platformSO.targetPriorities.Length; i++)
+            for (int i = 0; i < platformSO.projectileSO.targetPriorities.Length; i++)
             {
-                Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.range, platformSO.targetPriorities[i]);
+                Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range, platformSO.projectileSO.targetPriorities[i]);
 
                 if (possibleTargets.Length > 0)
                 {
-                    float closestEnemy = Mathf.Infinity;
+                    float closestEnemy = platformSO.projectileSO.range;
 
                     for (int x = 0; x < possibleTargets.Length; x++)
                     {
@@ -73,7 +78,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     bool IsLoSClear(GameObject obj)
     {
         // if (Physics.Raycast(ray, out RaycastHit hit, platformSO.range))
-        if (Physics.Raycast(spawnPoints[0].transform.position, obj.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, platformSO.range))
+        if (Physics.Raycast(spawnPoints[0].transform.position, obj.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, platformSO.projectileSO.range))
         {
             if (hit.collider != null)
             {
@@ -92,7 +97,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if (target != null)
         {
-            if (Physics.Raycast(spawnPoints[0].transform.position, target.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, platformSO.range))
+            if (Physics.Raycast(spawnPoints[0].transform.position, target.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, platformSO.projectileSO.range))
             {
                 if (hit.collider != null)
                 {
@@ -112,6 +117,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
             targetVector.Normalize();
             
             Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+            float baseYRotation = targetRotation.eulerAngles.y;
             // platformBase.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
 
             //float yAngle = Vector3.Angle(platformBase.position, target.transform.position);
@@ -133,20 +139,23 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
             targetVector.Normalize();
             
             targetRotation = Quaternion.LookRotation(targetVector);
+            
 
-            if (targetRotation.eulerAngles.y < 5f)
+            if ((baseYRotation - platformBase.rotation.eulerAngles.y) < 20f)
             {
-                if (targetRotation.eulerAngles.x < xCurrentRotation)
-                {
-                    xCurrentRotation -= Time.deltaTime * trackingSpeed;
-                }
-                else
-                {
-                    xCurrentRotation += Time.deltaTime * trackingSpeed;
-                }
+                // if (targetRotation.eulerAngles.x < xCurrentRotation)
+                // {
+                //     xCurrentRotation -= Time.deltaTime * trackingSpeed;
+                // }
+                // else
+                // {
+                //     xCurrentRotation += Time.deltaTime * trackingSpeed;
+                // }
+                
+                platformTurret.rotation = Quaternion.Slerp(platformTurret.rotation, targetRotation, trackingSpeed * Time.deltaTime);
             }
             
-            platformTurret.rotation = Quaternion.Slerp(platformTurret.rotation, targetRotation, trackingSpeed * Time.deltaTime);
+            
             //platformTurret.rotation = Quaternion.Euler(xCurrentRotation, 0, 0);
             //platformTurret.transform.LookAt(target.transform.position);
         }
@@ -156,14 +165,23 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if (target != null)
         {
-            if ((Time.time - lastFireTime) > platformSO.fireRate)
+            if (Physics.Raycast(spawnPoints[0].transform.position,
+                    spawnPoints[0].forward * platformSO.projectileSO.range, out RaycastHit hit,
+                    platformSO.projectileSO.range))
             {
-                lastFireTime = Time.time;
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                        if ((Time.time - lastFireTime) > platformSO.fireRate)
+                        {
+                            lastFireTime = Time.time;
 
-                foreach (Transform spawnPoint in spawnPoints)
-                {
-                    Instantiate(platformSO.projectilePrefab, spawnPoint.position, platformTurret.transform.rotation);
-                }
+                            foreach (Transform spawnPoint in spawnPoints)
+                            {
+                                Instantiate(platformSO.projectileSO.projectilePrefab, spawnPoint.position, platformTurret.transform.rotation);
+                    
+                                if(platformSO.projectileSO.dischargePrefab !=null)
+                                    Instantiate(platformSO.projectileSO.dischargePrefab, spawnPoint.position, platformTurret.transform.rotation);
+                            }
+                        }
             }
         }
     }
@@ -177,6 +195,6 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, platformSO.range);
+        Gizmos.DrawWireSphere(transform.position, platformSO.projectileSO.range);
     }
 }
