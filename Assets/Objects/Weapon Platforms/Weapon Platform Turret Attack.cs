@@ -34,14 +34,10 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if(target != null)
             Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
-            
-            // Debug.DrawRay(spawnPoints[0].position, target.transform.position - spawnPoints[0].position, Color.red);
         
         SearchForTarget();
         RotateTowardsTarget();
         Fire();
-        
-        //IsTargetStillInView();
     }
 
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
@@ -121,20 +117,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
             
             Quaternion targetRotation = Quaternion.LookRotation(targetVector);
             float baseYRotation = targetRotation.eulerAngles.y;
-            // platformBase.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
 
-            //float yAngle = Vector3.Angle(platformBase.position, target.transform.position);
-            
-            // if (targetRotation.eulerAngles.y < yCurrentRotation)
-            // {
-            //     yCurrentRotation -= Time.deltaTime * trackingSpeed;
-            // }
-            // else
-            // {
-            //     yCurrentRotation += Time.deltaTime * trackingSpeed;
-            // }
-            //
-            // platformBase.rotation = Quaternion.Euler(0, yCurrentRotation, 0);
             platformBase.rotation = Quaternion.Slerp(platformBase.rotation, targetRotation, trackingSpeed * Time.deltaTime);
             
             
@@ -145,22 +128,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
             
 
             if ((baseYRotation - platformBase.rotation.eulerAngles.y) < 20f)
-            {
-                // if (targetRotation.eulerAngles.x < xCurrentRotation)
-                // {
-                //     xCurrentRotation -= Time.deltaTime * trackingSpeed;
-                // }
-                // else
-                // {
-                //     xCurrentRotation += Time.deltaTime * trackingSpeed;
-                // }
-                
                 platformTurret.rotation = Quaternion.Slerp(platformTurret.rotation, targetRotation, trackingSpeed * Time.deltaTime);
-            }
-            
-            
-            //platformTurret.rotation = Quaternion.Euler(xCurrentRotation, 0, 0);
-            //platformTurret.transform.LookAt(target.transform.position);
         }
     }
 
@@ -168,8 +136,6 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if (target != null)
         {
-            // if (Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position, out RaycastHit hit,
-            //         platformSO.projectileSO.range))
             if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, out RaycastHit hit,
                     platformSO.projectileSO.range))
             {

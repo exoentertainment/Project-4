@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PDCProjectile : MonoBehaviour
 {
-    [SerializeField] ProjectileSO projectileSO;
+    [SerializeField] BaseProjectileSO projectileSO;
 
     private bool isActivated;
 

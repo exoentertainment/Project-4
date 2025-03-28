@@ -25,5 +25,5 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1298173687816790, guid: ed81a9b813be3047595ac3ee9e5b5e35,
     type: 3}
   dischargePrefab: {fileID: 0}
-  impactPrefab: {fileID: 1043624379182380, guid: 15722c524bd936b53b0f54c71519922d,
+  impactPrefab: {fileID: 1043624379182380, guid: 4d9c4b0de666d06c9b9094ee330f530b,
     type: 3}

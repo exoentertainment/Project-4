@@ -4,5 +4,5 @@ using UnityEngine;
 public class MainGunSO : ScriptableObject
 {
     public float fireRate;
-    public ProjectileSO projectileSO;
+    public BaseProjectileSO projectileSO;
 }

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Test Platform 1
   m_EditorClassIdentifier: 
   damage: 1
-  range: 500
   fireRate: 1
   cost: 1
+  baseTrackingSpeed: 0.5
+  barrelTrackingSpeed: 1
   UIScale: 20
   weaponDescription: Test Platform 1
-  projectileSO: {fileID: 11400000, guid: a8f98bca48da2fd4ea767052fd748a66, type: 2}
+  projectileSO: {fileID: 11400000, guid: 0d2538466de75c1dba40d28e18295898, type: 2}
   weaponPrefab: {fileID: 1535887227311786, guid: b325700bd98ed230a8e4ee7e60d6ee53,
     type: 3}

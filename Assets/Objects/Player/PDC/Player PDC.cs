@@ -30,8 +30,6 @@ public class PlayerPDC : MonoBehaviour
         SearchForTarget();
         RotateTowardsTarget();
         Fire();
-
-        IsTargetStillInView();
     }
 
     void SearchForTarget()

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Placeholder Turret
   m_EditorClassIdentifier: 
   fireRate: 2
-  projectileSO: {fileID: 11400000, guid: 7e9199c3718f042f8876288dd4f3e88b, type: 2}
+  projectileSO: {fileID: 11400000, guid: c68a56487f8fa9c39b1ac143903a2cd4, type: 2}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlaceholderProjectile : MonoBehaviour
 {
-    [SerializeField] ProjectileSO projectileSO;
+    [SerializeField] BaseProjectileSO projectileSO;
 
     //
     //private bool isActivated;

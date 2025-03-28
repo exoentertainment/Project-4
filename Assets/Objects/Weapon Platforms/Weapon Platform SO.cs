@@ -4,10 +4,10 @@ using UnityEngine;
 public class WeaponPlatformSO : ScriptableObject
 {
     public int damage;
-    //public int range;
     public float fireRate;
     public int cost;
-    //public LayerMask[] targetPriorities;
+    public float baseTrackingSpeed;
+    public float barrelTrackingSpeed;
     public int UIScale;
 
     public string weaponDescription;
