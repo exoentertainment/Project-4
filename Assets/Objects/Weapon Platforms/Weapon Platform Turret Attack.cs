@@ -43,10 +43,12 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
     void SearchForTarget()
     {
-        if(target == null)
+        if (target == null)
+        {
             for (int i = 0; i < platformSO.projectileSO.targetPriorities.Length; i++)
             {
-                Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range, platformSO.projectileSO.targetPriorities[i]);
+                Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range,
+                    platformSO.projectileSO.targetPriorities[i]);
 
                 if (possibleTargets.Length > 0)
                 {
@@ -57,7 +59,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
                         float distanceToEnemy =
                             Vector3.Distance(possibleTargets[x].transform.position, transform.position);
 
-                        if(IsLoSClear(possibleTargets[x].gameObject))
+                        if (IsLoSClear(possibleTargets[x].gameObject))
                             if (distanceToEnemy < closestEnemy)
                             {
                                 closestEnemy = distanceToEnemy;
@@ -69,6 +71,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
                         break;
                 }
             }
+        }
     }
     
     //Check if the passed target is within line-of-sight. If it is, then return true
@@ -88,24 +91,6 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
         
         return false;
     }
-    
-    //Check if the passed target is within line-of-sight. If it isn't then set target to null so a new target can be found
-    void IsTargetStillInView()
-    {
-        if (target != null)
-        {
-            
-            //if (Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
-            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, out RaycastHit hit, platformSO.projectileSO.range))
-            {
-                if (hit.collider != null)
-                {
-                    if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Enemy"))
-                        target = null;
-                }
-            }
-        }
-    }
 
     //Rotate the base and barrel towards target
     void RotateTowardsTarget()
@@ -114,21 +99,18 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
         {
             Vector3 targetVector = target.transform.position - transform.position;
             targetVector.Normalize();
-            
             Quaternion targetRotation = Quaternion.LookRotation(targetVector);
             float baseYRotation = targetRotation.eulerAngles.y;
 
-            platformBase.rotation = Quaternion.Slerp(platformBase.rotation, targetRotation, trackingSpeed * Time.deltaTime);
+            platformBase.rotation = Quaternion.Slerp(platformBase.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime);
             
             
             targetVector = target.transform.position - platformTurret.transform.position;
             targetVector.Normalize();
-            
             targetRotation = Quaternion.LookRotation(targetVector);
             
-
             if ((baseYRotation - platformBase.rotation.eulerAngles.y) < 20f)
-                platformTurret.rotation = Quaternion.Slerp(platformTurret.rotation, targetRotation, trackingSpeed * Time.deltaTime);
+                platformTurret.rotation = Quaternion.Slerp(platformTurret.rotation, targetRotation, platformSO.barrelTrackingSpeed * Time.deltaTime);
         }
     }
 

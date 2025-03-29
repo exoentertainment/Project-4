@@ -21,6 +21,13 @@ public class WeaponPlatformSpot : MonoBehaviour
             Destroy(weapon);
         
         weapon = Instantiate(obj, weaponBuildPos.position, Quaternion.identity);
-        //weapon.transform.parent = transform;
+        GameObject planet = GameObject.FindGameObjectWithTag("Planet");
+        
+        //Rotate turret so it faces away from the planet
+        Vector3 targetVector = planet.transform.position - transform.position;
+        targetVector.Normalize();
+        Quaternion targetRotation = Quaternion.LookRotation(-targetVector);
+        
+        weapon.transform.rotation = targetRotation;
     }
 }

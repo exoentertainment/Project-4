@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5778281924626978606}
   m_Layer: 7
   m_Name: Enemy 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +180,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347748c3456d77d3ebcdbbdd5d9a4a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 25
+  enemySO: {fileID: 0}
+  raycastOrigin: {fileID: 0}
+  obstacleDetectionRange: 0
+  waypointMarker: {fileID: 0}
+  detourMarker: {fileID: 0}
+  behavior: 0
+  numWaypoints: 0
+  waypointContactDistance: 0
+  minWaypointDistance: 0
+  maxWaypointDistance: 0
 --- !u!1 &7411493172457989263
 GameObject:
   m_ObjectHideFlags: 0

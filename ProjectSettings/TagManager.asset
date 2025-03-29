@@ -8,6 +8,8 @@ TagManager:
   - FlyByParticles
   - Aim Reticule
   - Virtual Mouse
+  - Enemy
+  - Planet
   layers:
   - Default
   - TransparentFX

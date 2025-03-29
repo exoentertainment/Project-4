@@ -137,7 +137,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.40392157, g: 0.9137255, b: 0.9372549, a: 1}
   m_Intensity: 0.1
-  m_Range: 1
+  m_Range: 0.2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa821b1e2159a7dbd9f9cf4d783b2db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSO: {fileID: 11400000, guid: f6dce16614239ac7cbe52de9651fed93, type: 2}
+  projectileSO: {fileID: 11400000, guid: 0c2002f1960a70c85954a860607cc6c0, type: 2}
 --- !u!54 &3955562961843534997
 Rigidbody:
   m_ObjectHideFlags: 0

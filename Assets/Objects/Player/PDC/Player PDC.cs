@@ -8,6 +8,7 @@ public class PlayerPDC : MonoBehaviour
     [SerializeField] Transform[] spawnPoints;
     [SerializeField] private Transform pdcBase;
     [SerializeField] private Transform pdcGunMount;
+    [SerializeField] Transform raycastOrigin;
 
     private GameObject target;
     private float lastFireTime;
@@ -27,6 +28,9 @@ public class PlayerPDC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(target != null)
+            Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * pdcSO.range, Color.red);
+        
         SearchForTarget();
         RotateTowardsTarget();
         Fire();
@@ -34,6 +38,9 @@ public class PlayerPDC : MonoBehaviour
 
     void SearchForTarget()
     {
+        if(target != null && !target.activeSelf)
+            target = null;
+        
         if (target == null)
         {
             Collider[] possibleTargets = Physics.OverlapSphere(transform.position, pdcSO.range, pdcSO.targetMask);
@@ -60,34 +67,17 @@ public class PlayerPDC : MonoBehaviour
 
     bool IsLoSClear(GameObject obj)
     {
-        // if (Physics.Raycast(ray, out RaycastHit hit, platformSO.range))
-        if (Physics.Raycast(spawnPoints[0].transform.position, obj.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, pdcSO.range))
+        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, pdcSO.range))
         {
             if (hit.collider != null)
             {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-                {
+                // if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                if (hit.collider.gameObject.CompareTag("Enemy"))
                     return true;
-                }
             }
         }
         
         return false;
-    }
-
-    void IsTargetStillInView()
-    {
-        if (target != null)
-        {
-            if (Physics.Raycast(spawnPoints[0].transform.position, target.transform.position - spawnPoints[0].transform.position, out RaycastHit hit, pdcSO.range))
-            {
-                if (hit.collider != null)
-                {
-                    if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Enemy"))
-                        target = null;
-                }
-            }
-        }
     }
 
     //Rotate the base of the PDC and its barrels towards target
@@ -97,13 +87,21 @@ public class PlayerPDC : MonoBehaviour
         {
             Vector3 targetVector = target.transform.position - transform.position;
             targetVector.Normalize();
-
-            Quaternion targetRotation = Quaternion.LookRotation(targetVector);
-
-            //pdcBase.rotation = Quaternion.Euler(0, targetRotation.eulerAngles.y, 0);
-            pdcBase.transform.LookAt(target.transform.position);
             
-            pdcGunMount.transform.LookAt(target.transform.position);
+            Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+            float baseYRotation = targetRotation.eulerAngles.y;
+
+            pdcBase.rotation = Quaternion.Slerp(pdcBase.rotation, targetRotation, pdcSO.baseTrackingSpeed * Time.deltaTime);
+            
+            
+            targetVector = target.transform.position - pdcGunMount.transform.position;
+            targetVector.Normalize();
+            
+            targetRotation = Quaternion.LookRotation(targetVector);
+            
+
+            if ((baseYRotation - pdcBase.rotation.eulerAngles.y) < 20f)
+                pdcGunMount.rotation = Quaternion.Slerp(pdcGunMount.rotation, targetRotation, pdcSO.barrelTrackingSpeed * Time.deltaTime);
         }
     }
 
@@ -113,24 +111,25 @@ public class PlayerPDC : MonoBehaviour
     {
         if (target != null)
         {
-            if ((Time.time - lastFireTime) > pdcSO.RoF)
-            {
-                lastFireTime = Time.time;
-                
-                Quaternion shootingAngle = new Quaternion();
-                shootingAngle.eulerAngles = new Vector3(pdcGunMount.rotation.eulerAngles.x + pdcSO.GetTrackingError(), pdcGunMount.rotation.eulerAngles.y + pdcSO.GetTrackingError(), 0);
-
-                foreach (Transform spawnPoint in spawnPoints)
+            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * pdcSO.range, out RaycastHit hit,
+                    pdcSO.range))
+                if ((Time.time - lastFireTime) > pdcSO.RoF)
                 {
-                    GameObject projectile = projectilePool.GetPooledObject(); 
-                    if (projectile != null) {
-                        projectile.transform.position = spawnPoint.position;
-                        projectile.transform.rotation = shootingAngle;
-                        projectile.SetActive(true);
+                    lastFireTime = Time.time;
+                    
+                    Quaternion shootingAngle = new Quaternion();
+                    shootingAngle.eulerAngles = new Vector3(pdcGunMount.rotation.eulerAngles.x + pdcSO.GetTrackingError(), pdcGunMount.rotation.eulerAngles.y + pdcSO.GetTrackingError(), 0);
+
+                    foreach (Transform spawnPoint in spawnPoints)
+                    {
+                        GameObject projectile = projectilePool.GetPooledObject(); 
+                        if (projectile != null) {
+                            projectile.transform.position = spawnPoint.position;
+                            projectile.transform.rotation = shootingAngle;
+                            projectile.SetActive(true);
+                        }
                     }
                 }
-                
-            }
         }
     }
     

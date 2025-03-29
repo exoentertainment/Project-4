@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: Placeholder PDC SO
   m_EditorClassIdentifier: 
   RoF: 0.1
-  range: 10
+  range: 20
   fireOffset: 0
-  trackingErrorMin: -0.343
-  trackingErrorMax: 0.349
+  trackingErrorMin: -0.475
+  trackingErrorMax: 0.534
+  baseTrackingSpeed: 3
+  barrelTrackingSpeed: 3
   targetMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 32768
   projectilePrefab: {fileID: 5730284336272845626, guid: ecd3cb347597014a49f3d194ba6a91fd,
     type: 3}

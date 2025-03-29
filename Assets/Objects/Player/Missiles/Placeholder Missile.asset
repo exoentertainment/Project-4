@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de43a3869cda8ed99dd8fffbb29f839, type: 3}
   m_Name: Placeholder Missile
   m_EditorClassIdentifier: 
-  damage: 0
   speed: 25
+  damage: 0
   duration: 4
   range: 25
+  targetPriorities:
+  - serializedVersion: 2
+    m_Bits: 128
   targetLayers:
     serializedVersion: 2
     m_Bits: 128
-  missilePrefab: {fileID: 1298173687816790, guid: f34e250723b573bc69858d257b8f733a,
+  projectilePrefab: {fileID: 1298173687816790, guid: f34e250723b573bc69858d257b8f733a,
     type: 3}
-  missileDetonation: {fileID: 1043624379182380, guid: 15722c524bd936b53b0f54c71519922d,
+  dischargePrefab: {fileID: 0}
+  impactPrefab: {fileID: 1043624379182380, guid: 15722c524bd936b53b0f54c71519922d,
     type: 3}

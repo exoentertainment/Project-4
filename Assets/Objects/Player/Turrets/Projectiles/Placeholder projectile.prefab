@@ -19245,7 +19245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa821b1e2159a7dbd9f9cf4d783b2db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSO: {fileID: 11400000, guid: 7e9199c3718f042f8876288dd4f3e88b, type: 2}
+  projectileSO: {fileID: 11400000, guid: c68a56487f8fa9c39b1ac143903a2cd4, type: 2}
 --- !u!135 &474121447123242461
 SphereCollider:
   m_ObjectHideFlags: 0
