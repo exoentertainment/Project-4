@@ -8,6 +8,8 @@ public class WeaponPlatformSO : ScriptableObject
     public int cost;
     public float baseTrackingSpeed;
     public float barrelTrackingSpeed;
+    public int targetLoiterTime;
+    public float barrelFireDelay;
     public int UIScale;
 
     public string weaponDescription;

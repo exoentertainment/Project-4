@@ -10,7 +10,7 @@ public class PlaceholderMissile : MonoBehaviour, IDamageable
     [SerializeField] protected float maxSwarmAmount = 20;
 
     [Tooltip("The distance from the target over which the swarm fades to zero (so that the missile can aim at the target as it gets close).")]
-    [SerializeField] protected float swarmFadeDistance = 0;
+    [SerializeField] protected float swarmFadeDistance = 100;
 
     [Tooltip("The swarm frequency (how rapidly it weaves from one side to the other).")]
     [SerializeField] protected float swarmFrequency = 2;
@@ -46,8 +46,6 @@ public class PlaceholderMissile : MonoBehaviour, IDamageable
     {
         if (target != null)
         {
-            transform.LookAt(target.transform);
-            
             float dist = Vector3.Distance(transform.position, target.transform.position);
             float swarmAmount = dist > swarmFadeDistance ? 1 : (dist / swarmFadeDistance);
             swarmAmount *= Mathf.Clamp(1 - ((Time.time - startTime) / swarmFadeTime), 0, 1);

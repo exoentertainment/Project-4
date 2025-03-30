@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Numerics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
@@ -21,8 +22,8 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
 
     private GameObject target;
     private float lastFireTime;
-
-    private float xCurrentRotation;
+    private float lastTimeOnTarget;
+    
     float yCurrentRotation;
 
     private void Start()
@@ -77,13 +78,13 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     //Check if the passed target is within line-of-sight. If it is, then return true
     bool IsLoSClear(GameObject obj)
     {
-        // if (Physics.Raycast(ray, out RaycastHit hit, platformSO.range))
         if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
         {
             if (hit.collider != null)
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
+                    lastTimeOnTarget = Time.time;
                     return true;
                 }
             }
@@ -121,19 +122,56 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
             if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, out RaycastHit hit,
                     platformSO.projectileSO.range))
             {
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-                        if ((Time.time - lastFireTime) > platformSO.fireRate)
-                        {
-                            lastFireTime = Time.time;
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    // lastTimeOnTarget = Time.time;
+                    //
+                    // if ((Time.time - lastFireTime) > platformSO.fireRate)
+                    // {
+                    //     lastFireTime = Time.time;
+                    //
+                    //     foreach (Transform spawnPoint in spawnPoints)
+                    //     {
+                    //         Instantiate(platformSO.projectileSO.projectilePrefab, spawnPoint.position,
+                    //             platformTurret.transform.rotation);
+                    //
+                    //         if (platformSO.projectileSO.dischargePrefab != null)
+                    //             Instantiate(platformSO.projectileSO.dischargePrefab, spawnPoint.position,
+                    //                 platformTurret.transform.rotation);
+                    //     }
+                    // }
 
-                            foreach (Transform spawnPoint in spawnPoints)
-                            {
-                                Instantiate(platformSO.projectileSO.projectilePrefab, spawnPoint.position, platformTurret.transform.rotation);
+                    StartCoroutine(FireRoutine());
+                }
+                
+                if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
+                {
+                    Debug.Log("Target out of view too long");
+                    lastTimeOnTarget = Time.time;
+                    target = null;
+                }
+            }
+        }
+    }
+
+    IEnumerator FireRoutine()
+    {
+        lastTimeOnTarget = Time.time;
                     
-                                if(platformSO.projectileSO.dischargePrefab !=null)
-                                    Instantiate(platformSO.projectileSO.dischargePrefab, spawnPoint.position, platformTurret.transform.rotation);
-                            }
-                        }
+        if ((Time.time - lastFireTime) > platformSO.fireRate)
+        {
+            lastFireTime = Time.time;
+
+            foreach (Transform spawnPoint in spawnPoints)
+            {
+                Instantiate(platformSO.projectileSO.projectilePrefab, spawnPoint.position,
+                    platformTurret.transform.rotation);
+
+                if (platformSO.projectileSO.dischargePrefab != null)
+                    Instantiate(platformSO.projectileSO.dischargePrefab, spawnPoint.position,
+                        platformTurret.transform.rotation);
+                
+                yield return new WaitForSeconds(platformSO.barrelFireDelay);
             }
         }
     }

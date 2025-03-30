@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSwarmAmount: 20
-  swarmFadeDistance: 10
+  swarmFadeDistance: 100
   swarmFrequency: 3
   guidanceSteeringPower: 5
   swarmFadeTime: 5

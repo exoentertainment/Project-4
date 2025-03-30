@@ -16,7 +16,9 @@ MonoBehaviour:
   damage: 0
   duration: 8
   range: 1000
-  targetPriorities: []
+  targetPriorities:
+  - serializedVersion: 2
+    m_Bits: 64
   targetLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -25,3 +27,4 @@ MonoBehaviour:
   dischargePrefab: {fileID: 0}
   impactPrefab: {fileID: 1043624379182380, guid: 15722c524bd936b53b0f54c71519922d,
     type: 3}
+  trackingSpeed: 5

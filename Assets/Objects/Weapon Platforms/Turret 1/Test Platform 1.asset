@@ -17,8 +17,10 @@ MonoBehaviour:
   cost: 1
   baseTrackingSpeed: 0.5
   barrelTrackingSpeed: 1
+  targetLoiterTime: 5
+  barrelFireDelay: 0.25
   UIScale: 20
   weaponDescription: Test Platform 1
   projectileSO: {fileID: 11400000, guid: 0d2538466de75c1dba40d28e18295898, type: 2}
-  weaponPrefab: {fileID: 1535887227311786, guid: b325700bd98ed230a8e4ee7e60d6ee53,
+  weaponPrefab: {fileID: 1370689007959718, guid: f2936e4ca0d34975ab433d8eb8518931,
     type: 3}

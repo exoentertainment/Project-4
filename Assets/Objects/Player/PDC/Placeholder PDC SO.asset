@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bc38177ec5c7b3db81784421a59265, type: 3}
   m_Name: Placeholder PDC SO
   m_EditorClassIdentifier: 
-  RoF: 0.1
-  range: 20
-  fireOffset: 0
+  RoF: 0.05
+  range: 25
   trackingErrorMin: -0.475
   trackingErrorMax: 0.534
   baseTrackingSpeed: 3
