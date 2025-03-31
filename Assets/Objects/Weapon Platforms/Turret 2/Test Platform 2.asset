@@ -22,5 +22,6 @@ MonoBehaviour:
   UIScale: 20
   weaponDescription: Test Platform 2
   projectileSO: {fileID: 11400000, guid: c2fcc72f43120b912854bba755299720, type: 2}
+  fireSFX: {fileID: 11400000, guid: 7ff7367ce75f32e438149abf94cabc5a, type: 2}
   weaponPrefab: {fileID: 1576628434390230528, guid: 14459a70bb3cbc076bb5ead2ae7d2fe9,
     type: 3}

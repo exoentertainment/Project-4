@@ -35,8 +35,9 @@ public class PDCProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     { 
+        Debug.Log(other.gameObject.name);
         if(projectileSO.impactPrefab != null)
-            Instantiate(projectileSO.impactPrefab, other.contacts[0].point, Quaternion.identity);
+            Instantiate(projectileSO.impactPrefab, other.GetContact(0).point, Quaternion.identity);
         
         other.gameObject.GetComponent<IDamageable>()?.TakeDamage(projectileSO.damage);
         

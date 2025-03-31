@@ -24,6 +24,7 @@ public class CameraManager : MonoBehaviour
         rotateRight = 1
     }
     
+    
     bool isRotating;
     int rotateDirection = (int)RotationDirection.rotateLeft;
 
@@ -49,6 +50,7 @@ public class CameraManager : MonoBehaviour
     {
         playerCamera.SetActive(false);
         phaseOneCamera.SetActive(true);
+        
     }
     
     void RotatePlanet()

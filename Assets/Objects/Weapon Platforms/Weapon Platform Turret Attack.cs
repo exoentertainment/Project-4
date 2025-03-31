@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Numerics;
+using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -10,6 +12,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     #region --Serialized Fields
 
     [SerializeField] WeaponPlatformSO platformSO;
+    [SerializeField] private MMAutoRotate[] barrels;
 
     [SerializeField] private Transform platformBase;
     [SerializeField] private Transform platformTurret;
@@ -17,6 +20,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     [SerializeField] Transform raycastOrigin;
 
     [SerializeField] private float trackingSpeed;
+    [SerializeField] private bool doesRotate;
 
     #endregion
 
@@ -119,37 +123,33 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if (target != null)
         {
+            foreach (MMAutoRotate barrel in barrels)
+            {
+                if(!barrel.enabled)
+                    barrel.enabled = true;
+            }
+            
             if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, out RaycastHit hit,
                     platformSO.projectileSO.range))
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 {
-                    // lastTimeOnTarget = Time.time;
-                    //
-                    // if ((Time.time - lastFireTime) > platformSO.fireRate)
-                    // {
-                    //     lastFireTime = Time.time;
-                    //
-                    //     foreach (Transform spawnPoint in spawnPoints)
-                    //     {
-                    //         Instantiate(platformSO.projectileSO.projectilePrefab, spawnPoint.position,
-                    //             platformTurret.transform.rotation);
-                    //
-                    //         if (platformSO.projectileSO.dischargePrefab != null)
-                    //             Instantiate(platformSO.projectileSO.dischargePrefab, spawnPoint.position,
-                    //                 platformTurret.transform.rotation);
-                    //     }
-                    // }
-
+                    
                     StartCoroutine(FireRoutine());
                 }
                 
                 if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
                 {
-                    Debug.Log("Target out of view too long");
                     lastTimeOnTarget = Time.time;
                     target = null;
                 }
+            }
+        }
+        else
+        {
+            foreach (MMAutoRotate barrel in barrels)
+            {
+                barrel.enabled = false;
             }
         }
     }
@@ -170,6 +170,8 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
                 if (platformSO.projectileSO.dischargePrefab != null)
                     Instantiate(platformSO.projectileSO.dischargePrefab, spawnPoint.position,
                         platformTurret.transform.rotation);
+                
+                AudioManager.instance.PlaySound(platformSO.fireSFX);
                 
                 yield return new WaitForSeconds(platformSO.barrelFireDelay);
             }
