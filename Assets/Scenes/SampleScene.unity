@@ -6555,6 +6555,7 @@ MonoBehaviour:
   weaponPlatforms:
   - {fileID: 11400000, guid: 6142c4f8284708397b9a9db6e0caffd7, type: 2}
   - {fileID: 11400000, guid: 2484274be87d5ea4196b4344a91b04e8, type: 2}
+  - {fileID: 11400000, guid: b35896bf9d7a7e938a74c4cbf32afbf7, type: 2}
   weaponPreviewPane: {fileID: 357976976}
   weaponPreviewRotateSpeed: 5
   uiDamageText: {fileID: 738339248}

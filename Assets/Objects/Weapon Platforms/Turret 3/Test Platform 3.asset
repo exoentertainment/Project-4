@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6890d21f12f409f15958408f9127096e, type: 3}
-  m_Name: Test Platform 1
+  m_Name: Test Platform 3
   m_EditorClassIdentifier: 
   damage: 1
-  fireRate: 1
+  fireRate: 0.1
   cost: 1
-  baseTrackingSpeed: 1
-  barrelTrackingSpeed: 1.5
+  baseTrackingSpeed: 2
+  barrelTrackingSpeed: 2
   targetLoiterTime: 5
   barrelFireDelay: 0.25
   barrelRotateSpeed: 25
   UIScale: 20
   weaponDescription: Test Platform 1
-  projectileSO: {fileID: 11400000, guid: 0d2538466de75c1dba40d28e18295898, type: 2}
-  fireSFX: {fileID: 11400000, guid: 2c30deade3811cbfab8f5619f5a98029, type: 2}
-  weaponPrefab: {fileID: 1370689007959718, guid: f2936e4ca0d34975ab433d8eb8518931,
+  projectileSO: {fileID: 11400000, guid: 6139274d55b6cc03fa9d3adb111774f3, type: 2}
+  fireSFX: {fileID: 11400000, guid: f16d23300e345e271ae6baf8a21a166b, type: 2}
+  weaponPrefab: {fileID: 7033345753994927868, guid: 0339b9558e1c786bbbddd5b49fb8b7e5,
     type: 3}

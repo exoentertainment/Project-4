@@ -87,8 +87,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 7117506352843742850}
   raycastOrigin: {fileID: 7117506352843742850}
-  trackingSpeed: 0.5
-  doesRotate: 1
+  doesRotate: 0
 --- !u!1 &1919472123045906
 GameObject:
   m_ObjectHideFlags: 0

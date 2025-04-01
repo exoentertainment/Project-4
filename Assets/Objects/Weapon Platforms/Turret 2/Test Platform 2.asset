@@ -15,10 +15,11 @@ MonoBehaviour:
   damage: 2
   fireRate: 2
   cost: 2
-  baseTrackingSpeed: 0.5
+  baseTrackingSpeed: 1
   barrelTrackingSpeed: 1
   targetLoiterTime: 2
   barrelFireDelay: 0.25
+  barrelRotateSpeed: 0
   UIScale: 20
   weaponDescription: Test Platform 2
   projectileSO: {fileID: 11400000, guid: c2fcc72f43120b912854bba755299720, type: 2}

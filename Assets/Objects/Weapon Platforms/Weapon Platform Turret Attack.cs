@@ -18,8 +18,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     [SerializeField] private Transform platformTurret;
     [SerializeField] Transform[] spawnPoints;
     [SerializeField] Transform raycastOrigin;
-
-    [SerializeField] private float trackingSpeed;
+    
     [SerializeField] private bool doesRotate;
 
     #endregion
@@ -105,6 +104,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
             Vector3 targetVector = target.transform.position - transform.position;
             targetVector.Normalize();
             Quaternion targetRotation = Quaternion.LookRotation(targetVector);
+            targetRotation.eulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
             float baseYRotation = targetRotation.eulerAngles.y;
 
             platformBase.rotation = Quaternion.Slerp(platformBase.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime);
@@ -113,6 +113,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
             targetVector = target.transform.position - platformTurret.transform.position;
             targetVector.Normalize();
             targetRotation = Quaternion.LookRotation(targetVector);
+            //targetRotation.eulerAngles = new Vector3(targetRotation.eulerAngles.x, 0, 0);
             
             if ((baseYRotation - platformBase.rotation.eulerAngles.y) < 20f)
                 platformTurret.rotation = Quaternion.Slerp(platformTurret.rotation, targetRotation, platformSO.barrelTrackingSpeed * Time.deltaTime);
