@@ -19,8 +19,11 @@ MonoBehaviour:
   barrelTrackingSpeed: 1.5
   targetLoiterTime: 5
   barrelFireDelay: 0.25
-  barrelRotateSpeed: 25
   UIScale: 20
+  targetPriorities: 00000000
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 0
   weaponDescription: Test Platform 1
   projectileSO: {fileID: 11400000, guid: 0d2538466de75c1dba40d28e18295898, type: 2}
   fireSFX: {fileID: 11400000, guid: 2c30deade3811cbfab8f5619f5a98029, type: 2}

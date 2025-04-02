@@ -13,15 +13,20 @@ MonoBehaviour:
   m_Name: Test Platform 3
   m_EditorClassIdentifier: 
   damage: 1
-  fireRate: 0.1
+  fireRate: 0.5
   cost: 1
   baseTrackingSpeed: 2
   barrelTrackingSpeed: 2
   targetLoiterTime: 5
   barrelFireDelay: 0.25
-  barrelRotateSpeed: 25
   UIScale: 20
-  weaponDescription: Test Platform 1
+  targetPriorities:
+  - serializedVersion: 2
+    m_Bits: 32768
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 32768
+  weaponDescription: Test Platform 3
   projectileSO: {fileID: 11400000, guid: 6139274d55b6cc03fa9d3adb111774f3, type: 2}
   fireSFX: {fileID: 11400000, guid: f16d23300e345e271ae6baf8a21a166b, type: 2}
   weaponPrefab: {fileID: 7033345753994927868, guid: 0339b9558e1c786bbbddd5b49fb8b7e5,

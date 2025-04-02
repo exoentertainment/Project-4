@@ -34,6 +34,7 @@ public class PlaceholderMissile : MonoBehaviour, IDamageable
         Destroy(gameObject, missileSO.duration);
         randomTimeOffset = Random.Range(0f, 1000f);
         startTime = Time.time;
+        Debug.Log(gameObject.layer);
     }
 
     // Update is called once per frame

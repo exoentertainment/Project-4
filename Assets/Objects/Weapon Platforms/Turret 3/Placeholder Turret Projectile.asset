@@ -15,16 +15,16 @@ MonoBehaviour:
   speed: 250
   damage: 0
   duration: 2
-  range: 100
+  range: 50
   targetPriorities:
   - serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 32768
   targetLayers:
     serializedVersion: 2
-    m_Bits: 128
-  projectilePrefab: {fileID: 1846563170864394, guid: b02b6d188fd69898dab4a9c1000546ff,
+    m_Bits: 32768
+  projectilePrefab: {fileID: 1846563170864394, guid: eca4269783511bf76a56558c4fe2a1ba,
     type: 3}
-  dischargePrefab: {fileID: 1232470965182556, guid: 74067b953ce2846f09acc35583000bd4,
+  dischargePrefab: {fileID: 1232470965182556, guid: 806b0288d56ce8e4f94fd4719f4065fd,
     type: 3}
-  impactPrefab: {fileID: 1576947433937734, guid: 39178679c6a7874a6a3850dee66c73e3,
+  impactPrefab: {fileID: 1576947433937734, guid: 5b9aadee63a11a96dae79b59131fd79c,
     type: 3}
