@@ -5,6 +5,8 @@ public class PDCSO : ScriptableObject
 {
     public float RoF;
     public float range;
+    public float minRange;
+    public float barrelFireDelay;
     
     [Range(-1, 0)]
     public float trackingErrorMin;
@@ -15,7 +17,9 @@ public class PDCSO : ScriptableObject
     public float baseTrackingSpeed;
     public float barrelTrackingSpeed;
     public LayerMask targetMask;
-    public GameObject projectilePrefab;
+    public BaseProjectileSO projectileSO;
+    public AudioClipSO fireSFX;
+    public GameObject weaponPrefab;
     
     public float GetTrackingError()
     {

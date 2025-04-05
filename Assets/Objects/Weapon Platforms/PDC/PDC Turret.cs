@@ -7,11 +7,11 @@ using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
-public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
+public class PDCTurret : MonoBehaviour
 {
     #region --Serialized Fields
 
-    [SerializeField] WeaponPlatformSO platformSO;
+    [SerializeField] PDCSO platformSO;
     [SerializeField] private MMAutoRotate[] barrels;
 
     [SerializeField] private Transform platformBase;
@@ -20,16 +20,20 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     [SerializeField] Transform raycastOrigin;
     
     [SerializeField] private bool doesRotate;
-    [SerializeField] private bool needRaycast;
 
     #endregion
 
     private GameObject target;
     private float lastFireTime;
-    private float lastTimeOnTarget;
+    ObjectPool projectilePool;
     
     float yCurrentRotation;
 
+    private void Awake()
+    {
+        projectilePool = GetComponent<ObjectPool>();
+    }
+    
     private void Start()
     {
         lastFireTime = Time.time;
@@ -62,31 +66,28 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     {
         if (target == null)
         {
-            for (int i = 0; i < platformSO.targetPriorities.Length; i++)
+            Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range,
+                platformSO.targetMask);
+            
+            if (possibleTargets.Length > 0)
             {
-                Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range,
-                    platformSO.targetPriorities[i]);
-                
-                if (possibleTargets.Length > 0)
+                float closestEnemy = platformSO.projectileSO.range;
+    
+                for (int x = 0; x < possibleTargets.Length; x++)
                 {
-                    float closestEnemy = platformSO.projectileSO.range;
-        
-                    for (int x = 0; x < possibleTargets.Length; x++)
-                    {
-                        float distanceToEnemy =
-                            Vector3.Distance(possibleTargets[x].transform.position, transform.position);
-        
-                        if (IsLoSClear(possibleTargets[x].gameObject))
-                            if (distanceToEnemy < closestEnemy && distanceToEnemy > platformSO.minRange)
-                            {
-                                closestEnemy = distanceToEnemy;
-                                target = possibleTargets[x].gameObject;
-                            }
-                    }
-        
-                    if (target != null)
-                        break;
+                    float distanceToEnemy =
+                        Vector3.Distance(possibleTargets[x].transform.position, transform.position);
+    
+                    if (IsLoSClear(possibleTargets[x].gameObject))
+                        if (distanceToEnemy < closestEnemy && distanceToEnemy > platformSO.minRange)
+                        {
+                            closestEnemy = distanceToEnemy;
+                            target = possibleTargets[x].gameObject;
+                        }
                 }
+    
+                // if (target != null)
+                //     break;
             }
         }
     }
@@ -94,7 +95,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     //Check if the passed target is within line-of-sight. If it is, then return true
     bool IsLoSClear(GameObject obj)
     {
-        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range, platformSO.targetLayers))
+        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range, platformSO.targetMask))
         {
             if (hit.collider != null)
             {
@@ -104,7 +105,6 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
                 //     return true;
                 // }
                 
-                lastTimeOnTarget = Time.time;
                 return true;
             }
         }
@@ -141,48 +141,27 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
             if(!barrel.enabled)
                 barrel.enabled = true;
         }
-
-        if (needRaycast)
-        {
-            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range,
-                    out RaycastHit hit,
-                    platformSO.projectileSO.range))
-            {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Projectile"))
-                {
-                    StartCoroutine(FireRoutine());
-                }
-
-                if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
-                {
-                    lastTimeOnTarget = Time.time;
-                    target = null;
-                }
-            }
-        }
-        else
-        {
-            StartCoroutine(FireRoutine());
-        }
+        
+        StartCoroutine(FireRoutine());
     }
 
     IEnumerator FireRoutine()
     {
-        lastTimeOnTarget = Time.time;
-                    
-        if ((Time.time - lastFireTime) > platformSO.fireRate)
+        if ((Time.time - lastFireTime) > platformSO.RoF)
         {
             lastFireTime = Time.time;
-
+            Quaternion shootingAngle = new Quaternion();
+            shootingAngle.eulerAngles = new Vector3(platformTurret.rotation.eulerAngles.x + platformSO.GetTrackingError(), platformTurret.rotation.eulerAngles.y + platformSO.GetTrackingError(), 0);
+            
             foreach (Transform spawnPoint in spawnPoints)
             {
-                Instantiate(platformSO.projectileSO.projectilePrefab, spawnPoint.position,
-                    platformTurret.transform.rotation);
+                GameObject projectile = projectilePool.GetPooledObject(); 
+                if (projectile != null) {
+                    projectile.transform.position = spawnPoint.position;
+                    projectile.transform.rotation = shootingAngle;
+                    projectile.SetActive(true);
+                }
 
-                if (platformSO.projectileSO.dischargePrefab != null)
-                    Instantiate(platformSO.projectileSO.dischargePrefab, spawnPoint.position,
-                        platformTurret.transform.rotation);
-                
                 yield return new WaitForSeconds(platformSO.barrelFireDelay);
             }
             

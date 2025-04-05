@@ -67,12 +67,12 @@ public class PlayerPDC : MonoBehaviour
 
     bool IsLoSClear(GameObject obj)
     {
-        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, pdcSO.range))
+        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, pdcSO.range, pdcSO.targetMask))
         {
             if (hit.collider != null)
             {
                 // if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-                if (hit.collider.gameObject.CompareTag("Enemy"))
+                //if (hit.collider.gameObject.CompareTag("Enemy"))
                     return true;
             }
         }
@@ -91,7 +91,7 @@ public class PlayerPDC : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(targetVector);
             float baseYRotation = targetRotation.eulerAngles.y;
 
-            pdcBase.rotation = Quaternion.Slerp(pdcBase.rotation, targetRotation, pdcSO.baseTrackingSpeed * Time.deltaTime);
+            pdcBase.rotation = Quaternion.SlerpUnclamped(pdcBase.rotation, targetRotation, pdcSO.baseTrackingSpeed * Time.deltaTime);
             
             
             targetVector = target.transform.position - pdcGunMount.transform.position;
@@ -101,7 +101,7 @@ public class PlayerPDC : MonoBehaviour
             
 
             if ((baseYRotation - pdcBase.rotation.eulerAngles.y) < 20f)
-                pdcGunMount.rotation = Quaternion.Slerp(pdcGunMount.rotation, targetRotation, pdcSO.barrelTrackingSpeed * Time.deltaTime);
+                pdcGunMount.rotation = Quaternion.SlerpUnclamped(pdcGunMount.rotation, targetRotation, pdcSO.barrelTrackingSpeed * Time.deltaTime);
         }
     }
 

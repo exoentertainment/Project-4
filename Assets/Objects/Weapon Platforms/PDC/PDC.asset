@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6890d21f12f409f15958408f9127096e, type: 3}
-  m_Name: Test Platform 3
+  m_Name: PDC
   m_EditorClassIdentifier: 
   damage: 1
-  fireRate: 0.5
+  fireRate: 0.1
   cost: 1
-  baseTrackingSpeed: 25
-  barrelTrackingSpeed: 25
+  baseTrackingSpeed: 10
+  barrelTrackingSpeed: 10
   targetLoiterTime: 5
   barrelFireDelay: 0.25
   minRange: 15
@@ -28,7 +28,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32768
   weaponDescription: Test Platform 3
-  projectileSO: {fileID: 11400000, guid: 6139274d55b6cc03fa9d3adb111774f3, type: 2}
-  fireSFX: {fileID: 11400000, guid: f16d23300e345e271ae6baf8a21a166b, type: 2}
-  weaponPrefab: {fileID: 7033345753994927868, guid: 0339b9558e1c786bbbddd5b49fb8b7e5,
+  projectileSO: {fileID: 11400000, guid: daf3e29f375e20b29804df418d0b3e80, type: 2}
+  fireSFX: {fileID: 11400000, guid: b554beaf67390d9fdbc631e8ffeb228b, type: 2}
+  weaponPrefab: {fileID: 1181149403445442, guid: dc03857fb9628306f9af6d0353059bdd,
     type: 3}
