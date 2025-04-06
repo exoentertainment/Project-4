@@ -23,10 +23,10 @@ MonoBehaviour:
   UIScale: 20
   targetPriorities:
   - serializedVersion: 2
-    m_Bits: 32768
+    m_Bits: 128
   targetLayers:
     serializedVersion: 2
-    m_Bits: 32768
+    m_Bits: 128
   weaponDescription: Test Platform 3
   projectileSO: {fileID: 11400000, guid: 6139274d55b6cc03fa9d3adb111774f3, type: 2}
   fireSFX: {fileID: 11400000, guid: f16d23300e345e271ae6baf8a21a166b, type: 2}

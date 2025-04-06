@@ -4,9 +4,18 @@ using UnityEngine;
 public class MissileLauncherSO : ScriptableObject
 {
     public float fireRate;
+    public float baseTrackingSpeed;
+    public float barrelTrackingSpeed;
+    public int targetLoiterTime;
+    public float barrelFireDelay;
+    public LayerMask targetLayers;
+    
+    public BaseProjectileSO projectileSO;
+    public AudioClipSO fireSFX;
+    public GameObject weaponPrefab;
 
     public MissileType targettingType;
-    public MissileSO missileSO;
+    //public MissileSO missileSO;
 
     public enum MissileType
     {

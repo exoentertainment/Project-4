@@ -13,5 +13,15 @@ MonoBehaviour:
   m_Name: Enemy Missile Launcher Placeholder
   m_EditorClassIdentifier: 
   fireRate: 2
-  targettingType: 0
-  missileSO: {fileID: 11400000, guid: 012c2fccc7b6714699a89361de1f114a, type: 2}
+  baseTrackingSpeed: 5
+  barrelTrackingSpeed: 5
+  targetLoiterTime: 2
+  barrelFireDelay: 0.1
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  projectileSO: {fileID: 11400000, guid: 012c2fccc7b6714699a89361de1f114a, type: 2}
+  fireSFX: {fileID: 0}
+  weaponPrefab: {fileID: 1298173687816790, guid: eb22315af4935463a91d17d8e115f660,
+    type: 3}
+  targettingType: 1

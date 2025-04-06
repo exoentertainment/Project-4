@@ -19,7 +19,7 @@ MonoBehaviour:
   barrelTrackingSpeed: 10
   targetLoiterTime: 5
   barrelFireDelay: 0.25
-  minRange: 15
+  minRange: 5
   UIScale: 20
   targetPriorities:
   - serializedVersion: 2

@@ -153,19 +153,21 @@ public class PDCTurret : MonoBehaviour
             Quaternion shootingAngle = new Quaternion();
             shootingAngle.eulerAngles = new Vector3(platformTurret.rotation.eulerAngles.x + platformSO.GetTrackingError(), platformTurret.rotation.eulerAngles.y + platformSO.GetTrackingError(), 0);
             
-            foreach (Transform spawnPoint in spawnPoints)
-            {
-                GameObject projectile = projectilePool.GetPooledObject(); 
-                if (projectile != null) {
-                    projectile.transform.position = spawnPoint.position;
-                    projectile.transform.rotation = shootingAngle;
-                    projectile.SetActive(true);
-                }
+            // if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, out RaycastHit hit, platformSO.projectileSO.range))
+            //     if(hit.collider.gameObject.CompareTag("Enemy"))
+                    foreach (Transform spawnPoint in spawnPoints)
+                    {
+                        GameObject projectile = projectilePool.GetPooledObject(); 
+                        if (projectile != null) {
+                            projectile.transform.position = spawnPoint.position;
+                            projectile.transform.rotation = shootingAngle;
+                            projectile.SetActive(true);
+                        }
 
-                yield return new WaitForSeconds(platformSO.barrelFireDelay);
-            }
+                        yield return new WaitForSeconds(platformSO.barrelFireDelay);
+                    }
             
-            AudioManager.instance.PlaySound(platformSO.fireSFX);
+            //AudioManager.instance.PlaySound(platformSO.fireSFX);
         }
     }
 

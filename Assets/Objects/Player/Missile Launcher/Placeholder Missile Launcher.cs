@@ -62,7 +62,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
     //This is called if current missile selects a random target. Culls any nearby target that isn't on screen
     void SetRandomTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.projectileSO.range, missileLauncherSO.projectileSO.targetLayers);
         
         if (possibleTargets.Length > 0)
         {
@@ -88,7 +88,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
                     //     projectile.SetActive(true);
                     // }
                     
-                    GameObject missile = Instantiate(missileLauncherSO.missileSO.projectilePrefab, spawnPoint.position, transform.rotation);
+                    GameObject missile = Instantiate(missileLauncherSO.projectileSO.projectilePrefab, spawnPoint.position, transform.rotation);
                     randomTarget = UnityEngine.Random.Range(0, targets.Count);
                     missile.GetComponent<PlaceholderMissile>().SetTarget(targets[randomTarget].gameObject);
                     
@@ -101,7 +101,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
     //This is called if current missile selects closest target. Culls any nearby target that isn't on screen
     void SetSingleTarget()
     {
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.missileSO.range, missileLauncherSO.missileSO.targetLayers);
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, missileLauncherSO.projectileSO.range, missileLauncherSO.projectileSO.targetLayers);
         
         if (possibleTargets.Length > 0)
         {
@@ -136,7 +136,7 @@ public class PlaceholderMissileLauncher : MonoBehaviour
                 
                 foreach (Transform spawnPoint in spawnPoints)
                 {
-                    GameObject missile = Instantiate(missileLauncherSO.missileSO.projectilePrefab, spawnPoint.position, transform.rotation);
+                    GameObject missile = Instantiate(missileLauncherSO.projectileSO.projectilePrefab, spawnPoint.position, transform.rotation);
                     missile.GetComponent<PlaceholderMissile>().SetTarget(target);
                 }
             }
@@ -154,6 +154,6 @@ public class PlaceholderMissileLauncher : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, missileLauncherSO.missileSO.range);
+        Gizmos.DrawWireSphere(transform.position, missileLauncherSO.projectileSO.range);
     }
 }
