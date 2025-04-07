@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Weapon Platform SO", menuName = "Weapon Platform SO")]
-public class WeaponPlatformSO : ScriptableObject
+public class TurretSO : ScriptableObject
 {
     public int damage;
     public float fireRate;

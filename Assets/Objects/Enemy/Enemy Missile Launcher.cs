@@ -69,9 +69,10 @@ public class EnemyMissileLauncher : MonoBehaviour
     //Check if the passed target is within line-of-sight. If it is, then return true
     bool IsLoSClear(GameObject obj)
     {
-        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, missileLauncherSO.projectileSO.range, missileLauncherSO.projectileSO.targetLayers))
+        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, missileLauncherSO.projectileSO.range))
         {
-            if (hit.collider != null)
+            // if (hit.collider.gameObject.layer == LayerMask.NameToLayer(missileLauncherSO.projectileSO.targetLayerName))
+            if (hit.collider.gameObject == obj)
             {
                 // if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Projectile"))
                 // {
@@ -92,14 +93,40 @@ public class EnemyMissileLauncher : MonoBehaviour
         if ((Time.time - lastFireTime) > missileLauncherSO.fireRate)
         {
             lastFireTime = Time.time;
-            
-            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * missileLauncherSO.projectileSO.range, out RaycastHit hit, missileLauncherSO.projectileSO.range, missileLauncherSO.projectileSO.targetLayers))
-                foreach (Transform spawnPoint in spawnPoints)
+
+            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * missileLauncherSO.projectileSO.range, out RaycastHit hit, missileLauncherSO.projectileSO.range))
+            {
+                if(hit.collider.gameObject.layer == LayerMask.NameToLayer(missileLauncherSO.projectileSO.targetLayerName))
+                    StartCoroutine(FireRoutine());
+                else
                 {
-                    GameObject missile = Instantiate(missileLauncherSO.projectileSO.projectilePrefab, spawnPoint.position, transform.rotation);
-                    missile.GetComponent<PlaceholderMissile>().SetTarget(target);
+                    if((Time.time - lastTimeOnTarget) >= missileLauncherSO.targetLoiterTime)
+                    {
+                        lastTimeOnTarget = Time.time;
+                        target = null;
+                    }
                 }
+            }
         }
+    }
+    
+    IEnumerator FireRoutine()
+    {
+        lastTimeOnTarget = Time.time;
+
+        foreach (Transform spawnPoint in spawnPoints)
+        {
+            Instantiate(missileLauncherSO.projectileSO.projectilePrefab, spawnPoint.position,
+                platformTurret.transform.rotation);
+
+            if (missileLauncherSO.projectileSO.dischargePrefab != null)
+                Instantiate(missileLauncherSO.projectileSO.dischargePrefab, spawnPoint.position,
+                    platformTurret.transform.rotation);
+            
+            yield return new WaitForSeconds(missileLauncherSO.barrelFireDelay);
+        }
+        
+        //AudioManager.instance.PlaySound(missileLauncherSO.fireSFX);
     }
 
     //This is called if current missile selects a random target. Culls any nearby target that isn't on screen
@@ -184,9 +211,12 @@ public class EnemyMissileLauncher : MonoBehaviour
     
     void CheckDistanceToTarget()
     {
-        float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+        if (target != null)
+        {
+            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
-        if (distanceToTarget > missileLauncherSO.projectileSO.range)
-            target = null;
+            if (distanceToTarget > missileLauncherSO.projectileSO.range)
+                target = null;
+        }
     }
 }

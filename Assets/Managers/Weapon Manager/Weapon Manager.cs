@@ -12,7 +12,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] PlayerInput playerInput;
     [SerializeField] private Transform gamepadMouseCursor;
 
-    [SerializeField] private WeaponPlatformSO[] weaponPlatforms;
+    [SerializeField] private TurretSO[] weaponPlatforms;
     [SerializeField] private Transform weaponPreviewPane;
     [SerializeField] private int weaponPreviewRotateSpeed;
 

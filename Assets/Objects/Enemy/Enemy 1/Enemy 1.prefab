@@ -42,10 +42,10 @@ GameObject:
   - component: {fileID: 5125769609664584993}
   - component: {fileID: 3304236997650203400}
   - component: {fileID: 2769943694122640679}
-  - component: {fileID: 5025448185029840195}
   - component: {fileID: 3570543464800874262}
   - component: {fileID: -8436357894647935533}
   - component: {fileID: 5778281924626978606}
+  - component: {fileID: 6143111104215040848}
   m_Layer: 7
   m_Name: Enemy 1
   m_TagString: Enemy
@@ -63,7 +63,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 7.257078, y: 14.88, z: -185}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6566100084648133692}
@@ -123,28 +123,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5025448185029840195
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6273887433251789901}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7150650179120035140, guid: 409951b3f6a7beb42a0bc845a7c97145, type: 3}
 --- !u!54 &3570543464800874262
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -217,6 +195,27 @@ MonoBehaviour:
   posMarker: {fileID: 0}
   rotateSpeed: 0
   radius: 0
+--- !u!65 &6143111104215040848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6273887433251789901}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 37.53995, y: 10.942018, z: 111.10722}
+  m_Center: {x: 0, y: -2.0623832, z: -0.000019073486}
 --- !u!1 &7411493172457989263
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +362,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3460251703227774697}
+    - targetCorrespondingSourceObject: {fileID: 1576628434390230528, guid: 6e0cf1a05fde35b38b100f4024c1dce5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5014461311265249137}
   m_SourcePrefab: {fileID: 100100000, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
 --- !u!4 &3501486895464046238 stripped
 Transform:
@@ -383,12 +386,32 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3501486895846549707}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9720a2300791ad8278d49bce74e720fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   missileLauncherSO: {fileID: 11400000, guid: dd7a947749899842787baec5e449abdb, type: 2}
+  platformBase: {fileID: 3501486895464046238}
+  platformTurret: {fileID: 5515839605091891963}
+  spawnPoints:
+  - {fileID: 2698986607979098494}
+  - {fileID: 5130526773325625843}
+  raycastOrigin: {fileID: 1620111852441512764}
+--- !u!114 &5014461311265249137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3501486895846549707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fb680dbf02eb514791cd6ef69f9c3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformSO: {fileID: 11400000, guid: 380f2d3864454744f9ffc7718c0f57fa, type: 2}
+  barrels: []
   platformBase: {fileID: 3501486895464046238}
   platformTurret: {fileID: 5515839605091891963}
   spawnPoints:

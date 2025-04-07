@@ -11,7 +11,7 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
 {
     #region --Serialized Fields
 
-    [SerializeField] WeaponPlatformSO platformSO;
+    [SerializeField] TurretSO platformSO;
     [SerializeField] private MMAutoRotate[] barrels;
 
     [SerializeField] private Transform platformBase;
@@ -53,8 +53,6 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
                 barrel.enabled = false;
             }
         }
-
-        
     }
 
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
@@ -145,10 +143,9 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
         if (needRaycast)
         {
             if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range,
-                    out RaycastHit hit,
-                    platformSO.projectileSO.range))
+                    out RaycastHit hit, platformSO.projectileSO.range))
             {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy Projectile"))
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer(platformSO.projectileSO.targetLayerName))
                 {
                     StartCoroutine(FireRoutine());
                 }

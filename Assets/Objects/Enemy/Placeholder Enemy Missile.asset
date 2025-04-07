@@ -22,6 +22,7 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 4096
+  targetLayerName: Turret
   projectilePrefab: {fileID: 1298173687816790, guid: eb22315af4935463a91d17d8e115f660,
     type: 3}
   dischargePrefab: {fileID: 0}
