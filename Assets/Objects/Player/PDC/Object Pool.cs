@@ -26,6 +26,22 @@ public class ObjectPool : MonoBehaviour
             pooledObjects.Add(tmp);
         }
     }
+
+    public void SetObjectToPool(GameObject obj)
+    {
+        objectToPool = obj;
+        amountToPool = 50;
+        
+        pooledObjects = new List<GameObject>();
+        GameObject tmp;
+        for(int i = 0; i < amountToPool; i++)
+        {
+            tmp = Instantiate(objectToPool);
+            tmp.transform.SetParent(transform);
+            tmp.SetActive(false);
+            pooledObjects.Add(tmp);
+        }
+    }
     
     public GameObject GetPooledObject()
     {

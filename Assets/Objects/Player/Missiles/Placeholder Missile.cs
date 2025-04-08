@@ -31,7 +31,7 @@ public class PlaceholderMissile : MonoBehaviour, IDamageable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Destroy(gameObject, missileSO.duration);
+        StartCoroutine(DisableRoutine());
         randomTimeOffset = Random.Range(0f, 1000f);
         startTime = Time.time;
     }
@@ -109,6 +109,13 @@ public class PlaceholderMissile : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    IEnumerator DisableRoutine()
+    {
+        yield return new WaitForSeconds(missileSO.duration);
+        
+        gameObject.SetActive(false);
     }
 }

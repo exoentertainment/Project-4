@@ -12,6 +12,13 @@ public class TurretSO : ScriptableObject
     public float barrelFireDelay;
     public int minRange;
     public int UIScale;
+    
+    [Range(-1, 0)]
+    public float trackingErrorMin;
+    
+    [Range(0, 1)]
+    public float trackingErrorMax;
+    
     public LayerMask[] targetPriorities;
     public LayerMask targetLayers;
     
@@ -19,4 +26,9 @@ public class TurretSO : ScriptableObject
     public BaseProjectileSO projectileSO;
     public AudioClipSO fireSFX;
     public GameObject weaponPrefab;
+    
+    public float GetTrackingError()
+    {
+        return Random.Range(trackingErrorMin, trackingErrorMax);
+    }
 }

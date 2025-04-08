@@ -41,7 +41,7 @@ public class PDCTurret : MonoBehaviour
 
     private void Update()
     {
-        if (target != null)
+        if (target != null && target.activeSelf)
         {
             Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
             RotateTowardsTarget();
@@ -64,7 +64,7 @@ public class PDCTurret : MonoBehaviour
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
     void SearchForTarget()
     {
-        if (target == null)
+        if (target == null || !target.activeSelf)
         {
             Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range,
                 platformSO.targetMask);

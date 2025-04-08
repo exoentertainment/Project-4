@@ -11,36 +11,46 @@ public class BaseTurret : MonoBehaviour
 {
     #region --Serialized Fields
 
-    [SerializeField] TurretSO platformSO;
-    [SerializeField] private MMAutoRotate[] barrels;
+    [SerializeField] protected TurretSO platformSO;
 
-    [SerializeField] private Transform platformBase;
-    [SerializeField] private Transform platformTurret;
-    [SerializeField] Transform[] spawnPoints;
-    [SerializeField] Transform raycastOrigin;
+    [SerializeField] protected  Transform platformBase;
+    [SerializeField] protected  Transform platformTurret;
+    [SerializeField] protected Transform[] spawnPoints;
+    [SerializeField] protected Transform raycastOrigin;
 
     #endregion
 
-    private GameObject target;
-    private float lastFireTime;
-    private float lastTimeOnTarget;
+    protected GameObject target;
+    protected float lastFireTime;
+    protected float lastTimeOnTarget;
     
-    float yCurrentRotation;
-    float xCurrentRotation;
+    protected float yCurrentRotation;
+    protected float xCurrentRotation;
     
-    private void Start()
+    protected ObjectPool projectilePool;
+
+    protected void Awake()
+    {
+        projectilePool = GetComponent<ObjectPool>();
+    }
+
+    protected void Start()
     {
         lastFireTime = Time.time;
     }
     
-    private void Update()
+    protected void Update()
     {
         if (target != null)
         {
-            Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
-            CheckDistanceToTarget();
-            RotateTowardsTarget();
-            Fire();
+            if (target.activeSelf)
+            {
+                Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
+                RotateTowardsTarget();
+                Fire();
+            }
+            else
+                target = null;
         }
         else
         {
@@ -49,11 +59,9 @@ public class BaseTurret : MonoBehaviour
     }
     
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
-    void SearchForTarget()
+    protected void SearchForTarget()
     {
-        Debug.Log("Searching for target");
-        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range,
-            platformSO.projectileSO.targetLayers);
+        Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range, platformSO.projectileSO.targetLayers);
         
         if (possibleTargets.Length > 0)
         {
@@ -75,7 +83,7 @@ public class BaseTurret : MonoBehaviour
     }
     
     //Check if the passed target is within line-of-sight. If it is, then return true
-    bool IsLoSClear(GameObject obj)
+    protected bool IsLoSClear(GameObject obj)
     {
         if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
         {
@@ -90,7 +98,7 @@ public class BaseTurret : MonoBehaviour
     }
     
     //Rotate the base and barrel towards target
-    void RotateTowardsTarget()
+    protected void RotateTowardsTarget()
     {
         Vector3 targetVector = target.transform.position - transform.position;
         targetVector.Normalize();
@@ -108,34 +116,38 @@ public class BaseTurret : MonoBehaviour
             platformTurret.rotation = Quaternion.SlerpUnclamped(platformTurret.rotation, targetRotation, platformSO.barrelTrackingSpeed * Time.deltaTime);
     }
     
-    void Fire()
+    protected void Fire()
     {
-        if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, out RaycastHit hit, platformSO.projectileSO.range))
+        if(IsLoSClear(target))
         {
-            if (hit.collider.gameObject == target)
-            {
-                if ((Time.time - lastFireTime) > platformSO.fireRate)
-                    StartCoroutine(FireRoutine());
-            }
+            if ((Time.time - lastFireTime) > platformSO.fireRate)
+                StartCoroutine(FireRoutine());
+        }
 
-            if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
-            {
-                lastTimeOnTarget = Time.time;
-                target = null;
-            }
+        if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
+        {
+            lastTimeOnTarget = Time.time;
+            target = null;
         }
     }
     
-    IEnumerator FireRoutine()
+    protected virtual IEnumerator FireRoutine()
     {
         lastTimeOnTarget = Time.time;
         lastFireTime = Time.time;
+        
+        Quaternion shootingAngle = new Quaternion();
+        shootingAngle.eulerAngles = new Vector3(platformTurret.rotation.eulerAngles.x + platformSO.GetTrackingError(), platformTurret.rotation.eulerAngles.y + platformSO.GetTrackingError(), 0);
 
         foreach (Transform spawnPoint in spawnPoints)
         {
-            Instantiate(platformSO.projectileSO.projectilePrefab, spawnPoint.position,
-                platformTurret.transform.rotation);
-
+            GameObject projectile = projectilePool.GetPooledObject(); 
+            if (projectile != null) {
+                projectile.transform.position = spawnPoint.position;
+                projectile.transform.rotation = shootingAngle;
+                projectile.SetActive(true);
+            }
+            
             if (platformSO.projectileSO.dischargePrefab != null)
                 Instantiate(platformSO.projectileSO.dischargePrefab, spawnPoint.position,
                     platformTurret.transform.rotation);
@@ -147,7 +159,7 @@ public class BaseTurret : MonoBehaviour
             AudioManager.instance.PlaySound(platformSO.fireSFX);
     }
     
-    void CheckDistanceToTarget()
+    protected void CheckDistanceToTarget()
     {
         float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
