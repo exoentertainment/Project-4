@@ -16,12 +16,11 @@ MonoBehaviour:
   damage: 0
   duration: 1
   range: 50
-  targetPriorities:
-  - serializedVersion: 2
-    m_Bits: 32768
+  targetPriorities: []
   targetLayers:
     serializedVersion: 2
     m_Bits: 32768
+  targetLayerName: 
   projectilePrefab: {fileID: 1846563170864394, guid: b55f6f31eebce1efcbd29aa710c59118,
     type: 3}
   dischargePrefab: {fileID: 1232470965182556, guid: cf27bd29a05a6313cb5eb52aea90a938,

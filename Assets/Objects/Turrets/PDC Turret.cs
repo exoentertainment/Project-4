@@ -41,6 +41,7 @@ public class PDCTurret : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(platformBase.rotation.eulerAngles.y);
         if (target != null && target.activeSelf)
         {
             Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);

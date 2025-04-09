@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Numerics;
-using MoreMountains.Feedbacks;
-using MoreMountains.Tools;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
+using Vector2 = UnityEngine.Vector2;
 
 public class BaseTurret : MonoBehaviour
 {
@@ -24,6 +23,7 @@ public class BaseTurret : MonoBehaviour
     protected float lastFireTime;
     protected float lastTimeOnTarget;
     
+    Vector2 currentRotation;
     protected float yCurrentRotation;
     protected float xCurrentRotation;
     
@@ -65,15 +65,15 @@ public class BaseTurret : MonoBehaviour
         
         if (possibleTargets.Length > 0)
         {
-            float closestEnemy = platformSO.projectileSO.range;
+            float closestEnemy = Mathf.Infinity;
 
             for (int x = 0; x < possibleTargets.Length; x++)
             {
                 float distanceToEnemy =
                     Vector3.Distance(possibleTargets[x].transform.position, transform.position);
 
-                if (IsLoSClear(possibleTargets[x].gameObject))
-                    if (distanceToEnemy < closestEnemy && distanceToEnemy > platformSO.minRange)
+                //if (IsLoSClear(possibleTargets[x].gameObject))
+                    if (distanceToEnemy < closestEnemy)
                     {
                         closestEnemy = distanceToEnemy;
                         target = possibleTargets[x].gameObject;
@@ -85,7 +85,7 @@ public class BaseTurret : MonoBehaviour
     //Check if the passed target is within line-of-sight. If it is, then return true
     protected bool IsLoSClear(GameObject obj)
     {
-        if (Physics.Raycast(raycastOrigin.position, obj.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
+        if (Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
         {
             if (hit.collider.gameObject == obj)
             {
@@ -107,13 +107,17 @@ public class BaseTurret : MonoBehaviour
         float baseYRotation = targetRotation.eulerAngles.y;
 
         platformBase.rotation = Quaternion.SlerpUnclamped(platformBase.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime);
+        currentRotation.y = platformBase.rotation.eulerAngles.y;
+
         
         targetVector = target.transform.position - platformTurret.transform.position;
         targetVector.Normalize();
         targetRotation = Quaternion.LookRotation(targetVector);
         
-        if ((baseYRotation - platformBase.rotation.eulerAngles.y) < 20f)
+        if ((baseYRotation - currentRotation.y) < 10f)
+        {
             platformTurret.rotation = Quaternion.SlerpUnclamped(platformTurret.rotation, targetRotation, platformSO.barrelTrackingSpeed * Time.deltaTime);
+        }
     }
     
     protected void Fire()
@@ -165,5 +169,14 @@ public class BaseTurret : MonoBehaviour
 
         if (distanceToTarget < platformSO.minRange)
             target = null;
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, platformSO.projectileSO.range);
+        
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, platformSO.minRange);
     }
 }

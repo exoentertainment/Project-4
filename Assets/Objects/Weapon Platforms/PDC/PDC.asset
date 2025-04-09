@@ -21,6 +21,8 @@ MonoBehaviour:
   barrelFireDelay: 0.25
   minRange: 5
   UIScale: 20
+  trackingErrorMin: -0.1
+  trackingErrorMax: 0.1
   targetPriorities:
   - serializedVersion: 2
     m_Bits: 32768
