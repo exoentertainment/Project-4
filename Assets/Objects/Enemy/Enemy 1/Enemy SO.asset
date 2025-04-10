@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7755507249dedac00a7760406a85c04e, type: 3}
   m_Name: Enemy SO
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 20
+  deathSpeed: 10
+  turnSpeed: 1
+  movementRadius: 150
+  maxHealth: 5
+  explosionPrefab: {fileID: 1593023632951020, guid: e14e9fb1486a95a678b37f3ae9ab8948,
+    type: 3}
+  explosionDuration: 3
+  explosionFrequency: 0.5
+  reactorExplosionPrefab: {fileID: 4451286742375843044, guid: 6e446d3126b4da33c99aceea038fdf9d,
+    type: 3}

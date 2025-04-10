@@ -132,6 +132,7 @@ public class BaseTurret : MonoBehaviour
         {
             lastTimeOnTarget = Time.time;
             target = null;
+            Debug.Log("Lost target");
         }
     }
     

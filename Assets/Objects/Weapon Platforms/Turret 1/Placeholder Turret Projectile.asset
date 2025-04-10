@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Placeholder Turret Projectile
   m_EditorClassIdentifier: 
   speed: 250
-  damage: 0
+  damage: 1
   duration: 2
-  range: 100
+  range: 150
   targetPriorities:
   - serializedVersion: 2
     m_Bits: 128
   targetLayers:
     serializedVersion: 2
     m_Bits: 128
+  targetLayerName: 
   projectilePrefab: {fileID: 1846563170864394, guid: b02b6d188fd69898dab4a9c1000546ff,
     type: 3}
   dischargePrefab: {fileID: 1232470965182556, guid: 74067b953ce2846f09acc35583000bd4,

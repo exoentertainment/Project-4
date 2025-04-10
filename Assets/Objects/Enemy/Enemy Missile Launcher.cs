@@ -96,7 +96,7 @@ public class EnemyMissileLauncher : MonoBehaviour
 
             if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * missileLauncherSO.projectileSO.range, out RaycastHit hit, missileLauncherSO.projectileSO.range))
             {
-                if(hit.collider.gameObject.layer == LayerMask.NameToLayer(missileLauncherSO.projectileSO.targetLayerName))
+                if(hit.collider.gameObject == target)
                     StartCoroutine(FireRoutine());
                 else
                 {

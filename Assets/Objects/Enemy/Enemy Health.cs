@@ -8,7 +8,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 {
     #region --Serialized Fields--
 
-    [SerializeField] private EnemyHealthSO healthSO;
+    [SerializeField] private EnemySO enemySO;
     [SerializeField] private UnityEvent onDeath;
 
     #endregion
@@ -17,6 +17,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     bool isDead;
     MeshCollider meshCollider;
 
+    private bool isHit;
+
     private void Awake()
     {
         meshCollider = GetComponent<MeshCollider>();
@@ -24,13 +26,22 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        currentHealth = healthSO.maxHealth;
+        currentHealth = enemySO.maxHealth;
+    }
+
+    private void Update()
+    {
+        isHit = false;
     }
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        
+        if (!isHit)
+        {
+            currentHealth -= damage;
+            isHit = true;
+        }
+
         if(currentHealth <= 0 && !isDead)
             OnDeath();
     }
@@ -45,7 +56,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         //start coroutine that spawns explosions along ship
         StartCoroutine(SpawnExplosionsRoutine());
         
-        if(healthSO.reactorExplosionPrefab != null)
+        if(enemySO.reactorExplosionPrefab != null)
             StartCoroutine(SpawnReactorExplosion());
     }
 
@@ -58,11 +69,11 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             Vector3 explosionPos = new Vector3(Random.Range(meshCollider.bounds.min.x, meshCollider.bounds.max.x),
                 Random.Range(meshCollider.bounds.min.y, meshCollider.bounds.max.y),
                 Random.Range(meshCollider.bounds.min.z, meshCollider.bounds.max.z));
-            Instantiate(healthSO.explosionPrefab, explosionPos, Quaternion.identity);
+            Instantiate(enemySO.explosionPrefab, explosionPos, Quaternion.identity);
 
-            yield return new WaitForSeconds(healthSO.explosionFrequency);
+            yield return new WaitForSeconds(enemySO.explosionFrequency);
         } 
-        while ((Time.time - startTime) < healthSO.explosionDuration);
+        while ((Time.time - startTime) < enemySO.explosionDuration);
         
         //call reactor death at end of routine
         
@@ -71,8 +82,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     IEnumerator SpawnReactorExplosion()
     {
-        yield return new WaitForSeconds(healthSO.explosionDuration * .75f);
+        yield return new WaitForSeconds(enemySO.explosionDuration * .75f);
         
-        Instantiate(healthSO.reactorExplosionPrefab, transform.position, Quaternion.identity);
+        Instantiate(enemySO.reactorExplosionPrefab, transform.position, Quaternion.identity);
     }
 }

@@ -134,33 +134,33 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
 
     void Fire()
     {
-        foreach (MMAutoRotate barrel in barrels)
-        {
-            if(!barrel.enabled)
-                barrel.enabled = true;
-        }
-
-        if (needRaycast)
-        {
-            if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range,
-                    out RaycastHit hit, platformSO.projectileSO.range))
-            {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer(platformSO.projectileSO.targetLayerName))
-                {
-                    StartCoroutine(FireRoutine());
-                }
-
-                if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
-                {
-                    lastTimeOnTarget = Time.time;
-                    target = null;
-                }
-            }
-        }
-        else
-        {
-            StartCoroutine(FireRoutine());
-        }
+        // foreach (MMAutoRotate barrel in barrels)
+        // {
+        //     if(!barrel.enabled)
+        //         barrel.enabled = true;
+        // }
+        //
+        // if (needRaycast)
+        // {
+        //     if (Physics.Raycast(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range,
+        //             out RaycastHit hit, platformSO.projectileSO.range))
+        //     {
+        //         if (hit.collider.gameObject.layer == LayerMask.NameToLayer(platformSO.projectileSO.targetLayerName))
+        //         {
+        //             StartCoroutine(FireRoutine());
+        //         }
+        //
+        //         if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
+        //         {
+        //             lastTimeOnTarget = Time.time;
+        //             target = null;
+        //         }
+        //     }
+        // }
+        // else
+        // {
+        //     StartCoroutine(FireRoutine());
+        // }
     }
 
     IEnumerator FireRoutine()

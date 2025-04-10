@@ -264,11 +264,10 @@ public class EnemyMovement : MonoBehaviour
     
     [SerializeField] private EnemySO enemySO;
     [SerializeField] private Transform raycastOrigin;
-    [SerializeField] private GameObject posMarker;
-    [SerializeField] float rotateSpeed;
-    [SerializeField] private float radius;
 
     Vector3 targetPos;
+
+    private bool isDead;
     
     private void Start()
     {
@@ -277,14 +276,23 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        if(targetPos != null)
-            Debug.DrawRay(raycastOrigin.position, targetPos - raycastOrigin.position, Color.red);
-        
-        MoveTowardsTarget();
-        RotateTowardsTarget();
-        CheckDistanceToTarget();
+        if (!isDead)
+        {
+            MoveTowardsTarget();
+            RotateTowardsTarget();
+            CheckDistanceToTarget();
+        }
+        else
+        {
+            MoveForward();
+        }
     }
 
+    public void SetDead()
+    {
+        isDead = true;
+    }
+    
     IEnumerator SetNewPosition()
     {
         Vector3 potentialPos;
@@ -292,20 +300,14 @@ public class EnemyMovement : MonoBehaviour
         
         while (!foundTarget)
         {
-            potentialPos = Random.onUnitSphere * radius;
+            potentialPos = Random.insideUnitSphere * enemySO.movementRadius;
 
             if (IsLoSClear(potentialPos))
             {
-                Debug.Log("No obstacle found");
-                Instantiate(posMarker, potentialPos, Quaternion.identity);
                 targetPos = potentialPos;
                 foundTarget = true;
             }
-            else
-            {
-                Debug.Log("Obstacle found");
-            }
-
+            
             yield return new WaitForEndOfFrame();
         }
 
@@ -335,7 +337,7 @@ public class EnemyMovement : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(targetVector);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,
-                rotateSpeed * Time.deltaTime);
+                enemySO.turnSpeed * Time.deltaTime);
         }
     }
 
@@ -345,5 +347,10 @@ public class EnemyMovement : MonoBehaviour
         {
             StartCoroutine(SetNewPosition());
         }
+    }
+
+    void MoveForward()
+    {
+        transform.position += transform.forward * (enemySO.deathSpeed * Time.deltaTime);
     }
 }
