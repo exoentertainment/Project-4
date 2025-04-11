@@ -58,35 +58,35 @@ public class WeaponPlatformTurretAttack : MonoBehaviour, IPlatformInterface
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
     void SearchForTarget()
     {
-        if (target == null)
-        {
-            for (int i = 0; i < platformSO.targetPriorities.Length; i++)
-            {
-                Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range,
-                    platformSO.targetPriorities[i]);
-                
-                if (possibleTargets.Length > 0)
-                {
-                    float closestEnemy = platformSO.projectileSO.range;
-        
-                    for (int x = 0; x < possibleTargets.Length; x++)
-                    {
-                        float distanceToEnemy =
-                            Vector3.Distance(possibleTargets[x].transform.position, transform.position);
-        
-                        if (IsLoSClear(possibleTargets[x].gameObject))
-                            if (distanceToEnemy < closestEnemy && distanceToEnemy > platformSO.minRange)
-                            {
-                                closestEnemy = distanceToEnemy;
-                                target = possibleTargets[x].gameObject;
-                            }
-                    }
-        
-                    if (target != null)
-                        break;
-                }
-            }
-        }
+        // if (target == null)
+        // {
+        //     for (int i = 0; i < platformSO.targetPriorities.Length; i++)
+        //     {
+        //         Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range,
+        //             platformSO.targetPriorities[i]);
+        //         
+        //         if (possibleTargets.Length > 0)
+        //         {
+        //             float closestEnemy = platformSO.projectileSO.range;
+        //
+        //             for (int x = 0; x < possibleTargets.Length; x++)
+        //             {
+        //                 float distanceToEnemy =
+        //                     Vector3.Distance(possibleTargets[x].transform.position, transform.position);
+        //
+        //                 if (IsLoSClear(possibleTargets[x].gameObject))
+        //                     if (distanceToEnemy < closestEnemy && distanceToEnemy > platformSO.minRange)
+        //                     {
+        //                         closestEnemy = distanceToEnemy;
+        //                         target = possibleTargets[x].gameObject;
+        //                     }
+        //             }
+        //
+        //             if (target != null)
+        //                 break;
+        //         }
+        //     }
+        // }
     }
     
     //Check if the passed target is within line-of-sight. If it is, then return true

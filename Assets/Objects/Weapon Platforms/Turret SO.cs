@@ -3,6 +3,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon Platform SO", menuName = "Weapon Platform SO")]
 public class TurretSO : ScriptableObject
 {
+    #region --Phase 1 Variables--
+
+    public GameObject weaponPrefab;
+    public string weaponDescription;
+    public int UIScale;
+
+    #endregion
+    
+    #region --Attack Variables--
+
+    public BaseProjectileSO projectileSO;
+    public AudioClipSO fireSFX;
     public int damage;
     public float fireRate;
     public int cost;
@@ -11,24 +23,27 @@ public class TurretSO : ScriptableObject
     public int targetLoiterTime;
     public float barrelFireDelay;
     public int minRange;
-    public int UIScale;
-    
+    public LayerMask targetLayers;
+
     [Range(-1, 0)]
     public float trackingErrorMin;
     
     [Range(0, 1)]
     public float trackingErrorMax;
     
-    public LayerMask[] targetPriorities;
-    public LayerMask targetLayers;
-    
-    public string weaponDescription;
-    public BaseProjectileSO projectileSO;
-    public AudioClipSO fireSFX;
-    public GameObject weaponPrefab;
-    
     public float GetTrackingError()
     {
         return Random.Range(trackingErrorMin, trackingErrorMax);
     }
+    
+    #endregion
+
+    #region --Health Variables--
+
+    public int maxHealth;
+    public float explosionDuration;
+    public float explosionFrequency;
+    public GameObject explosionPrefab;
+
+    #endregion
 }

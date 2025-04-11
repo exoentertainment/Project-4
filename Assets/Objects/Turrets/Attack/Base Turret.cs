@@ -46,6 +46,7 @@ public class BaseTurret : MonoBehaviour
             if (target.activeSelf)
             {
                 Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
+                CheckDistanceToTarget();
                 RotateTowardsTarget();
                 Fire();
             }
@@ -132,7 +133,6 @@ public class BaseTurret : MonoBehaviour
         {
             lastTimeOnTarget = Time.time;
             target = null;
-            Debug.Log("Lost target");
         }
     }
     
@@ -168,7 +168,7 @@ public class BaseTurret : MonoBehaviour
     {
         float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
-        if (distanceToTarget < platformSO.minRange)
+        if (distanceToTarget > platformSO.projectileSO.range)
             target = null;
     }
     

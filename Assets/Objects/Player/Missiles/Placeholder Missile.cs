@@ -116,6 +116,7 @@ public class PlaceholderMissile : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(missileSO.duration);
         
+        Instantiate(missileSO.impactPrefab, transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
 }

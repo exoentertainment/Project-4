@@ -209,7 +209,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1042700233761527556}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f009572b4d918346b24337ef83f88c1, type: 3}
   m_Name: 
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3454122382167275924}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f009572b4d918346b24337ef83f88c1, type: 3}
   m_Name: 
@@ -656,6 +656,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7263113908587046737}
+    - targetCorrespondingSourceObject: {fileID: 1576628434390230528, guid: 5ea86acff5d3a47449a3d4c6611bc74d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6783406658555688673}
   m_SourcePrefab: {fileID: 100100000, guid: 5ea86acff5d3a47449a3d4c6611bc74d, type: 3}
 --- !u!4 &2125843682078264524 stripped
 Transform:
@@ -682,7 +686,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7033345753994927868}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 724763b3868e072448b0275832e2605f, type: 3}
   m_Name: 
@@ -698,6 +702,7 @@ MonoBehaviour:
   - {fileID: 7109514052421811203}
   raycastOrigin: {fileID: 6656579978570823158}
   doesRotate: 1
+  needRaycast: 0
 --- !u!54 &4419061105430576856
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -746,3 +751,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6.4708304, y: 5.144303, z: 5.2907443}
   m_Center: {x: -0.7576587, y: 2.0721514, z: -1.3750789}
+--- !u!114 &6783406658555688673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7033345753994927868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fb680dbf02eb514791cd6ef69f9c3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformSO: {fileID: 11400000, guid: b35896bf9d7a7e938a74c4cbf32afbf7, type: 2}
+  platformBase: {fileID: 7033345753570420905}
+  platformTurret: {fileID: 2125843682078264524}
+  spawnPoints:
+  - {fileID: 2686152575378098738}
+  - {fileID: 7109514052421811203}
+  raycastOrigin: {fileID: 6656579978570823158}

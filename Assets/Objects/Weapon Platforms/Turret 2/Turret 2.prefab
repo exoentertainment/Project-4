@@ -82,6 +82,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1576628434390230535}
   - component: {fileID: 3405321046299568789}
+  - component: {fileID: 4641181706007261243}
+  - component: {fileID: 4796133984607660418}
   m_Layer: 12
   m_Name: Turret 2
   m_TagString: Untagged
@@ -118,9 +120,31 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576628434390230528}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 724763b3868e072448b0275832e2605f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformSO: {fileID: 11400000, guid: 2484274be87d5ea4196b4344a91b04e8, type: 2}
+  barrels: []
+  platformBase: {fileID: 1576628433739550805}
+  platformTurret: {fileID: 7636620726401381424}
+  spawnPoints:
+  - {fileID: 6830906922913915121}
+  - {fileID: 6335153605210134318}
+  raycastOrigin: {fileID: 1212922510991490678}
+  doesRotate: 0
+  needRaycast: 0
+--- !u!114 &4641181706007261243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576628434390230528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1890d1cf9c0326534b3655c3a60ebaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   platformSO: {fileID: 11400000, guid: 2484274be87d5ea4196b4344a91b04e8, type: 2}
@@ -130,7 +154,22 @@ MonoBehaviour:
   - {fileID: 6830906922913915121}
   - {fileID: 6335153605210134318}
   raycastOrigin: {fileID: 1212922510991490678}
-  trackingSpeed: 0.5
+--- !u!114 &4796133984607660418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576628434390230528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3165ccc2ba11bbb89b91114c0c97a7a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObjects: []
+  objectToPool: {fileID: 1298173687816790, guid: ed81a9b813be3047595ac3ee9e5b5e35,
+    type: 3}
+  amountToPool: 20
 --- !u!1 &4226179521816464062
 GameObject:
   m_ObjectHideFlags: 0
