@@ -1,16 +1,45 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class BaseTurretHealth : MonoBehaviour
+public class BaseTurretHealth : MonoBehaviour, IDamageable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private TurretSO turretSO;
+    [SerializeField] UnityEvent onDeath;
+
+    private float currentHealth;
+
+    private bool isDead;
+    private bool isHit;
+
+    private void Start()
     {
-        
+        currentHealth = turretSO.maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        isHit = false;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (!isHit)
+        {
+            Debug.Log("hit");
+            isHit = true;
+            //currentHealth -= damage;
+        }
         
+        if(currentHealth <= 0 && !isDead)
+            OnDeath();
+    }
+
+    void OnDeath()
+    {
+        isDead = true;
+        
+        //Invoke onDeath event
+        onDeath?.Invoke();
     }
 }

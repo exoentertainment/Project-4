@@ -17,6 +17,8 @@ public class BaseTurret : MonoBehaviour
     [SerializeField] protected Transform[] spawnPoints;
     [SerializeField] protected Transform raycastOrigin;
 
+    [SerializeField] private LayerMask selfLayer;
+
     #endregion
 
     protected GameObject target;
@@ -45,7 +47,7 @@ public class BaseTurret : MonoBehaviour
         {
             if (target.activeSelf)
             {
-                Debug.DrawRay(raycastOrigin.position, raycastOrigin.forward * platformSO.projectileSO.range, Color.red);
+                Debug.DrawRay(target.transform.position, raycastOrigin.position - target.transform.position, Color.red);
                 CheckDistanceToTarget();
                 RotateTowardsTarget();
                 Fire();
@@ -86,14 +88,24 @@ public class BaseTurret : MonoBehaviour
     //Check if the passed target is within line-of-sight. If it is, then return true
     protected bool IsLoSClear(GameObject obj)
     {
-        if (Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position, out RaycastHit hit, platformSO.projectileSO.range))
-        {
-            if (hit.collider.gameObject == obj)
-            {
-                lastTimeOnTarget = Time.time;
-                return true;
-            }
-        }
+        // // RaycastHit[] hits = Physics.RaycastAll(raycastOrigin.position, target.transform.position - raycastOrigin.position, platformSO.projectileSO.range);
+        // RaycastHit[] hits = Physics.RaycastAll(target.transform.position, raycastOrigin.position - target.transform.position, platformSO.projectileSO.range);
+        //
+        // if(hits.Length > 0)
+        //     Debug.Log(hits[0].collider.gameObject.name);
+        
+        if(Physics.Linecast(raycastOrigin.position, target.transform.position, out RaycastHit hit))
+            Debug.Log(hit.collider.gameObject.name);
+        // if (Physics.Raycast(target.transform.position, raycastOrigin.position - target.transform.position, out RaycastHit hit, platformSO.projectileSO.range))
+        // {
+        //     // if (hit.collider.gameObject == obj)
+        //     if (hit.collider.gameObject == gameObject)
+        //     {
+        //         Debug.Log(hit.collider.gameObject.name);
+        //         lastTimeOnTarget = Time.time;
+        //         return true;
+        //     }
+        // }
         
         return false;
     }
@@ -123,11 +135,9 @@ public class BaseTurret : MonoBehaviour
     
     protected void Fire()
     {
-        if(IsLoSClear(target))
-        {
-            if ((Time.time - lastFireTime) > platformSO.fireRate)
+        if ((Time.time - lastFireTime) > platformSO.fireRate)
+            if(IsLoSClear(target))
                 StartCoroutine(FireRoutine());
-        }
 
         if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
         {

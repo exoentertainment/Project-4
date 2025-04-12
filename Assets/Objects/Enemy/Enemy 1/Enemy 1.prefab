@@ -431,8 +431,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySO: {fileID: 11400000, guid: 34d8d07af86d09f30aaa1425b3cc5314, type: 2}
   raycastOrigin: {fileID: 4084556550082422345}
-  rotateSpeed: 1
-  radius: 150
 --- !u!64 &1463098531835576874
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -791,7 +789,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3405321046299568789, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4202502236814301709, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 4491866841153831712, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 7296841760180238050, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 4498321356814748547, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 1216218609893231650, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 6537369759561520384, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 9003961081176779502, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 9003961080932050466, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 9003961080474926797, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 9003961079713694195, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 6253776315213444184, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
+    - {fileID: 8763864669234456695, guid: 6e0cf1a05fde35b38b100f4024c1dce5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1576628434390230528, guid: 6e0cf1a05fde35b38b100f4024c1dce5,
@@ -834,6 +844,9 @@ MonoBehaviour:
   - {fileID: 8915659779243257402}
   - {fileID: 8258603708302465509}
   raycastOrigin: {fileID: 3865111483339419837}
+  selfLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &8722575255924704450
 MonoBehaviour:
   m_ObjectHideFlags: 0
