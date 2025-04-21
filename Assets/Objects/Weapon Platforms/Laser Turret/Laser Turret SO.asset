@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6890d21f12f409f15958408f9127096e, type: 3}
-  m_Name: Test Platform 1
+  m_Name: Laser Turret SO
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1370689007959718, guid: f2936e4ca0d34975ab433d8eb8518931,
     type: 3}

@@ -6,6 +6,7 @@ using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
 
+[RequireComponent(typeof(ObjectPool))]
 public class BaseTurret : MonoBehaviour
 {
     #region --Serialized Fields
@@ -47,7 +48,8 @@ public class BaseTurret : MonoBehaviour
         {
             if (target.activeSelf)
             {
-                Debug.DrawRay(target.transform.position, raycastOrigin.position - target.transform.position, Color.red);
+                //Debug.DrawRay(target.transform.position, raycastOrigin.position - target.transform.position, Color.red);
+                Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * 100), Color.red);
                 CheckDistanceToTarget();
                 RotateTowardsTarget();
                 Fire();
@@ -62,7 +64,7 @@ public class BaseTurret : MonoBehaviour
     }
     
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
-    protected void SearchForTarget()
+    protected virtual void SearchForTarget()
     {
         Collider[] possibleTargets = Physics.OverlapSphere(transform.position, platformSO.projectileSO.range, platformSO.projectileSO.targetLayers);
         
@@ -86,26 +88,18 @@ public class BaseTurret : MonoBehaviour
     }
     
     //Check if the passed target is within line-of-sight. If it is, then return true
-    protected bool IsLoSClear(GameObject obj)
+    protected virtual bool IsLoSClear(GameObject obj)
     {
-        // // RaycastHit[] hits = Physics.RaycastAll(raycastOrigin.position, target.transform.position - raycastOrigin.position, platformSO.projectileSO.range);
-        // RaycastHit[] hits = Physics.RaycastAll(target.transform.position, raycastOrigin.position - target.transform.position, platformSO.projectileSO.range);
-        //
-        // if(hits.Length > 0)
-        //     Debug.Log(hits[0].collider.gameObject.name);
-        
-        if(Physics.Linecast(raycastOrigin.position, target.transform.position, out RaycastHit hit))
+        // if(Physics.Linecast(raycastOrigin.position, target.transform.position, out RaycastHit hit))
+        if(Physics.Linecast(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), out RaycastHit hit))
+        {
             Debug.Log(hit.collider.gameObject.name);
-        // if (Physics.Raycast(target.transform.position, raycastOrigin.position - target.transform.position, out RaycastHit hit, platformSO.projectileSO.range))
-        // {
-        //     // if (hit.collider.gameObject == obj)
-        //     if (hit.collider.gameObject == gameObject)
-        //     {
-        //         Debug.Log(hit.collider.gameObject.name);
-        //         lastTimeOnTarget = Time.time;
-        //         return true;
-        //     }
-        // }
+            if (hit.collider.gameObject == target)
+            {
+                lastTimeOnTarget = Time.time;
+                return true;
+            }
+        }
         
         return false;
     }
@@ -118,10 +112,10 @@ public class BaseTurret : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(targetVector);
         targetRotation.eulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
         float baseYRotation = targetRotation.eulerAngles.y;
-
+        
         platformBase.rotation = Quaternion.SlerpUnclamped(platformBase.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime);
         currentRotation.y = platformBase.rotation.eulerAngles.y;
-
+        
         
         targetVector = target.transform.position - platformTurret.transform.position;
         targetVector.Normalize();
@@ -174,7 +168,7 @@ public class BaseTurret : MonoBehaviour
             AudioManager.instance.PlaySound(platformSO.fireSFX);
     }
     
-    protected void CheckDistanceToTarget()
+    protected virtual void CheckDistanceToTarget()
     {
         float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
