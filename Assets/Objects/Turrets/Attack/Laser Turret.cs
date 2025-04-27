@@ -6,18 +6,20 @@ public class LaserTurret : BaseTurret
 {
     #region --Serialized Fields--
 
+    //[SerializeField] LineRenderer lineRenderer;
+    [SerializeField] GameObject laserImpactPrefab;
     [SerializeField] private float laserDuration;
     [SerializeField] private int laserRange;
 
     #endregion
     
     LineRenderer lineRenderer;
+    bool isFiring;
     
     void Awake()
     {
         base.Awake();
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, spawnPoints[0].transform.position);
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,7 +37,7 @@ public class LaserTurret : BaseTurret
         {
             if (target.activeSelf)
             {
-                UpdateLineRenderer();
+                // UpdateLineRenderer();
             }
         }
     }
@@ -53,8 +55,7 @@ public class LaserTurret : BaseTurret
             {
                 float distanceToEnemy =
                     Vector3.Distance(possibleTargets[x].transform.position, transform.position);
-
-                //if (IsLoSClear(possibleTargets[x].gameObject))
+                
                 if (distanceToEnemy < closestEnemy)
                 {
                     closestEnemy = distanceToEnemy;
@@ -83,20 +84,47 @@ public class LaserTurret : BaseTurret
     {
         float distanceToTarget = Vector3.Distance(spawnPoints[0].transform.position, target.transform.position);
         lineRenderer.SetPosition(1, spawnPoints[0].transform.position + (spawnPoints[0].transform.forward * distanceToTarget));
+        lineRenderer.SetPosition(0, spawnPoints[0].transform.position);
     }
     
     protected override IEnumerator FireRoutine()
     {
-        lineRenderer.enabled = true;
+        if (!isFiring)
+        {
+            isFiring = true;
+            UpdateLineRenderer();
+            StartCoroutine(SpawnLaserHitsRoutine());
+            lineRenderer.enabled = true;
+            lastTimeOnTarget = Time.time;
         
-        lastTimeOnTarget = Time.time;
+
         
-        yield return new WaitForSeconds(laserDuration);
+            yield return new WaitForSeconds(laserDuration);
         
-        lastFireTime = Time.time;
-        lineRenderer.enabled = false;
+            isFiring = false;
+            lastFireTime = Time.time;
+            lineRenderer.enabled = false;
+        }
     }
-    
+
+    IEnumerator SpawnLaserHitsRoutine()
+    {
+        while (isFiring)
+        {
+            if(Physics.Linecast(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), out RaycastHit hit))
+            {
+                if(laserImpactPrefab != null)
+                    Instantiate(laserImpactPrefab, hit.point, Quaternion.identity);
+            }
+            
+            target.TryGetComponent<IDamageable>(out IDamageable targetHit);
+            if (targetHit != null)
+                targetHit.TakeDamage(platformSO.damage * Time.deltaTime);
+            
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     protected override void CheckDistanceToTarget()
     {
         float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);

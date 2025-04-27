@@ -264,6 +264,7 @@ public class EnemyMovement : MonoBehaviour
     
     [SerializeField] private EnemySO enemySO;
     [SerializeField] private Transform raycastOrigin;
+    [SerializeField] private int raycastRange;
 
     Vector3 targetPos;
 
@@ -315,7 +316,7 @@ public class EnemyMovement : MonoBehaviour
 
     bool IsLoSClear(Vector3 pos)
     {
-        if (!Physics.Raycast(raycastOrigin.position, pos - raycastOrigin.position, out RaycastHit hit))
+        if (!Physics.Raycast(raycastOrigin.position, pos - raycastOrigin.position, out RaycastHit hit, raycastRange))
         {
             return true;
         }

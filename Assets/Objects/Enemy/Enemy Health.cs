@@ -38,6 +38,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         if (!isHit)
         {
+            Debug.Log(damage);
             currentHealth -= damage;
             isHit = true;
         }
@@ -63,12 +64,18 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     IEnumerator SpawnExplosionsRoutine()
     {
         float startTime = Time.time;
+        Collider[] colliders = GetComponentsInChildren<Collider>();
 
         do
         {
-            Vector3 explosionPos = new Vector3(Random.Range(meshCollider.bounds.min.x, meshCollider.bounds.max.x),
-                Random.Range(meshCollider.bounds.min.y, meshCollider.bounds.max.y),
-                Random.Range(meshCollider.bounds.min.z, meshCollider.bounds.max.z));
+            int randomCollider = Random.Range(0, colliders.Length);
+            Vector3 explosionPos = new Vector3(Random.Range(colliders[randomCollider].bounds.min.x, colliders[randomCollider].bounds.max.x),
+                Random.Range(colliders[randomCollider].bounds.min.y, colliders[randomCollider].bounds.max.y),
+                Random.Range(colliders[randomCollider].bounds.min.z, colliders[randomCollider].bounds.max.z));
+            
+            // Vector3 explosionPos = new Vector3(Random.Range(meshCollider.bounds.min.x, meshCollider.bounds.max.x),
+            //     Random.Range(meshCollider.bounds.min.y, meshCollider.bounds.max.y),
+            //     Random.Range(meshCollider.bounds.min.z, meshCollider.bounds.max.z));
             Instantiate(enemySO.explosionPrefab, explosionPos, Quaternion.identity);
 
             yield return new WaitForSeconds(enemySO.explosionFrequency);

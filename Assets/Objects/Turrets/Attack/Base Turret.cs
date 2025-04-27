@@ -18,8 +18,6 @@ public class BaseTurret : MonoBehaviour
     [SerializeField] protected Transform[] spawnPoints;
     [SerializeField] protected Transform raycastOrigin;
 
-    [SerializeField] private LayerMask selfLayer;
-
     #endregion
 
     protected GameObject target;
@@ -93,7 +91,6 @@ public class BaseTurret : MonoBehaviour
         // if(Physics.Linecast(raycastOrigin.position, target.transform.position, out RaycastHit hit))
         if(Physics.Linecast(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), out RaycastHit hit))
         {
-            Debug.Log(hit.collider.gameObject.name);
             if (hit.collider.gameObject == target)
             {
                 lastTimeOnTarget = Time.time;
@@ -116,14 +113,16 @@ public class BaseTurret : MonoBehaviour
         platformBase.rotation = Quaternion.SlerpUnclamped(platformBase.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime);
         currentRotation.y = platformBase.rotation.eulerAngles.y;
         
-        
         targetVector = target.transform.position - platformTurret.transform.position;
         targetVector.Normalize();
         targetRotation = Quaternion.LookRotation(targetVector);
         
         if ((baseYRotation - currentRotation.y) < 10f)
         {
-            platformTurret.rotation = Quaternion.SlerpUnclamped(platformTurret.rotation, targetRotation, platformSO.barrelTrackingSpeed * Time.deltaTime);
+            Quaternion newRotation = Quaternion.SlerpUnclamped(platformTurret.rotation, targetRotation, platformSO.barrelTrackingSpeed * Time.deltaTime);
+            float newX = Mathf.Clamp(newRotation.eulerAngles.x, -90f, 20f);
+            newRotation.eulerAngles = new Vector3(newX, newRotation.eulerAngles.y, newRotation.eulerAngles.z);
+            platformTurret.rotation = newRotation;
         }
     }
     

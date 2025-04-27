@@ -81,7 +81,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1576628434390230535}
-  - component: {fileID: 3405321046299568789}
+  - component: {fileID: 6485928453828843133}
+  - component: {fileID: 8483490661994267766}
   m_Layer: 7
   m_Name: Turret 2
   m_TagString: Untagged
@@ -99,7 +100,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 849488820962901188}
@@ -111,7 +112,7 @@ Transform:
   - {fileID: 1576628433739550805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3405321046299568789
+--- !u!114 &6485928453828843133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,19 +121,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1576628434390230528}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724763b3868e072448b0275832e2605f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3165ccc2ba11bbb89b91114c0c97a7a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformSO: {fileID: 11400000, guid: 2484274be87d5ea4196b4344a91b04e8, type: 2}
-  barrels: []
+  pooledObjects: []
+  objectToPool: {fileID: 0}
+  amountToPool: 0
+--- !u!114 &8483490661994267766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576628434390230528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1890d1cf9c0326534b3655c3a60ebaa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformSO: {fileID: 11400000, guid: 380f2d3864454744f9ffc7718c0f57fa, type: 2}
   platformBase: {fileID: 1576628433739550805}
   platformTurret: {fileID: 7636620726401381424}
   spawnPoints:
   - {fileID: 6830906922913915121}
   - {fileID: 6335153605210134318}
   raycastOrigin: {fileID: 1212922510991490678}
-  doesRotate: 0
-  needRaycast: 0
 --- !u!1 &4226179521816464062
 GameObject:
   m_ObjectHideFlags: 0
