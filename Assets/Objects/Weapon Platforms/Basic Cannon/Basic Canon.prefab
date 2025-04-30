@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 728410055378084991}
   - component: {fileID: 8906259133806531931}
   m_Layer: 12
-  m_Name: Turret 1
+  m_Name: Basic Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,6 +138,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 7117506352843742850}
   raycastOrigin: {fileID: 7117506352843742850}
+  barrelDeclineLimit: 0
 --- !u!114 &728410055378084991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +154,7 @@ MonoBehaviour:
   pooledObjects: []
   objectToPool: {fileID: 1846563170864394, guid: b02b6d188fd69898dab4a9c1000546ff,
     type: 3}
-  amountToPool: 20
+  amountToPool: 5
 --- !u!114 &8906259133806531931
 MonoBehaviour:
   m_ObjectHideFlags: 0

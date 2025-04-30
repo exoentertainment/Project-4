@@ -21,7 +21,7 @@ MonoBehaviour:
   damage: 1
   fireRate: 1
   cost: 1
-  baseTrackingSpeed: 1
+  baseTrackingSpeed: 1.5
   barrelTrackingSpeed: 1.5
   targetLoiterTime: 5
   barrelFireDelay: 0.25

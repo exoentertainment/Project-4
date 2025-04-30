@@ -38,7 +38,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         if (!isHit)
         {
-            Debug.Log(damage);
             currentHealth -= damage;
             isHit = true;
         }

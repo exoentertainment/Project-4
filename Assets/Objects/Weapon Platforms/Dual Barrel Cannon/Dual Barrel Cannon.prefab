@@ -416,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 1576628434390230528, guid: 5ea86acff5d3a47449a3d4c6611bc74d,
         type: 3}
       propertyPath: m_Name
-      value: Turret 3
+      value: Dual Barrel Cannon
       objectReference: {fileID: 0}
     - target: {fileID: 1576628434390230528, guid: 5ea86acff5d3a47449a3d4c6611bc74d,
         type: 3}
@@ -647,10 +647,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1576628434390230528, guid: 5ea86acff5d3a47449a3d4c6611bc74d,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8812221231985087512}
-    - targetCorrespondingSourceObject: {fileID: 1576628434390230528, guid: 5ea86acff5d3a47449a3d4c6611bc74d,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4419061105430576856}
     - targetCorrespondingSourceObject: {fileID: 1576628434390230528, guid: 5ea86acff5d3a47449a3d4c6611bc74d,
         type: 3}
@@ -660,6 +656,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6783406658555688673}
+    - targetCorrespondingSourceObject: {fileID: 1576628434390230528, guid: 5ea86acff5d3a47449a3d4c6611bc74d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2080359962651447003}
   m_SourcePrefab: {fileID: 100100000, guid: 5ea86acff5d3a47449a3d4c6611bc74d, type: 3}
 --- !u!4 &2125843682078264524 stripped
 Transform:
@@ -679,30 +679,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8393084111295789308}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8812221231985087512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7033345753994927868}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724763b3868e072448b0275832e2605f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platformSO: {fileID: 11400000, guid: b35896bf9d7a7e938a74c4cbf32afbf7, type: 2}
-  barrels:
-  - {fileID: 8935477670082564088}
-  - {fileID: 473710960963783038}
-  platformBase: {fileID: 7033345753570420905}
-  platformTurret: {fileID: 2125843682078264524}
-  spawnPoints:
-  - {fileID: 2686152575378098738}
-  - {fileID: 7109514052421811203}
-  raycastOrigin: {fileID: 6656579978570823158}
-  doesRotate: 1
-  needRaycast: 0
 --- !u!54 &4419061105430576856
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -770,3 +746,20 @@ MonoBehaviour:
   - {fileID: 2686152575378098738}
   - {fileID: 7109514052421811203}
   raycastOrigin: {fileID: 6656579978570823158}
+  barrelDeclineLimit: 0
+--- !u!114 &2080359962651447003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7033345753994927868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3165ccc2ba11bbb89b91114c0c97a7a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObjects: []
+  objectToPool: {fileID: 1846563170864394, guid: eca4269783511bf76a56558c4fe2a1ba,
+    type: 3}
+  amountToPool: 20

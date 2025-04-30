@@ -12,25 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6890d21f12f409f15958408f9127096e, type: 3}
   m_Name: Test Platform 3
   m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 7033345753994927868, guid: 0339b9558e1c786bbbddd5b49fb8b7e5,
+    type: 3}
+  weaponDescription: Test Platform 3
+  UIScale: 20
+  projectileSO: {fileID: 11400000, guid: 6139274d55b6cc03fa9d3adb111774f3, type: 2}
+  fireSFX: {fileID: 11400000, guid: f16d23300e345e271ae6baf8a21a166b, type: 2}
   damage: 1
   fireRate: 0.25
   cost: 1
-  baseTrackingSpeed: 3
-  barrelTrackingSpeed: 3
-  targetLoiterTime: 5
+  baseTrackingSpeed: 2
+  barrelTrackingSpeed: 2
+  targetLoiterTime: 3
   barrelFireDelay: 0.25
   minRange: 15
-  UIScale: 20
-  trackingErrorMin: -0.1
-  trackingErrorMax: 0.1
-  targetPriorities:
-  - serializedVersion: 2
-    m_Bits: 128
   targetLayers:
     serializedVersion: 2
     m_Bits: 128
-  weaponDescription: Test Platform 3
-  projectileSO: {fileID: 11400000, guid: 6139274d55b6cc03fa9d3adb111774f3, type: 2}
-  fireSFX: {fileID: 11400000, guid: f16d23300e345e271ae6baf8a21a166b, type: 2}
-  weaponPrefab: {fileID: 7033345753994927868, guid: 0339b9558e1c786bbbddd5b49fb8b7e5,
-    type: 3}
+  trackingErrorMin: -0.1
+  trackingErrorMax: 0.1
+  maxHealth: 5
+  explosionDuration: 0
+  explosionFrequency: 0
+  explosionPrefab: {fileID: 0}

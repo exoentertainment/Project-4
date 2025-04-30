@@ -21,12 +21,6 @@ public class LaserTurret : BaseTurret
         base.Awake();
         lineRenderer = GetComponent<LineRenderer>();
     }
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        base.Start();
-    }
 
     // Update is called once per frame
     void Update()
@@ -37,7 +31,7 @@ public class LaserTurret : BaseTurret
         {
             if (target.activeSelf)
             {
-                // UpdateLineRenderer();
+                UpdateLineRenderer();
             }
         }
     }
@@ -65,26 +59,30 @@ public class LaserTurret : BaseTurret
         }
     }
     
-    protected override bool IsLoSClear(GameObject obj)
-    {
-        // if(Physics.Linecast(raycastOrigin.position, target.transform.position, out RaycastHit hit))
-        if(Physics.Linecast(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * laserRange), out RaycastHit hit))
-        {
-            if (hit.collider.gameObject == target)
-            {
-                lastTimeOnTarget = Time.time;
-                return true;
-            }
-        }
-        
-        return false;
-    }
+    // protected override bool IsLoSClear(GameObject obj)
+    // {
+    //     // if(Physics.Linecast(raycastOrigin.position, target.transform.position, out RaycastHit hit))
+    //     if(Physics.Linecast(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * laserRange), out RaycastHit hit))
+    //     {
+    //         if (hit.collider.gameObject == target)
+    //         {
+    //             lastTimeOnTarget = Time.time;
+    //             return true;
+    //         }
+    //     }
+    //     
+    //     return false;
+    // }
     
     void UpdateLineRenderer()
     {
-        float distanceToTarget = Vector3.Distance(spawnPoints[0].transform.position, target.transform.position);
-        lineRenderer.SetPosition(1, spawnPoints[0].transform.position + (spawnPoints[0].transform.forward * distanceToTarget));
-        lineRenderer.SetPosition(0, spawnPoints[0].transform.position);
+        if (isFiring)
+        {
+            float distanceToTarget = Vector3.Distance(spawnPoints[0].transform.position, target.transform.position);
+            lineRenderer.SetPosition(1,
+                spawnPoints[0].transform.position + (spawnPoints[0].transform.forward * distanceToTarget));
+            lineRenderer.SetPosition(0, spawnPoints[0].transform.position);
+        }
     }
     
     protected override IEnumerator FireRoutine()
@@ -92,13 +90,10 @@ public class LaserTurret : BaseTurret
         if (!isFiring)
         {
             isFiring = true;
-            UpdateLineRenderer();
             StartCoroutine(SpawnLaserHitsRoutine());
             lineRenderer.enabled = true;
             lastTimeOnTarget = Time.time;
-        
-
-        
+            
             yield return new WaitForSeconds(laserDuration);
         
             isFiring = false;

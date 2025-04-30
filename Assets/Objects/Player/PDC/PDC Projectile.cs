@@ -5,19 +5,11 @@ using System.Collections;
 public class PDCProjectile : MonoBehaviour
 {
     [SerializeField] BaseProjectileSO projectileSO;
-
-    private bool isActivated;
-
+    
     // Update is called once per frame
     void Update()
     {
         Move();
-
-        if (!isActivated)
-        {
-            isActivated = true;
-            StartCoroutine(DeactivateRoutine());
-        }
     }
 
     void Move()
@@ -29,7 +21,6 @@ public class PDCProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(projectileSO.duration);
         
-        isActivated = false;
         gameObject.SetActive(false);
     }
 
@@ -41,5 +32,10 @@ public class PDCProjectile : MonoBehaviour
         other.gameObject.GetComponent<IDamageable>()?.TakeDamage(projectileSO.damage);
         
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(DeactivateRoutine());
     }
 }
