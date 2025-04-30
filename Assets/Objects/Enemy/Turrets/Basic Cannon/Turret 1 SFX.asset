@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Turret 1 SFX
   m_EditorClassIdentifier: 
   audioType: 0
-  audioMixer: {fileID: 4797775633348784603, guid: 507d820722cf65e11a947273114200c9,
+  audioMixer: {fileID: -3165942800488051908, guid: 7e984f512e89b60468e829489e8883e3,
     type: 2}
   clip: {fileID: 8300000, guid: f13b7c6d237c9cac58535729ef5c3e87, type: 3}
-  volume: 0.2
+  volume: 1
   pitch: 1
   loop: 0

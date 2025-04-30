@@ -22,6 +22,7 @@ public class BaseTurret : MonoBehaviour
     #endregion
 
     protected GameObject target;
+    protected GameObject priorTarget;
     protected float lastFireTime;
     protected float lastTimeOnTarget;
     
@@ -72,8 +73,11 @@ public class BaseTurret : MonoBehaviour
                 //if (IsLoSClear(possibleTargets[x].gameObject))
                     if (distanceToEnemy < closestEnemy)
                     {
-                        closestEnemy = distanceToEnemy;
-                        target = possibleTargets[x].transform.root.gameObject;
+                        if (possibleTargets[x].transform.root.gameObject != priorTarget)
+                        {
+                            closestEnemy = distanceToEnemy;
+                            target = possibleTargets[x].transform.root.gameObject;
+                        }
                     }
             }
 
@@ -145,6 +149,7 @@ public class BaseTurret : MonoBehaviour
 
         if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
         {
+            priorTarget = target;
             target = null;
         }
     }

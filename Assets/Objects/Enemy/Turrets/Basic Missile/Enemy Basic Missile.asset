@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6890d21f12f409f15958408f9127096e, type: 3}
+  m_Name: Enemy Basic Missile
+  m_EditorClassIdentifier: 
+  damage: 2
+  fireRate: 2
+  cost: 2
+  baseTrackingSpeed: 1
+  barrelTrackingSpeed: 1
+  targetLoiterTime: 2
+  barrelFireDelay: 0.25
+  minRange: 0
+  UIScale: 20
+  targetPriorities:
+  - serializedVersion: 2
+    m_Bits: 128
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  weaponDescription: Test Platform 2
+  projectileSO: {fileID: 11400000, guid: c2fcc72f43120b912854bba755299720, type: 2}
+  fireSFX: {fileID: 11400000, guid: 7ff7367ce75f32e438149abf94cabc5a, type: 2}
+  weaponPrefab: {fileID: 1576628434390230528, guid: 14459a70bb3cbc076bb5ead2ae7d2fe9,
+    type: 3}

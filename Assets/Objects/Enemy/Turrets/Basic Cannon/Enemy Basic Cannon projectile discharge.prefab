@@ -4882,7 +4882,7 @@ GameObject:
   - component: {fileID: 3250107574246426392}
   - component: {fileID: 9139139045611120446}
   m_Layer: 0
-  m_Name: Turret 1 projectile discharge
+  m_Name: Enemy Basic Cannon projectile discharge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

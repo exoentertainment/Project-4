@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa552dec989416e7902f70e4750ebd2, type: 3}
+  m_Name: Placeholder Turret Projectile
+  m_EditorClassIdentifier: 
+  speed: 250
+  damage: 0
+  duration: 2
+  range: 150
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  projectilePrefab: {fileID: 1846563170864394, guid: 4910e22506e666714a10c8585211c300,
+    type: 3}
+  dischargePrefab: {fileID: 1232470965182556, guid: b9e646458f54a20f0941d33c6e196d22,
+    type: 3}
+  impactPrefab: {fileID: 1576947433937734, guid: c93180d7485e47719bb93f37532f503c,
+    type: 3}

@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 6485928453828843133}
   - component: {fileID: 8483490661994267766}
   m_Layer: 7
-  m_Name: Turret 2
+  m_Name: Basic Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

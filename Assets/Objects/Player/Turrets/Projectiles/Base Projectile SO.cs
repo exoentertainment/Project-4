@@ -8,9 +8,7 @@ public class BaseProjectileSO : ScriptableObject
     public int duration;
     public int range;
     
-    public LayerMask[] targetPriorities;
     public LayerMask targetLayers;
-    //public string targetLayerName;
     public GameObject projectilePrefab;
     public GameObject dischargePrefab;
     public GameObject impactPrefab;
