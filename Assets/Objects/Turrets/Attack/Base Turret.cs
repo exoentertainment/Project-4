@@ -73,19 +73,16 @@ public class BaseTurret : MonoBehaviour
                 //if (IsLoSClear(possibleTargets[x].gameObject))
                     if (distanceToEnemy < closestEnemy)
                     {
-                        if (possibleTargets[x].transform.root.gameObject != priorTarget)
-                        {
                             closestEnemy = distanceToEnemy;
                             target = possibleTargets[x].transform.root.gameObject;
-                        }
                     }
             }
+        }
 
-            if (target != null)
-            {
-                lastFireTime = Time.time;
-                lastTimeOnTarget = Time.time;
-            }
+        if (target != null)
+        {
+            lastFireTime = Time.time;
+            lastTimeOnTarget = Time.time;
         }
     }
     
@@ -149,6 +146,7 @@ public class BaseTurret : MonoBehaviour
 
         if ((Time.time - lastTimeOnTarget) >= platformSO.targetLoiterTime)
         {
+            Debug.Log("target lost");
             priorTarget = target;
             target = null;
         }

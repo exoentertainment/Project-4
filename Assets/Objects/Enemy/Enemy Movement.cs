@@ -267,9 +267,15 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private int raycastRange;
 
     Vector3 targetPos;
+    Rigidbody rigidbody;
 
     private bool isDead;
-    
+
+    private void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody>();
+    }
+
     private void Start()
     {
         StartCoroutine(SetNewPosition());
@@ -279,13 +285,22 @@ public class EnemyMovement : MonoBehaviour
     {
         if (!isDead)
         {
-            MoveTowardsTarget();
-            RotateTowardsTarget();
+            //MoveTowardsTarget();
+            // RotateTowardsTarget();
             CheckDistanceToTarget();
         }
         else
         {
             MoveForward();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isDead)
+        {
+            MoveTowardsTarget();
+            RotateTowardsTarget();
         }
     }
 
@@ -326,7 +341,8 @@ public class EnemyMovement : MonoBehaviour
 
     void MoveTowardsTarget()
     {
-        transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
+        //transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
+        rigidbody.MovePosition(transform.position + transform.forward * enemySO.moveSpeed * Time.deltaTime);
     }
 
     void RotateTowardsTarget()
@@ -337,8 +353,10 @@ public class EnemyMovement : MonoBehaviour
             targetVector.Normalize();
             Quaternion targetRotation = Quaternion.LookRotation(targetVector);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,
-                enemySO.turnSpeed * Time.deltaTime);
+            rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation,
+                enemySO.turnSpeed * Time.deltaTime));
+            // transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,
+            //     enemySO.turnSpeed * Time.deltaTime);
         }
     }
 

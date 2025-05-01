@@ -6,15 +6,28 @@ public class PDCProjectile : MonoBehaviour
 {
     [SerializeField] BaseProjectileSO projectileSO;
     
+    Rigidbody rigidbody;
+
+    private void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody>();
+    }
+
     // Update is called once per frame
     void Update()
+    {
+        //Move();
+    }
+
+    private void FixedUpdate()
     {
         Move();
     }
 
     void Move()
     {
-        transform.position += transform.forward * (projectileSO.speed * Time.deltaTime);
+        //transform.position += transform.forward * (projectileSO.speed * Time.deltaTime);
+        rigidbody.MovePosition(transform.position + transform.forward * (projectileSO.speed * Time.deltaTime));
     }
 
     IEnumerator DeactivateRoutine()
