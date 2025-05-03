@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
@@ -42,7 +43,8 @@ public class BaseTurret : MonoBehaviour
         {
             if (target.activeSelf)
             {
-                Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), Color.red);
+                // Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), Color.red);
+                Debug.DrawRay(target.transform.position, raycastOrigin.position - target.transform.position, Color.red);
                 RotateTowardsTarget();
                 Fire();
                 CheckDistanceToTarget();
@@ -89,16 +91,41 @@ public class BaseTurret : MonoBehaviour
     //Check if the passed target is within line-of-sight. If it is, then return true
     protected virtual bool IsLoSClear()
     {
-        // if(Physics.Linecast(raycastOrigin.position, target.transform.position, out RaycastHit hit))
-        if(Physics.Linecast(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), out RaycastHit hit))
+        //default logic
+        // if(Physics.Linecast(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), out RaycastHit hit))
+        // {
+        //     if (hit.collider.transform.root.gameObject == target.transform.root.gameObject)
+        //     {
+        //         lastTimeOnTarget = Time.time;
+        //         return true;
+        //     }
+        // }
+        
+        //Reverse raycast
+        // if(Physics.Raycast(target.transform.position, target.transform.position - raycastOrigin.position ,out RaycastHit hit))
+        // {
+        //     Debug.Log(hit.collider.transform.root.gameObject.name);
+        //     if (hit.collider.transform.root.gameObject == target.transform.root.gameObject)
+        //     {
+        //         Debug.Log("target in LOS");
+        //         lastTimeOnTarget = Time.time;
+        //         return true;
+        //     }
+        // }
+        
+        //Standard raycast
+        if(Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position ,out RaycastHit hit))
         {
+            Debug.Log(hit.collider.gameObject.name);
             if (hit.collider.transform.root.gameObject == target.transform.root.gameObject)
             {
+                Debug.Log("target in LOS");
                 lastTimeOnTarget = Time.time;
                 return true;
             }
         }
         
+        Debug.Log("target not in LOS");
         return false;
     }
     // protected virtual void IsLoSClear()
