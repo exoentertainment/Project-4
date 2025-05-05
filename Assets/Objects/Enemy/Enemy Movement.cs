@@ -284,15 +284,7 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         if (!isDead)
-        {
-            //MoveTowardsTarget();
-            // RotateTowardsTarget();
             CheckDistanceToTarget();
-        }
-        else
-        {
-            MoveForward();
-        }
     }
 
     private void FixedUpdate()
@@ -301,6 +293,10 @@ public class EnemyMovement : MonoBehaviour
         {
             MoveTowardsTarget();
             RotateTowardsTarget();
+        }
+        else
+        {
+            MoveForward();
         }
     }
 
@@ -331,18 +327,24 @@ public class EnemyMovement : MonoBehaviour
 
     bool IsLoSClear(Vector3 pos)
     {
-        if (!Physics.Raycast(raycastOrigin.position, pos - raycastOrigin.position, out RaycastHit hit, raycastRange))
+        // if (!Physics.Raycast(raycastOrigin.position, pos - raycastOrigin.position, out RaycastHit hit, raycastRange))
+        // {
+        //     return true;
+        // }
+        //
+        // return false;
+        
+        if (Physics.Raycast(raycastOrigin.position, raycastOrigin.transform.forward * raycastRange, out RaycastHit hit, raycastRange))
         {
-            return true;
+            return false;
         }
         
-        return false;
+        return true;
     }
 
     void MoveTowardsTarget()
     {
-        //transform.position += transform.forward * (enemySO.moveSpeed * Time.deltaTime);
-        rigidbody.MovePosition(transform.position + transform.forward * enemySO.moveSpeed * Time.deltaTime);
+        rigidbody.MovePosition(transform.position + transform.forward * (enemySO.moveSpeed * Time.deltaTime));
     }
 
     void RotateTowardsTarget()
@@ -355,8 +357,6 @@ public class EnemyMovement : MonoBehaviour
 
             rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation,
                 enemySO.turnSpeed * Time.deltaTime));
-            // transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,
-            //     enemySO.turnSpeed * Time.deltaTime);
         }
     }
 
@@ -370,6 +370,6 @@ public class EnemyMovement : MonoBehaviour
 
     void MoveForward()
     {
-        transform.position += transform.forward * (enemySO.deathSpeed * Time.deltaTime);
+        rigidbody.MovePosition(transform.position + transform.forward * (enemySO.moveSpeed * Time.deltaTime));
     }
 }

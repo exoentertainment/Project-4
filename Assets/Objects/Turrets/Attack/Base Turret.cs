@@ -28,6 +28,8 @@ public class BaseTurret : MonoBehaviour
     protected float lastTimeOnTarget;
     
     Vector2 currentRotation;
+    float xBaseRotation;
+    private float zBarrelRotation;
     private bool targetLOS;
     
     protected ObjectPool projectilePool;
@@ -36,7 +38,13 @@ public class BaseTurret : MonoBehaviour
     {
         projectilePool = GetComponent<ObjectPool>();
     }
-    
+
+    private void Start()
+    {
+        xBaseRotation = transform.rotation.eulerAngles.x;
+        zBarrelRotation = platformTurret.rotation.eulerAngles.z;
+    }
+
     protected void Update()
     {
         if (target != null)
@@ -116,10 +124,8 @@ public class BaseTurret : MonoBehaviour
         //Standard raycast
         if(Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position ,out RaycastHit hit))
         {
-            Debug.Log(hit.collider.gameObject.name);
             if (hit.collider.transform.root.gameObject == target.transform.root.gameObject)
             {
-                Debug.Log("target in LOS");
                 lastTimeOnTarget = Time.time;
                 return true;
             }
@@ -143,13 +149,13 @@ public class BaseTurret : MonoBehaviour
     //Rotate the base and barrel towards target
     protected void RotateTowardsTarget()
     {
-        Vector3 targetVector = target.transform.root.position - transform.position;
+        Vector3 targetVector = target.transform.root.position - platformBase.transform.position;
         targetVector.Normalize();
         Quaternion targetRotation = Quaternion.LookRotation(targetVector);
-        targetRotation.eulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
         float baseYRotation = targetRotation.eulerAngles.y;
-        
-        platformBase.rotation = Quaternion.SlerpUnclamped(platformBase.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime);
+
+        platformBase.transform.eulerAngles = new Vector3(platformBase.transform.eulerAngles.x, Quaternion.SlerpUnclamped(platformBase.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime).eulerAngles.y, platformBase.transform.eulerAngles.z);
+
         currentRotation.y = platformBase.rotation.eulerAngles.y;
         
         targetVector = target.transform.root.position - platformTurret.transform.position;
@@ -158,8 +164,7 @@ public class BaseTurret : MonoBehaviour
         
         if ((baseYRotation - currentRotation.y) < 10f)
         {
-            Quaternion newRotation = Quaternion.SlerpUnclamped(platformTurret.rotation, targetRotation, platformSO.barrelTrackingSpeed * Time.deltaTime);
-            platformTurret.rotation = newRotation;
+            platformTurret.eulerAngles = new Vector3(Quaternion.SlerpUnclamped(platformTurret.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime).eulerAngles.x, platformTurret.transform.eulerAngles.y, platformTurret.transform.eulerAngles.z);
         }
     }
     
