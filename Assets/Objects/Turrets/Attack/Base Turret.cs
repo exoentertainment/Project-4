@@ -11,7 +11,7 @@ using Vector2 = UnityEngine.Vector2;
 public class BaseTurret : MonoBehaviour
 {
     #region --Serialized Fields
-
+    
     [SerializeField] protected TurretSO platformSO;
 
     [SerializeField] protected  Transform platformBase;
@@ -28,44 +28,27 @@ public class BaseTurret : MonoBehaviour
     protected float lastTimeOnTarget;
     
     Vector2 currentRotation;
-    float xBaseRotation;
-    private float zBarrelRotation;
+    private float currentAngle;
     private bool targetLOS;
     
     protected ObjectPool projectilePool;
 
     protected void Awake()
     {
-        projectilePool = GetComponent<ObjectPool>();
-    }
-
-    private void Start()
-    {
-        xBaseRotation = transform.rotation.eulerAngles.x;
-        zBarrelRotation = platformTurret.rotation.eulerAngles.z;
+        projectilePool = GetComponent<ObjectPool>(); ;
     }
 
     protected void Update()
     {
         if (target != null)
         {
-            if (target.activeSelf)
-            {
-                // Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), Color.red);
-                Debug.DrawRay(target.transform.position, raycastOrigin.position - target.transform.position, Color.red);
-                RotateTowardsTarget();
-                Fire();
-                CheckDistanceToTarget();
-            }
-            else
-                target = null;
-        }
-        else
-        {
-            SearchForTarget();
+            Debug.DrawLine(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), Color.red);
+            //Debug.DrawRay(raycastOrigin.position, raycastOrigin.position + (transform.forward * platformSO.projectileSO.range), Color.red);
+            //RotateTowardsTarget();
+            Fire();
         }
     }
-    
+
     //Find the closest target going in order of target priority. If a suitable target cant be found in the first priority then check for targets in the next priority
     protected virtual void SearchForTarget()
     {
@@ -122,7 +105,7 @@ public class BaseTurret : MonoBehaviour
         // }
         
         //Standard raycast
-        if(Physics.Raycast(raycastOrigin.position, target.transform.position - raycastOrigin.position ,out RaycastHit hit))
+        if(Physics.Raycast(raycastOrigin.position, raycastOrigin.position + (raycastOrigin.transform.forward * platformSO.projectileSO.range), out RaycastHit hit))
         {
             if (hit.collider.transform.root.gameObject == target.transform.root.gameObject)
             {
@@ -145,28 +128,6 @@ public class BaseTurret : MonoBehaviour
     //         }
     //     }
     // }
-    
-    //Rotate the base and barrel towards target
-    protected void RotateTowardsTarget()
-    {
-        Vector3 targetVector = target.transform.root.position - platformBase.transform.position;
-        targetVector.Normalize();
-        Quaternion targetRotation = Quaternion.LookRotation(targetVector);
-        float baseYRotation = targetRotation.eulerAngles.y;
-
-        platformBase.transform.eulerAngles = new Vector3(platformBase.transform.eulerAngles.x, Quaternion.SlerpUnclamped(platformBase.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime).eulerAngles.y, platformBase.transform.eulerAngles.z);
-
-        currentRotation.y = platformBase.rotation.eulerAngles.y;
-        
-        targetVector = target.transform.root.position - platformTurret.transform.position;
-        targetVector.Normalize();
-        targetRotation = Quaternion.LookRotation(targetVector);
-        
-        if ((baseYRotation - currentRotation.y) < 10f)
-        {
-            platformTurret.eulerAngles = new Vector3(Quaternion.SlerpUnclamped(platformTurret.rotation, targetRotation, platformSO.baseTrackingSpeed * Time.deltaTime).eulerAngles.x, platformTurret.transform.eulerAngles.y, platformTurret.transform.eulerAngles.z);
-        }
-    }
     
     protected void Fire()
     {
@@ -221,6 +182,13 @@ public class BaseTurret : MonoBehaviour
             if (distanceToTarget > platformSO.projectileSO.range)
                 target = null;
         }
+    }
+
+    public void SetTarget(GameObject target)
+    {
+        this.target = target;    
+        lastTimeOnTarget = Time.time;
+        lastFireTime = Time.time;
     }
     
     private void OnDrawGizmosSelected()
